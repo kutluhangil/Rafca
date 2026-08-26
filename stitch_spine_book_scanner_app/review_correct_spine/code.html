@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Review / Correct Spine - Library App</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&amp;family=Inter:wght@100..900&amp;family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#151311",
+                        "primary-fixed": "#ffdeae",
+                        "secondary-fixed": "#c8ecc1",
+                        "on-secondary-fixed-variant": "#304e2e",
+                        "inverse-primary": "#7f5700",
+                        "surface": "#151311",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed-dim": "#ffb785",
+                        "surface-tint": "#f5bd62",
+                        "outline-variant": "#4f4537",
+                        "on-secondary-fixed": "#042107",
+                        "surface-container-low": "#1d1b19",
+                        "surface-container-lowest": "#100e0c",
+                        "primary-container": "#c9963f",
+                        "inverse-on-surface": "#33302d",
+                        "on-tertiary": "#502400",
+                        "on-tertiary-fixed-variant": "#723700",
+                        "inverse-surface": "#e8e1dd",
+                        "on-tertiary-fixed": "#301400",
+                        "on-primary-fixed": "#281900",
+                        "on-tertiary-container": "#582900",
+                        "tertiary-container": "#de8b4e",
+                        "tertiary-fixed": "#ffdcc6",
+                        "tertiary": "#ffb785",
+                        "secondary-fixed-dim": "#add0a7",
+                        "surface-container": "#221f1d",
+                        "on-secondary": "#19371a",
+                        "on-surface-variant": "#d3c4b2",
+                        "on-primary-fixed-variant": "#604100",
+                        "surface-container-highest": "#373432",
+                        "on-primary": "#432c00",
+                        "surface-container-high": "#2c2927",
+                        "surface-bright": "#3c3936",
+                        "secondary-container": "#304e2e",
+                        "on-secondary-container": "#9cbe96",
+                        "primary-fixed-dim": "#f5bd62",
+                        "primary": "#f5bd62",
+                        "on-error": "#690005",
+                        "outline": "#9c8f7e",
+                        "on-background": "#e8e1dd",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-container": "#4b3100",
+                        "secondary": "#add0a7",
+                        "background": "#151311",
+                        "on-surface": "#e8e1dd",
+                        "surface-variant": "#373432",
+                        "error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "lg": "24px",
+                        "base": "16px",
+                        "md": "12px",
+                        "xxl": "48px",
+                        "sm": "8px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Literata"],
+                        "label-mono": ["IBM Plex Mono"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Literata"],
+                        "body-sm": ["Inter"],
+                        "metadata-caps": ["IBM Plex Mono"],
+                        "headline-md": ["Literata"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-mono": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-sm": ["24px", { "lineHeight": "32px", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "metadata-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #12100E; /* Force exact hex as requested in brand styling */
+            color: #e8e1dd;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1;
+        }
+
+        /* Custom scrollbar for horizontal lists */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Modal specific styling */
+        .bottom-sheet {
+            background-color: #262119; /* Raised level */
+            border-top: 1px solid rgba(255,255,255,0.1); /* 1px inner stroke glow */
+            box-shadow: 0 -4px 24px rgba(18, 16, 14, 0.8);
+            transform: translateY(0);
+            transition: transform 0.4s cubic-bezier(0.2, 0, 0, 1);
+        }
+
+        .hairline-border {
+            border: 1px solid #3A332A;
+        }
+
+        .paper-glow {
+            box-shadow: inset 1px 1px 0px 0px rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-[#12100E] text-on-surface min-h-screen flex flex-col relative antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- Background Context (Blurred out library app behind modal) -->
+<div class="fixed inset-0 z-0 opacity-40 blur-sm pointer-events-none transition-opacity duration-700">
+<!-- Mock library background content -->
+<div class="h-16 w-full flex justify-between items-center px-lg border-b border-outline-variant bg-surface">
+<span class="material-symbols-outlined text-primary">menu</span>
+<span class="font-headline-md text-headline-md text-primary tracking-tight">SPINE</span>
+<span class="material-symbols-outlined">account_circle</span>
+</div>
+<div class="p-lg grid grid-cols-2 gap-4">
+<div class="h-64 bg-surface-container rounded-lg hairline-border"></div>
+<div class="h-64 bg-surface-container rounded-lg hairline-border"></div>
+<div class="h-64 bg-surface-container rounded-lg hairline-border"></div>
+<div class="h-64 bg-surface-container rounded-lg hairline-border"></div>
+</div>
+</div>
+<!-- Bottom Sheet Modal (Review / Correct) -->
+<div class="fixed inset-x-0 bottom-0 z-50 h-[85vh] bottom-sheet rounded-t-[24px] flex flex-col pt-2 md:max-w-[600px] md:mx-auto md:h-[90vh]">
+<!-- Drag Handle -->
+<div class="w-full flex justify-center py-2 cursor-grab active:cursor-grabbing">
+<div class="w-12 h-1.5 bg-outline-variant rounded-full opacity-50"></div>
+</div>
+<div class="flex-1 overflow-y-auto no-scrollbar px-lg pb-xxl">
+<!-- Header & Badge -->
+<div class="flex justify-between items-start mt-md mb-xl">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-xs">Review Match</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">We found multiple editions for this spine.</p>
+</div>
+<!-- Confidence Badge -->
+<div class="flex items-center bg-surface-container-lowest hairline-border pl-0 pr-md py-xs rounded">
+<div class="w-[3px] h-4 bg-[#C9963F] mr-sm"></div>
+<span class="font-label-mono text-label-mono text-primary-container">REVIEW</span>
+</div>
+</div>
+<!-- The Captured Spine Segment -->
+<div class="relative w-full h-48 mb-xl rounded-lg overflow-hidden hairline-border bg-surface-container-lowest">
+<!-- Cropped Spine Image -->
+<div class="absolute inset-0 w-full h-full">
+<div class="bg-cover bg-center w-full h-full opacity-80 mix-blend-luminosity hover:mix-blend-normal transition-all duration-500 cursor-zoom-in" data-alt="A macro, closely cropped photograph of an aged, textured book spine in a dimly lit, moody library setting. The leather is worn, with faint, embossed gold lettering barely visible. Deep blacks and warm parchment tones dominate the palette, emphasizing the tactile skeuomorphic quality of physical books. The lighting is intimate and directional, highlighting the grain of the material." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDcbQUJCrjeFbNcc8H1Bltkd6Zem9179ujdQqlxA9drL07cbUaYofH3fIfnEZ5o0mHFL56ZZQsb2B2bRh1nEIylliSs609Gkf7SMTuDd5gBkUtryBhAkCNFZewAFh8a3JrW6fuphj9BP4WaWzGmYAzq5RZ6ZWVepCFc3wb2ja0HvODnIibp0hZeikHe1dOqC3_f7_huG0QERcMCvb7JwFfIczKqsTTdy_BiWcoVS8-VFFkUOIrcyF0B')"></div>
+</div>
+<!-- Scanning Overlay / Gradient -->
+<div class="absolute inset-0 bg-gradient-to-t from-[#262119] via-transparent to-transparent pointer-events-none"></div>
+<!-- Crop Marks Decoration -->
+<div class="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-primary-container opacity-50"></div>
+<div class="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-primary-container opacity-50"></div>
+<div class="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-primary-container opacity-50"></div>
+<div class="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-primary-container opacity-50"></div>
+</div>
+<h3 class="font-metadata-caps text-metadata-caps text-on-surface-variant uppercase tracking-widest mb-md border-b border-outline-variant pb-xs">Select Correct Edition</h3>
+<!-- Candidate List -->
+<div class="flex flex-col gap-md mb-xl">
+<!-- Candidate Card 1 -->
+<button class="w-full text-left bg-[#1C1916] rounded-xl flex items-stretch overflow-hidden hairline-border paper-glow hover:bg-surface-container-high focus:outline-none focus:ring-1 focus:ring-primary-container transition-colors group relative">
+<!-- Selection Indicator (Hidden by default, shown on select) -->
+<div class="absolute inset-0 border border-primary-container rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10"></div>
+<!-- Cover Image -->
+<div class="w-20 sm:w-24 shrink-0 bg-surface-container-lowest">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300" data-alt="A digital render of a classic hardcover book cover titled 'Dune' by Frank Herbert. The cover features a minimalist desert landscape illustration with a deep orange and black color palette, matching the modern, tactile library aesthetic. The image is clean and well-lit." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCW8CUQPAePmuQ7LxaHzdGth0PA7i08jT2pIsR5veIJ1QCZ8pGknM8-G8HjKGAVtMP0u4haR_kHuTMI1iv3oGSXLdWmu46rGeOfYcsZPxNff1AM-puutxKq8DyAz1JA8CX_nbFnvSLkmizEdCDPf11QKWPOUADAXQQnjsUBBhs4_0wu5ljik1MDpU0uFD-iPGzH-6GYo5YaMldXbnyX6Ii8Gu37MrKR_g8QZ3Jt3NU1b9ww0m6fHAOn"/>
+</div>
+<!-- Metadata -->
+<div class="p-md flex flex-col justify-center flex-1">
+<h4 class="font-body-lg text-body-lg text-on-surface mb-xs group-hover:text-primary transition-colors">Dune</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-xs">Frank Herbert</p>
+<div class="flex items-center gap-sm mt-auto">
+<span class="font-label-mono text-label-mono text-outline">1965 Ed.</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="font-label-mono text-label-mono text-outline">Chilton Books</span>
+</div>
+</div>
+<!-- Action Arrow -->
+<div class="px-md flex items-center justify-center border-l border-outline-variant/30">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+</button>
+<!-- Candidate Card 2 -->
+<button class="w-full text-left bg-[#1C1916] rounded-xl flex items-stretch overflow-hidden hairline-border paper-glow hover:bg-surface-container-high focus:outline-none focus:ring-1 focus:ring-primary-container transition-colors group relative">
+<div class="absolute inset-0 border border-primary-container rounded-xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10"></div>
+<div class="w-20 sm:w-24 shrink-0 bg-surface-container-lowest">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300" data-alt="A photograph of a modern paperback book cover titled 'Dune'. The cover shows a stark, monochromatic sand dune with bold, contemporary typography. The visual style is subdued, fitting the dark, minimalist library theme." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwc0KDFeKfWD3ltCnsH2bqmattLVE6oPfrrRh4QXePQDt_0aND-_aPYyIRt8pdD_LUOX1AFgk4DTe1ipe22kL-vYmNumcA737WDhwjyQrpsrLJcztiUzY6m13HeSkP1XhqQJQhvW2hECEN6Lpc6Vz2Vj1m6D6q-KbP6dqxyJR6UFb0eRAzt_dTafLtd242U4jeL9l9HNmT4Ap-h-qkNefwUq0WyiVo7KJRvNSqb_rWjfuxSUseMWNO"/>
+</div>
+<div class="p-md flex flex-col justify-center flex-1">
+<h4 class="font-body-lg text-body-lg text-on-surface mb-xs group-hover:text-primary transition-colors">Dune (50th Anniversary)</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-xs">Frank Herbert</p>
+<div class="flex items-center gap-sm mt-auto">
+<span class="font-label-mono text-label-mono text-outline">2015 Ed.</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="font-label-mono text-label-mono text-outline">Ace Books</span>
+</div>
+</div>
+<div class="px-md flex items-center justify-center border-l border-outline-variant/30">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors">chevron_right</span>
+</div>
+</button>
+</div>
+<!-- Secondary Actions -->
+<div class="flex flex-col gap-sm border-t border-outline-variant pt-lg">
+<button class="w-full py-md px-lg bg-transparent hairline-border rounded font-body-md text-body-md text-primary-container hover:bg-surface-container-lowest transition-colors flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-[20px]">search</span>
+                    Search Manually
+                </button>
+<button class="w-full py-md px-lg bg-transparent rounded font-body-md text-body-md text-on-surface-variant hover:text-error hover:bg-error-container/10 transition-colors">
+                    Not a book
+                </button>
+</div>
+</div>
+</div>
+</body></html>

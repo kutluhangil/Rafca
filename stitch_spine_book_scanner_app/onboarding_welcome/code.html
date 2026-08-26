@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Spine - Onboarding</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Literata (Serif/Fraunces-like) & Inter, IBM Plex Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;family=Inter:wght@400;500&amp;family=Literata:opsz,wght@7..72,400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config injected from Style Guidance -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#151311",
+                        "primary-fixed": "#ffdeae",
+                        "secondary-fixed": "#c8ecc1",
+                        "on-secondary-fixed-variant": "#304e2e",
+                        "inverse-primary": "#7f5700",
+                        "surface": "#151311",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed-dim": "#ffb785",
+                        "surface-tint": "#f5bd62",
+                        "outline-variant": "#4f4537",
+                        "on-secondary-fixed": "#042107",
+                        "surface-container-low": "#1d1b19",
+                        "surface-container-lowest": "#100e0c",
+                        "primary-container": "#c9963f",
+                        "inverse-on-surface": "#33302d",
+                        "on-tertiary": "#502400",
+                        "on-tertiary-fixed-variant": "#723700",
+                        "inverse-surface": "#e8e1dd",
+                        "on-tertiary-fixed": "#301400",
+                        "on-primary-fixed": "#281900",
+                        "on-tertiary-container": "#582900",
+                        "tertiary-container": "#de8b4e",
+                        "tertiary-fixed": "#ffdcc6",
+                        "tertiary": "#ffb785",
+                        "secondary-fixed-dim": "#add0a7",
+                        "surface-container": "#221f1d",
+                        "on-secondary": "#19371a",
+                        "on-surface-variant": "#d3c4b2",
+                        "on-primary-fixed-variant": "#604100",
+                        "surface-container-highest": "#373432",
+                        "on-primary": "#432c00",
+                        "surface-container-high": "#2c2927",
+                        "surface-bright": "#3c3936",
+                        "secondary-container": "#304e2e",
+                        "on-secondary-container": "#9cbe96",
+                        "primary-fixed-dim": "#f5bd62",
+                        "primary": "#f5bd62",
+                        "on-error": "#690005",
+                        "outline": "#9c8f7e",
+                        "on-background": "#e8e1dd",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-container": "#4b3100",
+                        "secondary": "#add0a7",
+                        "background": "#151311",
+                        "on-surface": "#e8e1dd",
+                        "surface-variant": "#373432",
+                        "error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "lg": "24px",
+                        "base": "16px",
+                        "md": "12px",
+                        "xxl": "48px",
+                        "sm": "8px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Literata"],
+                        "label-mono": ["IBM Plex Mono"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Literata"],
+                        "body-sm": ["Inter"],
+                        "metadata-caps": ["IBM Plex Mono"],
+                        "headline-md": ["Literata"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-mono": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-sm": ["24px", { "lineHeight": "32px", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "metadata-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Shared Components JSON mandates rendering active states based on logic, but since this is an Onboarding screen (linear/transactional), the navigation shell is strictly suppressed as per the "Automatic Suppression" rule. */
+    </style>
+</head>
+<body class="bg-background text-on-background h-screen w-screen overflow-hidden flex flex-col relative antialiased selection:bg-primary-container selection:text-background">
+<!-- Full-bleed background image -->
+<div class="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat" data-alt="A close-up, highly detailed photograph of a wooden bookshelf tightly packed with diverse physical books, illuminated by warm, moody tungsten lighting at night. The lighting casts soft, atmospheric shadows, emphasizing the textures of the book spines and the rich, dark wood. The scene embodies a quiet, private library aesthetic with deep blacks and warm parchment tones, feeling authoritative yet intimate." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA6jl1u0wWXBPA7rJA2ebmlDBL929iL4kLLlmiRUEkQEZ6Gagr-Li5haJfvPqKn03H12wKa14klozd4JFr8dd0TQB5QbAWh6MtKC1dR7S4ela8hy85RAyQqbGEjDE5Dso-IbjAhiHS3KpAUMCcYsU_X960YweD3OElnx8fJcrLuspnCY4MAUz18KMTL5xoRrKDvnrUi93ni_uM1Qj7x9MqOuuhkoPBoSOJCgIepfusGmpCjLIsAvgdm')"></div>
+<!-- Dark bottom gradient overlay for text readability -->
+<div class="absolute inset-0 bg-gradient-to-t from-[#12100E] via-[#12100E]/70 to-transparent pointer-events-none z-10"></div>
+<!-- Content Container -->
+<div class="relative z-20 flex flex-col h-full w-full max-w-[1200px] mx-auto p-lg pt-xxl pb-xl justify-end">
+<!-- Text Content -->
+<div class="mb-xl text-left">
+<h1 class="font-display-lg text-display-lg text-on-surface mb-sm">Your library, digitized.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md">
+                A quiet archive for your physical volumes. Catalog, organize, and explore your collection with precision.
+            </p>
+</div>
+<!-- Controls (Dots & Button) -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-xl w-full">
+<!-- Dot Indicators -->
+<div class="flex gap-sm items-center self-start sm:self-center">
+<!-- Active Dot -->
+<div class="w-2 h-2 rounded-full bg-primary transition-all duration-300 ease-in-out scale-125"></div>
+<!-- Inactive Dots -->
+<div class="w-2 h-2 rounded-full bg-surface-variant transition-all duration-300 ease-in-out"></div>
+<div class="w-2 h-2 rounded-full bg-surface-variant transition-all duration-300 ease-in-out"></div>
+</div>
+<!-- Get Started Button -->
+<!-- Primary Button style: Brass background (#C9963F) with #12100E text. No shadow. -->
+<button class="bg-primary-container text-background font-metadata-caps text-metadata-caps tracking-widest uppercase px-xl py-md rounded-lg hover:bg-primary transition-colors duration-300 ease-in-out w-full sm:w-auto self-end flex items-center justify-center gap-sm">
+<span>Get started</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</body></html>

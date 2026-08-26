@@ -1,0 +1,79 @@
+# Publisher names stripped from a spine query and kept as a separate scoring
+# signal (SPINE_BLUEPRINT.md 8.2). One entry per line, lower case, comments
+# with '#'. Matching is done on the normalised (unaccented, case folded) form,
+# so write them however reads naturally here.
+#
+# Faz 5 must load this same file from the Go matching service. Two diverging
+# copies would make the client and the server score the same spine differently.
+
+# --- Türkiye ---
+is bankasi kultur yayinlari
+yapi kredi yayinlari
+can yayinlari
+iletisim yayinlari
+dogan kitap
+everest yayinlari
+alfa yayinlari
+epsilon yayinlari
+pegasus yayinlari
+ithaki yayinlari
+metis yayinlari
+ayrinti yayinlari
+timas yayinlari
+kirmizi kedi
+altin kitaplar
+remzi kitabevi
+inkilap kitabevi
+koridor yayincilik
+april yayincilik
+ketebe yayinlari
+dergah yayinlari
+sel yayincilik
+hep kitap
+tudem yayinlari
+gunisigi kitapligi
+destek yayinlari
+marti yayinlari
+olimpos yayinlari
+kure yayinlari
+vakifbank kultur yayinlari
+turkiye is bankasi
+yky
+
+# --- International ---
+penguin classics
+penguin books
+penguin
+vintage books
+vintage
+faber and faber
+faber
+harpercollins
+harper perennial
+harper
+random house
+alfred a knopf
+knopf
+bloomsbury
+macmillan
+simon and schuster
+doubleday
+oxford university press
+cambridge university press
+w w norton
+norton
+chilton books
+ace books
+bantam books
+bantam
+del rey
+tor books
+orbit
+gollancz
+picador
+granta
+verso
+pan books
+vintage international
+everyman s library
+modern library

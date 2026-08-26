@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Manual Search - Spine Library</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Literata:ital,wght@0,400;0,500;0,700;1,400&amp;family=IBM+Plex+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#151311",
+                        "primary-fixed": "#ffdeae",
+                        "secondary-fixed": "#c8ecc1",
+                        "on-secondary-fixed-variant": "#304e2e",
+                        "inverse-primary": "#7f5700",
+                        "surface": "#151311",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed-dim": "#ffb785",
+                        "surface-tint": "#f5bd62",
+                        "outline-variant": "#4f4537",
+                        "on-secondary-fixed": "#042107",
+                        "surface-container-low": "#1d1b19",
+                        "surface-container-lowest": "#100e0c",
+                        "primary-container": "#c9963f",
+                        "inverse-on-surface": "#33302d",
+                        "on-tertiary": "#502400",
+                        "on-tertiary-fixed-variant": "#723700",
+                        "inverse-surface": "#e8e1dd",
+                        "on-tertiary-fixed": "#301400",
+                        "on-primary-fixed": "#281900",
+                        "on-tertiary-container": "#582900",
+                        "tertiary-container": "#de8b4e",
+                        "tertiary-fixed": "#ffdcc6",
+                        "tertiary": "#ffb785",
+                        "secondary-fixed-dim": "#add0a7",
+                        "surface-container": "#221f1d",
+                        "on-secondary": "#19371a",
+                        "on-surface-variant": "#d3c4b2",
+                        "on-primary-fixed-variant": "#604100",
+                        "surface-container-highest": "#373432",
+                        "on-primary": "#432c00",
+                        "surface-container-high": "#2c2927",
+                        "surface-bright": "#3c3936",
+                        "secondary-container": "#304e2e",
+                        "on-secondary-container": "#9cbe96",
+                        "primary-fixed-dim": "#f5bd62",
+                        "primary": "#f5bd62",
+                        "on-error": "#690005",
+                        "outline": "#9c8f7e",
+                        "on-background": "#e8e1dd",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-container": "#4b3100",
+                        "secondary": "#add0a7",
+                        "background": "#151311",
+                        "on-surface": "#e8e1dd",
+                        "surface-variant": "#373432",
+                        "error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "lg": "24px",
+                        "base": "16px",
+                        "md": "12px",
+                        "xxl": "48px",
+                        "sm": "8px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Literata"],
+                        "label-mono": ["IBM Plex Mono"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Literata"],
+                        "body-sm": ["Inter"],
+                        "metadata-caps": ["IBM Plex Mono"],
+                        "headline-md": ["Literata"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-mono": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-sm": ["24px", { "lineHeight": "32px", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "metadata-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+        
+        .book-card-glow {
+            box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.1);
+        }
+
+        .input-minimal {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid theme('colors.outline-variant');
+            transition: all 0.3s ease;
+        }
+        
+        .input-minimal:focus {
+            outline: none;
+            border-bottom-color: theme('colors.primary-container');
+            border-bottom-width: 2px;
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="bg-surface text-primary font-headline-md text-headline-md w-full top-0 sticky border-b border-outline-variant z-40 transition-colors duration-300 ease-in-out flex justify-between items-center px-lg h-16">
+<button class="text-on-surface-variant hover:bg-surface-container-high transition-colors p-sm rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<span class="font-headline-md text-headline-md text-primary tracking-tight">SPINE</span>
+<button class="text-on-surface-variant hover:bg-surface-container-high transition-colors p-sm rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</header>
+<!-- Main Canvas -->
+<main class="flex-grow w-full max-w-[1200px] mx-auto px-lg md:px-xl py-xl pb-32">
+<!-- Search Section -->
+<section class="mb-xxl max-w-2xl mx-auto w-full">
+<div class="relative flex flex-col">
+<label class="font-metadata-caps text-metadata-caps text-on-surface-variant mb-xs uppercase tracking-widest" for="manual-search">Search Library</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-0 text-on-surface-variant z-10 pointer-events-none" data-icon="search">search</span>
+<input class="input-minimal w-full pl-lg py-sm text-on-surface font-body-lg text-body-lg placeholder-surface-variant bg-transparent" id="manual-search" placeholder="Title, Author, or ISBN" type="text" value="The City"/>
+</div>
+</div>
+</section>
+<!-- Results Section -->
+<section class="w-full">
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-lg">Search Results</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
+<!-- Book Card 1 -->
+<article class="bg-[#1C1916] rounded-xl flex overflow-hidden border border-[#3A332A] book-card-glow hover:bg-surface-container transition-colors group cursor-pointer h-32">
+<div class="w-24 shrink-0 bg-surface-container-lowest border-r border-[#3A332A]">
+<img class="w-full h-full object-cover object-left opacity-90 group-hover:opacity-100 transition-opacity" data-alt="A vintage, minimalist book cover for 'The City We Became'. Dark brown and muted brass color palette. Tactile paper texture visible. Atmospheric, moody lighting emphasizing the texture of an old library book spine." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7_nCdrCDMU9n-L-5VOSKrQPYnwR_WhVzRem0ER0ceWduk0bCdVAgbLe62cNhoE1NNKzBCxL_5V-VhCJlrhuPE070I-z4SJ_NV3LGPrTLOb9B07wV_GHme9HSrfLg9_MuBQLlrn11oQWhLLDz3CPigtW3s8zPgiN5tEQD_5TyX4xW2rt0bN_zFPwf10x9Kl_ZHmeZyP3KeNIqvPWJ5Z5Izi6ZWuXI6p6Votpq8D0OCgvOjCsUYPvlY"/>
+</div>
+<div class="p-md flex flex-col justify-between flex-grow">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface leading-tight mb-xs truncate">The City We Became</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">N.K. Jemisin</p>
+</div>
+<div class="flex items-center justify-between mt-sm">
+<span class="font-label-mono text-label-mono text-primary-container">ISBN 9780316556596</span>
+<div class="flex items-center gap-xs">
+<span class="w-1 h-3 bg-secondary-fixed"></span>
+<span class="font-metadata-caps text-metadata-caps text-secondary-fixed">MATCHED</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Book Card 2 -->
+<article class="bg-[#1C1916] rounded-xl flex overflow-hidden border border-[#3A332A] book-card-glow hover:bg-surface-container transition-colors group cursor-pointer h-32">
+<div class="w-24 shrink-0 bg-surface-container-lowest border-r border-[#3A332A]">
+<img class="w-full h-full object-cover object-left opacity-90 group-hover:opacity-100 transition-opacity" data-alt="A dark, textured book spine of 'The City &amp; The City'. Subtle typography pressed into what looks like dark leather or heavy buckram cloth. Quiet, subdued library lighting. Minimalist design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGng7x5tH6ueArzsRcbZC1Kl4ZX5T60Z0C5pFTALmEXO-L0KrV_GflVu7rbSmwnleQZ7zfZgUBgsh-c0iXcbNvp3P5yo_MbPIUskNo2zKk3O6E4Ap4vNuv1T_Tnz4T-Q_oOcxZplJrjaLibtHVGhY9IrJoffQwcCasQk5CnItytMKXaisawgLtgsNN2t_8_3pfxQ5-h-IZVUlK2i-CNOFHAeYm001cvGvv9oxbhPepQ2JGuQgtLomt"/>
+</div>
+<div class="p-md flex flex-col justify-between flex-grow">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface leading-tight mb-xs truncate">The City &amp; The City</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">China Miéville</p>
+</div>
+<div class="flex items-center justify-between mt-sm">
+<span class="font-label-mono text-label-mono text-primary-container">ISBN 9780345497529</span>
+<div class="flex items-center gap-xs">
+<span class="w-1 h-3 bg-primary-container"></span>
+<span class="font-metadata-caps text-metadata-caps text-primary-container">REVIEW</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Book Card 3 -->
+<article class="bg-[#1C1916] rounded-xl flex overflow-hidden border border-[#3A332A] book-card-glow hover:bg-surface-container transition-colors group cursor-pointer h-32">
+<div class="w-24 shrink-0 bg-surface-container-lowest border-r border-[#3A332A] flex items-center justify-center">
+<span class="material-symbols-outlined text-outline-variant text-3xl" data-icon="book">book</span>
+</div>
+<div class="p-md flex flex-col justify-between flex-grow">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface leading-tight mb-xs truncate">City of Glass</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Paul Auster</p>
+</div>
+<div class="flex items-center justify-between mt-sm">
+<span class="font-label-mono text-label-mono text-outline-variant">NO ISBN FOUND</span>
+<div class="flex items-center gap-xs">
+<span class="w-1 h-3 bg-error"></span>
+<span class="font-metadata-caps text-metadata-caps text-error">UNKNOWN</span>
+</div>
+</div>
+</div>
+</article>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-surface-container-lowest fixed bottom-0 w-full z-50 h-20 border-t border-outline-variant md:hidden flex justify-around items-center px-base pb-safe">
+<button class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 scale-95 active:scale-90 transition-transform duration-200 hover:bg-surface-container-highest rounded-lg p-xs w-16">
+<span class="material-symbols-outlined mb-1" data-icon="library_books">library_books</span>
+<span class="font-label-mono text-label-mono">Library</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary bg-secondary-container rounded-full px-md py-xs scale-95 active:scale-90 transition-transform duration-200 w-16 h-14">
+<span class="material-symbols-outlined mb-1" data-icon="search" style="font-variation-settings: 'FILL' 1;">search</span>
+<span class="font-label-mono text-label-mono sr-only">Search</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 scale-95 active:scale-90 transition-transform duration-200 hover:bg-surface-container-highest rounded-lg p-xs w-16">
+<span class="material-symbols-outlined mb-1" data-icon="shelves">shelves</span>
+<span class="font-label-mono text-label-mono">Shelves</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 scale-95 active:scale-90 transition-transform duration-200 hover:bg-surface-container-highest rounded-lg p-xs w-16">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+<span class="font-label-mono text-label-mono">Profile</span>
+</button>
+</nav>
+<script>
+        // Simple micro-interaction for the search input
+        const searchInput = document.getElementById('manual-search');
+        if (searchInput) {
+            searchInput.addEventListener('focus', () => {
+                searchInput.parentElement.querySelector('.material-symbols-outlined').classList.replace('text-on-surface-variant', 'text-primary-container');
+            });
+            searchInput.addEventListener('blur', () => {
+                searchInput.parentElement.querySelector('.material-symbols-outlined').classList.replace('text-primary-container', 'text-on-surface-variant');
+            });
+        }
+    </script>
+</body></html>

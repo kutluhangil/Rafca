@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Spine - Scan Results</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Literata:wght@400;500;700&amp;family=IBM+Plex+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#151311",
+                        "primary-fixed": "#ffdeae",
+                        "secondary-fixed": "#c8ecc1",
+                        "on-secondary-fixed-variant": "#304e2e",
+                        "inverse-primary": "#7f5700",
+                        "surface": "#151311",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed-dim": "#ffb785",
+                        "surface-tint": "#f5bd62",
+                        "outline-variant": "#4f4537",
+                        "on-secondary-fixed": "#042107",
+                        "surface-container-low": "#1d1b19",
+                        "surface-container-lowest": "#100e0c",
+                        "primary-container": "#c9963f",
+                        "inverse-on-surface": "#33302d",
+                        "on-tertiary": "#502400",
+                        "on-tertiary-fixed-variant": "#723700",
+                        "inverse-surface": "#e8e1dd",
+                        "on-tertiary-fixed": "#301400",
+                        "on-primary-fixed": "#281900",
+                        "on-tertiary-container": "#582900",
+                        "tertiary-container": "#de8b4e",
+                        "tertiary-fixed": "#ffdcc6",
+                        "tertiary": "#ffb785",
+                        "secondary-fixed-dim": "#add0a7",
+                        "surface-container": "#221f1d",
+                        "on-secondary": "#19371a",
+                        "on-surface-variant": "#d3c4b2",
+                        "on-primary-fixed-variant": "#604100",
+                        "surface-container-highest": "#373432",
+                        "on-primary": "#432c00",
+                        "surface-container-high": "#2c2927",
+                        "surface-bright": "#3c3936",
+                        "secondary-container": "#304e2e",
+                        "on-secondary-container": "#9cbe96",
+                        "primary-fixed-dim": "#f5bd62",
+                        "primary": "#f5bd62",
+                        "on-error": "#690005",
+                        "outline": "#9c8f7e",
+                        "on-background": "#e8e1dd",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-container": "#4b3100",
+                        "secondary": "#add0a7",
+                        "background": "#151311",
+                        "on-surface": "#e8e1dd",
+                        "surface-variant": "#373432",
+                        "error-container": "#93000a",
+                        
+                        "badge-matched": "#c8ecc1",
+                        "badge-review": "#f5bd62",
+                        "badge-unrecognized": "#ffb4ab"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "lg": "24px",
+                        "base": "16px",
+                        "md": "12px",
+                        "xxl": "48px",
+                        "sm": "8px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Literata"],
+                        "label-mono": ["IBM Plex Mono"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Literata"],
+                        "body-sm": ["Inter"],
+                        "metadata-caps": ["IBM Plex Mono"],
+                        "headline-md": ["Literata"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-mono": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-sm": ["24px", { "lineHeight": "32px", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "metadata-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { background-color: #12100E; color: #e8e1dd; }
+        .hairline-border { border: 1px solid #3A332A; }
+        .raised-card { 
+            background-color: #1C1916; 
+            border: 1px solid #3A332A;
+            box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+        }
+        .spine-crop { width: 40px; height: 120px; object-fit: cover; }
+        .cover-thumb { width: 60px; height: 90px; object-fit: cover; }
+        
+        .confidence-badge-matched { border-left: 3px solid #c8ecc1; padding-left: 8px; }
+        .confidence-badge-review { border-left: 3px solid #c9963f; padding-left: 8px; }
+        .confidence-badge-unrecognized { border-left: 3px solid #ffb4ab; padding-left: 8px; }
+        
+        /* Custom scrollbar for library feel */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #12100E; }
+        ::-webkit-scrollbar-thumb { background: #3A332A; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4f4537; }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col font-body-md">
+<!-- Top Navigation (Shell logic: Supressed since this is a transactional/task-focused screen, but keeping a simple back header) -->
+<header class="sticky top-0 z-40 bg-[#12100E]/90 backdrop-blur-md border-b border-[#3A332A] px-lg h-16 flex items-center justify-between">
+<div class="flex items-center gap-md cursor-pointer hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-primary text-2xl">arrow_back</span>
+<span class="font-metadata-caps text-metadata-caps text-primary tracking-widest uppercase">Discard Scan</span>
+</div>
+<div class="font-headline-md text-headline-md text-primary tracking-tight">SPINE</div>
+<div class="w-24"></div> <!-- Spacer for center alignment -->
+</header>
+<main class="flex-1 max-w-[1200px] w-full mx-auto px-lg py-xl pb-32 flex flex-col gap-xl">
+<!-- Captured Photo Collapse -->
+<section class="raised-card rounded-xl p-md flex flex-col gap-sm">
+<div class="flex justify-between items-center cursor-pointer" onclick="document.getElementById('source-image').classList.toggle('hidden')">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant">image</span>
+<span class="font-metadata-caps text-metadata-caps text-on-surface-variant">SOURCE CAPTURE - 12 ITEMS DETECTED</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">expand_more</span>
+</div>
+<div class="w-full h-48 rounded-lg overflow-hidden border border-[#3A332A] mt-sm hidden" id="source-image">
+<img class="w-full h-full object-cover grayscale opacity-80" data-alt="A softly lit, slightly grainy photograph of a wooden bookshelf containing about a dozen various hardcover and paperback books. The lighting is moody, evoking a quiet library at midnight. The focus is sharp on the book spines, capturing the textures of cloth, leather, and paper." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCt4rPiouEFqGyKTRq9_TxF1e2_j_mBkkprr8v4Xk0-SRRPFawCFAk8mtObnnVLd_BBanzsBdCqFjgCCpwVKzEeKLrihgxCZYFDfCn7_29UuWKCTGDDiHeAHfc0jhtNetaC9SACcllRAOUaA4YmGgfEj7PBbe_CoalAJVQjIFm8a6i0XMNizLwcCIqYmq7xoB64tXU0oZRe2ZlrCatklqsPNpZEGO2JN_Y7z35j5U6xWNlAiEl0dbcF"/>
+</div>
+</section>
+<!-- Shelf Strip (Visual Index) -->
+<div class="w-full h-12 flex rounded-lg overflow-hidden border border-[#3A332A] opacity-70 hover:opacity-100 transition-opacity">
+<!-- Simulated spines based on confidence -->
+<div class="h-full bg-[#1C1916] flex-1 border-r border-[#3A332A] relative"><div class="absolute bottom-0 w-full h-1 bg-badge-matched"></div></div>
+<div class="h-full bg-[#262119] flex-[1.2] border-r border-[#3A332A] relative"><div class="absolute bottom-0 w-full h-1 bg-badge-matched"></div></div>
+<div class="h-full bg-[#1C1916] flex-[0.8] border-r border-[#3A332A] relative"><div class="absolute bottom-0 w-full h-1 bg-badge-matched"></div></div>
+<div class="h-full bg-[#262119] flex-1 border-r border-[#3A332A] relative"><div class="absolute bottom-0 w-full h-1 bg-badge-review"></div></div>
+<div class="h-full bg-[#1C1916] flex-[1.5] border-r border-[#3A332A] relative"><div class="absolute bottom-0 w-full h-1 bg-badge-matched"></div></div>
+<div class="h-full bg-[#262119] flex-[0.9] border-r border-[#3A332A] relative"><div class="absolute bottom-0 w-full h-1 bg-badge-matched"></div></div>
+<div class="h-full bg-[#1C1916] flex-[1.1] border-r border-[#3A332A] relative"><div class="absolute bottom-0 w-full h-1 bg-badge-review"></div></div>
+<div class="h-full bg-[#262119] flex-[0.7] border-r border-[#3A332A] relative"><div class="absolute bottom-0 w-full h-1 bg-badge-unrecognized"></div></div>
+<div class="h-full bg-[#1C1916] flex-[1.3] border-r border-[#3A332A] relative"><div class="absolute bottom-0 w-full h-1 bg-badge-matched"></div></div>
+<div class="h-full bg-[#262119] flex-1 border-r border-[#3A332A] relative"><div class="absolute bottom-0 w-full h-1 bg-badge-matched"></div></div>
+<div class="h-full bg-[#1C1916] flex-[1.2] relative"><div class="absolute bottom-0 w-full h-1 bg-badge-matched"></div></div>
+</div>
+<!-- MATCHED GROUP -->
+<section class="flex flex-col gap-lg">
+<h2 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-md">
+                Matched <span class="font-label-mono text-label-mono text-badge-matched bg-badge-matched/10 px-2 py-1 rounded">8</span>
+</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Book Item 1 -->
+<article class="raised-card rounded-[14px] flex overflow-hidden group hover:bg-[#221f1d] transition-colors cursor-pointer">
+<!-- Extracted Spine -->
+<div class="w-12 bg-black border-r border-[#3A332A] flex-shrink-0 relative">
+<img class="w-full h-full object-cover opacity-70 mix-blend-luminosity" data-alt="A macro shot of a weathered cloth book spine, dark blue with faded gold lettering, dimly lit to show the texture of the fabric." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsr2JXs_u-EMUjTJ39hbhhFHS5RAM6aG8K8Gbj4GnbLsHAqruCe42PbTGvlU58esoHEK8xVLCZPIdrO6rid5tIlz1c2ahmRDTRqHDjj4g7xlT5T8C1Q4FpCm7YhE_HIV8iTQwm9CfgewNJ3SwfO77wkzYd-P0uFTb7xnQh0oDLfFOiVHkfJ5u1rRJRQbCorw8y9GGlR5fCxiAxasTpcsJzbUYLVkB70YilUKKZvzox6r2n3JLno53c"/>
+<div class="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent"></div>
+</div>
+<div class="flex-1 p-md flex gap-md items-center">
+<!-- Matched Cover -->
+<img class="cover-thumb rounded shadow-[0_2px_8px_rgba(0,0,0,0.5)] border border-[#3A332A]" data-alt="A minimalist vintage book cover design for '1984' by George Orwell, featuring stark typography and a deep black and parchment color scheme, high contrast." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbzg7JSMX-iM2tVpUH16HfamYC7fx9eOeeIwKQdxcGzZDghMNO-_7WzmXdIEf4YsW_HLAEOIfYi0Q2oF1pVj6sfaQfmB_xQYr5pFG6YGCAicKQBUBTAIvYxs1KGEgfU6w2eslYB2rZJ7SLIPTDG7uUh4-6ZDGS9-a9EXNz5zBJp4krBiIBDDsL0rHw-Ox_MbQrCxI26Ox1nvK1R4kbeyDFCvfCf5rJ9khgGJlkAsWcdgasV-0P1jwT"/>
+<!-- Metadata -->
+<div class="flex-1 flex flex-col gap-xs">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm text-headline-sm text-on-surface leading-tight">1984</h3>
+<div class="confidence-badge-matched">
+<span class="font-metadata-caps text-metadata-caps text-badge-matched">MATCHED</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">George Orwell</p>
+<p class="font-label-mono text-label-mono text-outline mt-sm">CONF: 0.98</p>
+</div>
+</div>
+</article>
+<!-- Book Item 2 -->
+<article class="raised-card rounded-[14px] flex overflow-hidden group hover:bg-[#221f1d] transition-colors cursor-pointer">
+<!-- Extracted Spine -->
+<div class="w-12 bg-black border-r border-[#3A332A] flex-shrink-0 relative">
+<img class="w-full h-full object-cover opacity-70 mix-blend-luminosity" data-alt="A close up of a modern paperback spine, crisp white with black sans-serif typography, lit to highlight the smooth paper texture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBheE7-UdpeCPQmHMBUUFCLdp3wo1cdHanV09IVy7CHb7t8F3y2aPgeVZ__U1ZyU-hNH2olKUCi_aGa7LL8gjeL1NOYRcjwJeNyEWbxJVJPaIdwlUsf9GLQTuCuaAdGCh3deKPeFDn149hcGW4ajSCe_Itzr6q0ANHkRTAx7YQFIpJc_MWY5OKcR0esLXw3GbkhzbLG0zA93BOVLeJ8eMHkuAt6CsTEOwkQ_PiGNuvaNzUwZYf9x7Xs"/>
+<div class="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent"></div>
+</div>
+<div class="flex-1 p-md flex gap-md items-center">
+<img class="cover-thumb rounded shadow-[0_2px_8px_rgba(0,0,0,0.5)] border border-[#3A332A]" data-alt="A cover of 'The Catcher in the Rye' showcasing a classic, slightly distressed red and yellow design, fitting a dark moody library aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBunf0Cl1H0KjO_b1xlMbk2YPLVpcO9qWu1UFBfWsYiTxZq0T6MET_sUIPIzMnA3sMfbHT_LHepCAH-2dmNYCYm3L0hB6ettQ0l7NM8MSJc2eDiLo7VCgDqWFFJcTCih5F5ZPxrw3KRYaTTfuNiutb1DbUNtUtTkQo9iZTOg8w3yIQRl9DKg34mjEAnamdDdhOFJwx2vXW_fftxilH8BCTdzz9A41ATgnm-lpqioS73IVteO8XwdNzg"/>
+<div class="flex-1 flex flex-col gap-xs">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm text-headline-sm text-on-surface leading-tight">The Catcher in the Rye</h3>
+<div class="confidence-badge-matched">
+<span class="font-metadata-caps text-metadata-caps text-badge-matched">MATCHED</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">J.D. Salinger</p>
+<p class="font-label-mono text-label-mono text-outline mt-sm">CONF: 0.95</p>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- NEEDS REVIEW GROUP -->
+<section class="flex flex-col gap-lg mt-lg">
+<h2 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-md">
+                Needs Review <span class="font-label-mono text-label-mono text-badge-review bg-badge-review/10 px-2 py-1 rounded">2</span>
+</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md opacity-90">
+<!-- Review Item 1 -->
+<article class="raised-card rounded-[14px] flex overflow-hidden group hover:bg-[#221f1d] transition-colors cursor-pointer border-[#c9963f]/30">
+<div class="w-12 bg-black border-r border-[#3A332A] flex-shrink-0 relative">
+<img class="w-full h-full object-cover opacity-60 mix-blend-luminosity" data-alt="A blurry, poorly lit spine of an old leather-bound book, title illegible, dark brown and gold tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYo3dgyZ9_vcFrisdkMCK4pdYmJmiB0cFzkOu4rhDCh_EftQ_DAv9PQituAc5QJpWJa6KZGJu6GZZVxK7xPnaGJMBmAgveV7hDCk1haM7XfGdWywMOsjY0AbhiNnnrSwJ1oD4e24hj-EMTOYc2448y_SnFGxO6Uq7xMHpQbg77j6TddXZZcS04MVp-JtGfsTicAEkIY3z3cYK8m_KGlk3crXaVdpQOwL4I3KhG20e5rHCI9dOOUE9O"/>
+</div>
+<div class="flex-1 p-md flex gap-md items-center">
+<img class="cover-thumb rounded shadow-[0_2px_8px_rgba(0,0,0,0.5)] border border-[#3A332A] opacity-80" data-alt="A generic vintage book cover representing a possible match for an unidentified classic novel, dark leather texture with subtle gold embossing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCc-gshCuAQAPtVt4mOwW_s0AClxlHESFH9j3DZ4sv5k2Bn2NPJkpbtIUwRhsvP9fDFYTspF-KmCHkKSU9QH-7J1kId2C4XiQsIx8oO6lEFipM-a_dytComDNBjd8leu4np2vh2KT60mTOkT_jFuM9vEh5aab4PS7DYG7m80YgM1IirqPuJjk7grWzkwvK2c8Alcb_Z8UlauSQPgSV17ZCI-ywn0NvgYkKIswodV2k0KrlLLKhuQiVn"/>
+<div class="flex-1 flex flex-col gap-xs">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm text-headline-sm text-on-surface leading-tight text-on-surface-variant italic">Moby Dick?</h3>
+<div class="confidence-badge-review">
+<span class="font-metadata-caps text-metadata-caps text-badge-review">REVIEW</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Herman Melville</p>
+<p class="font-label-mono text-label-mono text-badge-review mt-sm">CONF: 0.45</p>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- UNRECOGNIZED GROUP -->
+<section class="flex flex-col gap-lg mt-lg mb-xxl">
+<h2 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-md">
+                Unrecognized <span class="font-label-mono text-label-mono text-badge-unrecognized bg-badge-unrecognized/10 px-2 py-1 rounded">1</span>
+</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md opacity-70">
+<!-- Unrecognized Item 1 -->
+<article class="raised-card rounded-[14px] flex overflow-hidden group hover:bg-[#221f1d] transition-colors cursor-pointer border-[#ffb4ab]/20">
+<div class="w-12 bg-black border-r border-[#3A332A] flex-shrink-0 relative">
+<img class="w-full h-full object-cover opacity-50 mix-blend-luminosity" data-alt="A completely unreadable, dark, obscured book spine wedged between two others on a shelf, deep shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8gxCQZJ5NRLxv373GzpKh4Fdywa4cP1LDDOakpSJ7JQoXyULwx44qt_hl9BW4iilISkRca_jlpkWz4do9Mtd0qjsjcjuh2el23fUMzldL_ryrsNqviHRP1eaNH8TEJYj77p68bVQ3dAUrKG2JmewshZh7-PivvQZpfkp8lo6a0q6Vu64EMSHWaJjwTeJXD3EIkCYkiuUIta7ODGnErAxwNnNX2YqjWEhLBXvynIzYj8myqKntlHQg"/>
+</div>
+<div class="flex-1 p-md flex gap-md items-center">
+<div class="w-[60px] h-[90px] border border-dashed border-[#3A332A] rounded flex items-center justify-center bg-[#12100E]">
+<span class="material-symbols-outlined text-outline">question_mark</span>
+</div>
+<div class="flex-1 flex flex-col gap-xs">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-sm text-headline-sm text-on-surface-variant leading-tight italic">Unknown Volume</h3>
+<div class="confidence-badge-unrecognized">
+<span class="font-metadata-caps text-metadata-caps text-badge-unrecognized">FAILED</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Manual entry required</p>
+<p class="font-label-mono text-label-mono text-badge-unrecognized mt-sm">CONF: 0.12</p>
+</div>
+</div>
+</article>
+</div>
+</section>
+</main>
+<!-- Bottom Action Bar -->
+<div class="fixed bottom-0 left-0 w-full bg-[#12100E]/95 backdrop-blur-xl border-t border-[#3A332A] p-base pb-safe z-50">
+<div class="max-w-[1200px] mx-auto flex flex-col sm:flex-row gap-base justify-end items-center">
+<button class="w-full sm:w-auto px-xl py-sm rounded border border-[#3A332A] bg-transparent text-primary-container font-metadata-caps text-metadata-caps tracking-widest hover:bg-[#1C1916] transition-colors">
+                REVIEW 2 ISSUES
+            </button>
+<button class="w-full sm:w-auto px-xl py-sm rounded bg-primary-container text-[#12100E] font-metadata-caps text-metadata-caps tracking-widest hover:brightness-110 transition-all shadow-[0_0_15px_rgba(201,150,63,0.1)]">
+                ADD 8 MATCHED BOOKS
+            </button>
+</div>
+</div>
+</body></html>

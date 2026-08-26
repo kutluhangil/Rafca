@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Spine - Onboarding 2</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;family=Inter:wght@400;500&amp;family=Literata:opsz,wght@7..72,500;7..72,700&amp;family=Fraunces:opsz,wght@9..144,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#151311",
+                        "primary-fixed": "#ffdeae",
+                        "secondary-fixed": "#c8ecc1",
+                        "on-secondary-fixed-variant": "#304e2e",
+                        "inverse-primary": "#7f5700",
+                        "surface": "#151311",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed-dim": "#ffb785",
+                        "surface-tint": "#f5bd62",
+                        "outline-variant": "#4f4537",
+                        "on-secondary-fixed": "#042107",
+                        "surface-container-low": "#1d1b19",
+                        "surface-container-lowest": "#100e0c",
+                        "primary-container": "#c9963f",
+                        "inverse-on-surface": "#33302d",
+                        "on-tertiary": "#502400",
+                        "on-tertiary-fixed-variant": "#723700",
+                        "inverse-surface": "#e8e1dd",
+                        "on-tertiary-fixed": "#301400",
+                        "on-primary-fixed": "#281900",
+                        "on-tertiary-container": "#582900",
+                        "tertiary-container": "#de8b4e",
+                        "tertiary-fixed": "#ffdcc6",
+                        "tertiary": "#ffb785",
+                        "secondary-fixed-dim": "#add0a7",
+                        "surface-container": "#221f1d",
+                        "on-secondary": "#19371a",
+                        "on-surface-variant": "#d3c4b2",
+                        "on-primary-fixed-variant": "#604100",
+                        "surface-container-highest": "#373432",
+                        "on-primary": "#432c00",
+                        "surface-container-high": "#2c2927",
+                        "surface-bright": "#3c3936",
+                        "secondary-container": "#304e2e",
+                        "on-secondary-container": "#9cbe96",
+                        "primary-fixed-dim": "#f5bd62",
+                        "primary": "#f5bd62",
+                        "on-error": "#690005",
+                        "outline": "#9c8f7e",
+                        "on-background": "#e8e1dd",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-container": "#4b3100",
+                        "secondary": "#add0a7",
+                        "background": "#151311",
+                        "on-surface": "#e8e1dd",
+                        "surface-variant": "#373432",
+                        "error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "lg": "24px",
+                        "base": "16px",
+                        "md": "12px",
+                        "xxl": "48px",
+                        "sm": "8px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Literata"],
+                        "label-mono": ["IBM Plex Mono"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Literata"],
+                        "body-sm": ["Inter"],
+                        "metadata-caps": ["IBM Plex Mono"],
+                        "headline-md": ["Literata"],
+                        "body-lg": ["Inter"],
+                        "fraunces": ["Fraunces"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-mono": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-sm": ["24px", { "lineHeight": "32px", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "metadata-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col relative antialiased selection:bg-primary-container selection:text-background">
+<!-- Full Bleed Background Image -->
+<div class="absolute inset-0 z-0 bg-surface-dim">
+<div class="w-full h-full bg-cover bg-center" data-alt="A close-up, dramatic shot of a hand holding a modern smartphone perfectly parallel to a dimly lit bookshelf filled with antique, leather-bound books. The lighting is cinematic, mimicking a quiet midnight library, with warm, localized light illuminating the book spines and the edge of the phone. Deep, rich blacks and shadows dominate the scene, punctuated by the faint gleam of gold leaf on the book spines and the metallic rim of the device. The composition emphasizes precision and focus, capturing a moment of archiving in a tactile, atmospheric setting." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBbnDAWRIeozTgBU0Aeyhf92MydY0qYbug1qhajyDd0188pTPqE6woaRp5Ekk2KYS0jARlg81bvLSV10rdFpsTWaImwr9jGqa84QNSDVeFASAANcUS7HOeldznfkdMd9Rc3N7qmEoYK2bL0r5xAfZBxVEYOTWNQmb7nKUJmNhwBwTnxsj9ZRkjYz3RMu-gRwil1avzXMkgCU7ZeLJVXzUvf-6IF288xK5uA2bzNf9okjcPzgE1LOz7v')"></div>
+<!-- Gradient Overlay -->
+<div class="absolute inset-0 bg-gradient-to-t from-[#000000] via-[#000000]/60 to-transparent"></div>
+</div>
+<!-- Onboarding Content Canvas -->
+<main class="flex-grow flex flex-col justify-end relative z-10 px-lg pb-xxl w-full max-w-[1200px] mx-auto md:px-xxl">
+<div class="max-w-xl">
+<!-- Headline -->
+<h1 class="font-fraunces text-display-lg text-on-surface mb-xl drop-shadow-lg">
+                Recognize every spine.
+            </h1>
+<div class="flex items-center justify-between mt-xl">
+<!-- Dot Indicators -->
+<div class="flex space-x-sm">
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<div class="w-3 h-3 rounded-full bg-primary-container shadow-[0_0_8px_rgba(201,150,63,0.4)]"></div>
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+</div>
+<!-- Next Button -->
+<button class="bg-primary-container text-background font-metadata-caps px-lg py-md rounded hover:bg-primary transition-colors duration-300 flex items-center justify-center tracking-widest uppercase focus:outline-none focus:ring-1 focus:ring-outline-variant focus:ring-offset-1 focus:ring-offset-background">
+                    Next
+                </button>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Book Detail - Spine</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Literata:opsz,wght@7..72,400;500;700&amp;family=IBM+Plex+Mono:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#151311",
+                        "primary-fixed": "#ffdeae",
+                        "secondary-fixed": "#c8ecc1",
+                        "on-secondary-fixed-variant": "#304e2e",
+                        "inverse-primary": "#7f5700",
+                        "surface": "#151311",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed-dim": "#ffb785",
+                        "surface-tint": "#f5bd62",
+                        "outline-variant": "#4f4537",
+                        "on-secondary-fixed": "#042107",
+                        "surface-container-low": "#1d1b19",
+                        "surface-container-lowest": "#100e0c",
+                        "primary-container": "#c9963f",
+                        "inverse-on-surface": "#33302d",
+                        "on-tertiary": "#502400",
+                        "on-tertiary-fixed-variant": "#723700",
+                        "inverse-surface": "#e8e1dd",
+                        "on-tertiary-fixed": "#301400",
+                        "on-primary-fixed": "#281900",
+                        "on-tertiary-container": "#582900",
+                        "tertiary-container": "#de8b4e",
+                        "tertiary-fixed": "#ffdcc6",
+                        "tertiary": "#ffb785",
+                        "secondary-fixed-dim": "#add0a7",
+                        "surface-container": "#221f1d",
+                        "on-secondary": "#19371a",
+                        "on-surface-variant": "#d3c4b2",
+                        "on-primary-fixed-variant": "#604100",
+                        "surface-container-highest": "#373432",
+                        "on-primary": "#432c00",
+                        "surface-container-high": "#2c2927",
+                        "surface-bright": "#3c3936",
+                        "secondary-container": "#304e2e",
+                        "on-secondary-container": "#9cbe96",
+                        "primary-fixed-dim": "#f5bd62",
+                        "primary": "#f5bd62",
+                        "on-error": "#690005",
+                        "outline": "#9c8f7e",
+                        "on-background": "#e8e1dd",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-container": "#4b3100",
+                        "secondary": "#add0a7",
+                        "background": "#151311",
+                        "on-surface": "#e8e1dd",
+                        "surface-variant": "#373432",
+                        "error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "lg": "24px",
+                        "base": "16px",
+                        "md": "12px",
+                        "xxl": "48px",
+                        "sm": "8px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Literata"],
+                        "label-mono": ["IBM Plex Mono"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Literata"],
+                        "body-sm": ["Inter"],
+                        "metadata-caps": ["IBM Plex Mono"],
+                        "headline-md": ["Literata"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-mono": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-sm": ["24px", { "lineHeight": "32px", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "metadata-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .inner-glow-top { box-shadow: inset 0 1px 0 rgba(255,255,255,0.1); }
+        .brass-glow { box-shadow: 0 0 32px -8px rgba(201,150,63,0.3); }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col items-center">
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky bg-surface border-b border-outline-variant flat no shadows flex justify-between items-center px-lg h-16 w-full z-40 transition-colors duration-300 ease-in-out">
+<button class="text-primary hover:bg-surface-container-high transition-colors p-sm rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="font-headline-md text-headline-md text-primary tracking-tight">SPINE</div>
+<button class="text-primary hover:bg-surface-container-high transition-colors p-sm rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</header>
+<main class="w-full max-w-[1200px] flex-grow flex flex-col md:flex-row px-lg py-xl gap-xl">
+<!-- Left Column: Cover & Proof -->
+<div class="w-full md:w-1/3 flex flex-col gap-lg items-center md:items-start">
+<!-- Book Cover -->
+<div class="relative w-48 md:w-64 aspect-[2/3] rounded-sm brass-glow inner-glow-top overflow-hidden border border-[#3A332A] bg-surface-container-highest">
+<img class="w-full h-full object-cover" data-alt="A meticulously crafted dark, moody photograph of a vintage, leather-bound book cover. The book sits isolated on a deep black surface, illuminated by a single, soft, warm spotlight that catches the texture of the worn leather and subtle gold foil accents. The aesthetic evokes a quiet, private library at midnight, utilizing a rich palette of deep blacks, dark browns, and muted brass tones. The image is highly detailed, photorealistic, and prioritizes the tactile qualities of physical paper and wood." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDg5C-b4_Vqv4hKmmpmGpS7OpGGUAPL-J_MyUJKAyB15N9NKaPtAL4F6xjPuSTEWl77KGU32hS_R-hvxE9igx1l6Yo4WqNaO2psBaVRxdRPvHZ_putnZ0kpIOB3xV-DzU2i2_mJGoIjfG73lKsqlj9BPVpRHW7gZW5n1V2-7uPLZH7pNmIUUTji8NdDIe1gLToYTiRkGVxAx3y1YIxddoEmD1iqkpBZbSB_sMdFs6gtbQDydH6kqZwT"/>
+</div>
+<!-- Proof of Capture Section -->
+<div class="w-full bg-surface-container-low p-base rounded-xl border border-[#3A332A] inner-glow-top mt-xl">
+<h3 class="font-metadata-caps text-metadata-caps text-on-surface-variant mb-md uppercase">Proof of Capture</h3>
+<div class="w-full h-32 bg-surface-container overflow-hidden rounded-lg border border-outline-variant">
+<img class="w-full h-full object-cover grayscale opacity-80" data-alt="A close-up, macro photograph of a bookshelf containing several old, textured book spines in a dimly lit library. The focus is incredibly sharp on a single, worn spine in the center, highlighting its faded title and textured cloth binding. The lighting is cinematic, casting deep, dramatic shadows on either side. The color palette consists of rich, dark earth tones, deep blacks, and faint hints of brass or gold on the lettering. The mood is archival and tactile." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1NeEluGsq7N5Kg03Z5nEPq2LspIv0g0oF-psENlpq4g4JMNWY3lSBeECgmjFdpJtoOpbJ6FZfrV0UebK9pdVc5LzSi5iMK2iirp-lKkAFxjmlh5DM7gTDGwOCKTnRxFF0nbZNTwXbwwpEHhWEbV8mPuCtOVYzsdWiI0fiTBX6hJkBocWPMse7PJ6SAfYYoNwuaes7uiJ-p4rOnRJ12RtcylXYRLugdXiC3bdrbdFT7ORgVhtyyqE0"/>
+</div>
+</div>
+</div>
+<!-- Right Column: Details & Actions -->
+<div class="w-full md:w-2/3 flex flex-col gap-lg">
+<!-- Title & Author -->
+<div>
+<h1 class="font-display-lg text-display-lg text-on-surface mb-sm">The Shadow of the Wind</h1>
+<h2 class="font-headline-sm text-headline-sm text-primary italic">Carlos Ruiz Zafón</h2>
+</div>
+<!-- Metadata Chips -->
+<div class="flex flex-wrap gap-sm">
+<div class="px-md py-xs border border-outline-variant rounded-full text-on-surface-variant font-label-mono text-label-mono bg-surface-container flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="calendar_today">calendar_today</span> 2001
+                </div>
+<div class="px-md py-xs border border-outline-variant rounded-full text-on-surface-variant font-label-mono text-label-mono bg-surface-container flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="auto_stories">auto_stories</span> 506 p.
+                </div>
+<div class="px-md py-xs border border-outline-variant rounded-full text-on-surface-variant font-label-mono text-label-mono bg-surface-container flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px]" data-icon="business">business</span> Penguin
+                </div>
+</div>
+<!-- Description -->
+<div class="font-body-md text-body-md text-on-surface-variant max-w-prose border-l border-outline-variant pl-md mt-sm">
+                In Barcelona, 1945, young Daniel is taken by his antiquarian book dealer father to the Cemetery of Forgotten Books, a massive sanctuary where books are guarded from oblivion. He selects one book, <i>The Shadow of the Wind</i>, and sets out to find the author's other works, only to discover that someone has been systematically destroying every copy of every book the author has ever written.
+            </div>
+<!-- Selectors -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md mt-lg border-t border-[#3A332A] pt-lg">
+<!-- Shelf Assignment -->
+<div class="flex flex-col gap-xs">
+<label class="font-metadata-caps text-metadata-caps text-on-surface-variant uppercase">Shelf Assignment</label>
+<select class="bg-surface-container text-on-surface border-none border-b border-outline-variant focus:border-primary focus:ring-0 font-body-sm text-body-sm rounded-t-sm px-sm py-md">
+<option>Fiction - Historical</option>
+<option>Mystery</option>
+<option>Favorites</option>
+</select>
+</div>
+<!-- Reading Status -->
+<div class="flex flex-col gap-xs">
+<label class="font-metadata-caps text-metadata-caps text-on-surface-variant uppercase">Reading Status</label>
+<select class="bg-surface-container text-on-surface border-none border-b border-outline-variant focus:border-primary focus:ring-0 font-body-sm text-body-sm rounded-t-sm px-sm py-md">
+<option>Read</option>
+<option>Currently Reading</option>
+<option>Want to Read</option>
+</select>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex gap-md mt-xl pt-lg border-t border-[#3A332A]">
+<button class="bg-primary-container text-on-primary-container hover:bg-primary-fixed-dim px-lg py-md rounded-full font-body-sm text-body-sm transition-colors flex items-center gap-sm">
+<span class="material-symbols-outlined" data-icon="edit">edit</span> Edit Details
+                </button>
+<button class="bg-transparent border border-[#3A332A] text-error hover:bg-error-container hover:text-on-error-container px-lg py-md rounded-full font-body-sm text-body-sm transition-colors flex items-center gap-sm">
+<span class="material-symbols-outlined" data-icon="delete">delete</span> Remove
+                </button>
+</div>
+</div>
+</main>
+</body></html>

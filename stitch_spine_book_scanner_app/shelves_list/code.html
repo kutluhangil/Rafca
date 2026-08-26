@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Your Shelves</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;family=Inter:wght@400;500&amp;family=Literata:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#151311",
+                        "primary-fixed": "#ffdeae",
+                        "secondary-fixed": "#c8ecc1",
+                        "on-secondary-fixed-variant": "#304e2e",
+                        "inverse-primary": "#7f5700",
+                        "surface": "#151311",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed-dim": "#ffb785",
+                        "surface-tint": "#f5bd62",
+                        "outline-variant": "#4f4537",
+                        "on-secondary-fixed": "#042107",
+                        "surface-container-low": "#1d1b19",
+                        "surface-container-lowest": "#100e0c",
+                        "primary-container": "#c9963f",
+                        "inverse-on-surface": "#33302d",
+                        "on-tertiary": "#502400",
+                        "on-tertiary-fixed-variant": "#723700",
+                        "inverse-surface": "#e8e1dd",
+                        "on-tertiary-fixed": "#301400",
+                        "on-primary-fixed": "#281900",
+                        "on-tertiary-container": "#582900",
+                        "tertiary-container": "#de8b4e",
+                        "tertiary-fixed": "#ffdcc6",
+                        "tertiary": "#ffb785",
+                        "secondary-fixed-dim": "#add0a7",
+                        "surface-container": "#221f1d",
+                        "on-secondary": "#19371a",
+                        "on-surface-variant": "#d3c4b2",
+                        "on-primary-fixed-variant": "#604100",
+                        "surface-container-highest": "#373432",
+                        "on-primary": "#432c00",
+                        "surface-container-high": "#2c2927",
+                        "surface-bright": "#3c3936",
+                        "secondary-container": "#304e2e",
+                        "on-secondary-container": "#9cbe96",
+                        "primary-fixed-dim": "#f5bd62",
+                        "primary": "#f5bd62",
+                        "on-error": "#690005",
+                        "outline": "#9c8f7e",
+                        "on-background": "#e8e1dd",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-container": "#4b3100",
+                        "secondary": "#add0a7",
+                        "background": "#151311",
+                        "on-surface": "#e8e1dd",
+                        "surface-variant": "#373432",
+                        "error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "lg": "24px",
+                        "base": "16px",
+                        "md": "12px",
+                        "xxl": "48px",
+                        "sm": "8px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Literata"],
+                        "label-mono": ["IBM Plex Mono"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Literata"],
+                        "body-sm": ["Inter"],
+                        "metadata-caps": ["IBM Plex Mono"],
+                        "headline-md": ["Literata"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-mono": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-sm": ["24px", { "lineHeight": "32px", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "metadata-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        /* Simulated inner glow for raised elements */
+        .raised-element {
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col font-body-md text-body-md selection:bg-primary-container selection:text-background">
+<!-- TopAppBar -->
+<header class="bg-surface w-full top-0 sticky border-b border-outline-variant flat no shadows duration-300 ease-in-out z-40 transition-all" id="topAppBar">
+<div class="flex justify-between items-center px-lg h-16 w-full max-w-[1200px] mx-auto">
+<button class="text-primary hover:bg-surface-container-high transition-colors p-sm rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight transition-all duration-300 transform origin-center" id="appBarTitle">Your Shelves</h1>
+<button class="text-primary hover:bg-surface-container-high transition-colors p-sm rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow px-lg py-xl max-w-[1200px] mx-auto w-full pb-[100px] md:pb-xl">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
+<!-- Shelf Card 1 -->
+<div class="bg-[#1C1916] rounded-[14px] p-base border border-[#3A332A] raised-element hover:bg-surface-container-high transition-colors duration-300 cursor-pointer group">
+<div class="flex justify-between items-start mb-md">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary mb-xs group-hover:text-primary-fixed transition-colors">Fiction - Historical</h2>
+<span class="font-metadata-caps text-metadata-caps text-on-surface-variant tracking-widest uppercase">42 Volumes</span>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+<!-- Mini Shelf Strip -->
+<div class="h-6 w-full bg-surface-container-low rounded-sm overflow-hidden flex shadow-inner border border-[#3A332A] opacity-80 group-hover:opacity-100 transition-opacity">
+<div class="h-full w-[15%] bg-[#4f4537] border-r border-[#1C1916]"></div>
+<div class="h-full w-[8%] bg-[#c9963f] border-r border-[#1C1916]"></div>
+<div class="h-full w-[12%] bg-[#7f5700] border-r border-[#1C1916]"></div>
+<div class="h-full w-[25%] bg-[#373432] border-r border-[#1C1916]"></div>
+<div class="h-full w-[10%] bg-[#582900] border-r border-[#1C1916]"></div>
+<div class="h-full w-[5%] bg-[#C9963F] border-r border-[#1C1916]"></div>
+<div class="h-full w-[25%] bg-[#221f1d]"></div>
+</div>
+</div>
+<!-- Shelf Card 2 -->
+<div class="bg-[#1C1916] rounded-[14px] p-base border border-[#3A332A] raised-element hover:bg-surface-container-high transition-colors duration-300 cursor-pointer group">
+<div class="flex justify-between items-start mb-md">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary mb-xs group-hover:text-primary-fixed transition-colors">To Read</h2>
+<span class="font-metadata-caps text-metadata-caps text-on-surface-variant tracking-widest uppercase">18 Volumes</span>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+<!-- Mini Shelf Strip -->
+<div class="h-6 w-full bg-surface-container-low rounded-sm overflow-hidden flex shadow-inner border border-[#3A332A] opacity-80 group-hover:opacity-100 transition-opacity">
+<div class="h-full w-[20%] bg-[#c9963f] border-r border-[#1C1916]"></div>
+<div class="h-full w-[30%] bg-[#4f4537] border-r border-[#1C1916]"></div>
+<div class="h-full w-[15%] bg-[#2c2927] border-r border-[#1C1916]"></div>
+<div class="h-full w-[35%] bg-[#1d1b19]"></div>
+</div>
+</div>
+<!-- Shelf Card 3 -->
+<div class="bg-[#1C1916] rounded-[14px] p-base border border-[#3A332A] raised-element hover:bg-surface-container-high transition-colors duration-300 cursor-pointer group">
+<div class="flex justify-between items-start mb-md">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-primary mb-xs group-hover:text-primary-fixed transition-colors">Design Theory</h2>
+<span class="font-metadata-caps text-metadata-caps text-on-surface-variant tracking-widest uppercase">7 Volumes</span>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+<!-- Mini Shelf Strip -->
+<div class="h-6 w-full bg-surface-container-low rounded-sm overflow-hidden flex shadow-inner border border-[#3A332A] opacity-80 group-hover:opacity-100 transition-opacity">
+<div class="h-full w-[40%] bg-[#723700] border-r border-[#1C1916]"></div>
+<div class="h-full w-[25%] bg-[#373432] border-r border-[#1C1916]"></div>
+<div class="h-full w-[35%] bg-[#4f4537]"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB -->
+<button class="fixed bottom-24 right-6 md:bottom-8 md:right-8 bg-primary-container text-[#12100E] h-14 rounded-2xl px-base flex items-center gap-2 hover:bg-primary transition-colors duration-300 z-40 group shadow-lg shadow-background/50 border border-outline/20">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+<span class="font-metadata-caps text-metadata-caps tracking-widest uppercase mr-sm hidden sm:inline-block">Create Shelf</span>
+</button>
+<!-- BottomNavBar (Mobile Only based on rules, though typically hidden md, following JSON exactly) -->
+<nav class="md:hidden bg-surface-container-lowest border-t border-outline-variant bg-surface-container-lowest flat no shadows fixed bottom-0 w-full z-50 h-20">
+<div class="flex justify-around items-center w-full px-base pb-safe h-full pt-xs">
+<!-- Library (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:bg-surface-container-highest transition-all scale-95 active:scale-90 transition-transform duration-200 p-sm rounded-lg flex-1">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 0;">library_books</span>
+<span class="font-label-mono text-label-mono text-[10px]">Library</span>
+</button>
+<!-- Scan (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:bg-surface-container-highest transition-all scale-95 active:scale-90 transition-transform duration-200 p-sm rounded-lg flex-1">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 0;">photo_camera</span>
+<span class="font-label-mono text-label-mono text-[10px]">Scan</span>
+</button>
+<!-- Shelves (Active) -->
+<div class="flex-1 flex justify-center">
+<button class="flex flex-col items-center justify-center text-primary bg-secondary-container rounded-full px-md py-xs hover:bg-surface-container-highest transition-all scale-95 active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">shelves</span>
+<span class="font-label-mono text-label-mono text-[10px] font-bold">Shelves</span>
+</button>
+</div>
+<!-- Profile (Inactive) -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:bg-surface-container-highest transition-all scale-95 active:scale-90 transition-transform duration-200 p-sm rounded-lg flex-1">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 0;">person</span>
+<span class="font-label-mono text-label-mono text-[10px]">Profile</span>
+</button>
+</div>
+</nav>
+<!-- Scroll behavior for top bar title collapse -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const title = document.getElementById('appBarTitle');
+            const header = document.getElementById('topAppBar');
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 20) {
+                    title.classList.replace('text-headline-md', 'text-headline-sm');
+                    title.classList.replace('font-headline-md', 'font-headline-sm');
+                    header.classList.add('bg-surface-container-low', 'shadow-md');
+                    header.classList.remove('bg-surface', 'flat', 'no', 'shadows');
+                } else {
+                    title.classList.replace('text-headline-sm', 'text-headline-md');
+                    title.classList.replace('font-headline-sm', 'font-headline-md');
+                    header.classList.remove('bg-surface-container-low', 'shadow-md');
+                    header.classList.add('bg-surface', 'flat', 'no', 'shadows');
+                }
+            });
+        });
+    </script>
+</body></html>

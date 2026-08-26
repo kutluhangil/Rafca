@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "photos": [
+    {
+      "file": "shelf_01.jpg",
+      "group": "good_light",
+      "language_hint": "tur",
+      "notes": "Salon rafı üst kat, gündüz ışığı, düz açı.",
+      "books": [
+        {
+          "title": "Suç ve Ceza",
+          "author": "Fyodor Dostoyevski",
+          "language": "tur",
+          "publisher": "İş Bankası Kültür Yayınları"
+        },
+        {
+          "title": "1984",
+          "author": "George Orwell",
+          "language": "tur",
+          "publisher": "Can Yayınları"
+        },
+        {
+          "title": "Dune",
+          "author": "Frank Herbert",
+          "language": "eng",
+          "publisher": "Ace Books"
+        }
+      ]
+    },
+    {
+      "file": "shelf_02.jpg",
+      "group": "warm_angled",
+      "language_hint": "tur",
+      "notes": "Akşam, sarı ampul, yaklaşık 15 derece açı.",
+      "books": [
+        {
+          "title": "Kürk Mantolu Madonna",
+          "author": "Sabahattin Ali",
+          "language": "tur"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Processing Shelf - Spine</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;family=Inter:wght@400;500&amp;family=Literata:opsz,wght@7..72,500;7..72,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-dim": "#151311",
+                      "primary-fixed": "#ffdeae",
+                      "secondary-fixed": "#c8ecc1",
+                      "on-secondary-fixed-variant": "#304e2e",
+                      "inverse-primary": "#7f5700",
+                      "surface": "#151311",
+                      "error": "#ffb4ab",
+                      "tertiary-fixed-dim": "#ffb785",
+                      "surface-tint": "#f5bd62",
+                      "outline-variant": "#4f4537",
+                      "on-secondary-fixed": "#042107",
+                      "surface-container-low": "#1d1b19",
+                      "surface-container-lowest": "#100e0c",
+                      "primary-container": "#c9963f",
+                      "inverse-on-surface": "#33302d",
+                      "on-tertiary": "#502400",
+                      "on-tertiary-fixed-variant": "#723700",
+                      "inverse-surface": "#e8e1dd",
+                      "on-tertiary-fixed": "#301400",
+                      "on-primary-fixed": "#281900",
+                      "on-tertiary-container": "#582900",
+                      "tertiary-container": "#de8b4e",
+                      "tertiary-fixed": "#ffdcc6",
+                      "tertiary": "#ffb785",
+                      "secondary-fixed-dim": "#add0a7",
+                      "surface-container": "#221f1d",
+                      "on-secondary": "#19371a",
+                      "on-surface-variant": "#d3c4b2",
+                      "on-primary-fixed-variant": "#604100",
+                      "surface-container-highest": "#373432",
+                      "on-primary": "#432c00",
+                      "surface-container-high": "#2c2927",
+                      "surface-bright": "#3c3936",
+                      "secondary-container": "#304e2e",
+                      "on-secondary-container": "#9cbe96",
+                      "primary-fixed-dim": "#f5bd62",
+                      "primary": "#f5bd62",
+                      "on-error": "#690005",
+                      "outline": "#9c8f7e",
+                      "on-background": "#e8e1dd",
+                      "on-error-container": "#ffdad6",
+                      "on-primary-container": "#4b3100",
+                      "secondary": "#add0a7",
+                      "background": "#151311",
+                      "on-surface": "#e8e1dd",
+                      "surface-variant": "#373432",
+                      "error-container": "#93000a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xs": "4px",
+                      "lg": "24px",
+                      "base": "16px",
+                      "md": "12px",
+                      "xxl": "48px",
+                      "sm": "8px",
+                      "xl": "32px"
+              },
+              "fontFamily": {
+                      "display-lg": [
+                              "Literata"
+                      ],
+                      "label-mono": [
+                              "IBM Plex Mono"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-sm": [
+                              "Literata"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "metadata-caps": [
+                              "IBM Plex Mono"
+                      ],
+                      "headline-md": [
+                              "Literata"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-mono": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-sm": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "metadata-caps": [
+                              "11px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+            },
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        .spine-highlight {
+            animation: pulse-border 2s infinite alternate ease-in-out;
+        }
+        @keyframes pulse-border {
+            0% { border-color: rgba(201, 150, 63, 0.3); box-shadow: inset 0 0 10px rgba(201, 150, 63, 0.1); }
+            100% { border-color: rgba(201, 150, 63, 1); box-shadow: inset 0 0 20px rgba(201, 150, 63, 0.4); }
+        }
+        .scanning-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #f5bd62;
+            box-shadow: 0 0 10px #f5bd62, 0 0 20px #f5bd62;
+            animation: scan 3s linear infinite;
+            z-index: 10;
+        }
+        @keyframes scan {
+            0% { top: 0%; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+        .typing-text::after {
+            content: '|';
+            animation: blink 1s step-start infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col items-center justify-center relative overflow-hidden font-body-md">
+<!-- Top Navigation Placeholder (Hidden for this specific transactional screen intent) -->
+<!-- Main Processing Canvas -->
+<main class="w-full h-screen relative flex items-center justify-center p-lg max-w-[1200px] mx-auto">
+<!-- The Captured Image Container -->
+<div class="relative w-full max-w-2xl h-[70vh] rounded-lg overflow-hidden border border-outline-variant shadow-[0_0_40px_rgba(28,25,22,0.8)]">
+<!-- Dimmed Background Image -->
+<div class="absolute inset-0 bg-cover bg-center opacity-40 brightness-50 contrast-125 mix-blend-luminosity" data-alt="A dimly lit, atmospheric photograph of a dense bookshelf filled with vintage hardcover books. The lighting is moody, evoking a quiet midnight library, with deep shadows and subtle highlights on the worn spines and gold foil lettering. The color palette emphasizes rich dark wood, faded cloth covers in deep reds, greens, and blacks, and the warm, aged tone of paper edges." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC1VPcOKi5bZDqlLksDsbGOtJ8_46gxwi3y1lOtEja7KMpfnnd6GLuFFN0F07EDuUQjm8fyIus_9_WYYhq0r7u2zvntosxZ0nj4B0uWB1k_v-0rxvRCJfL39-rtzShrrI1WoivrjqP7K1LqsV70mYbnloZvGAt6G-eM3HVopJhNpymR2F4-R9hqfrth8ZyEM3JYhbQGD0_kuFimXHs9pa86JeclIBDBFUwMl5iQx5dVYOwRi3j1G5l6')"></div>
+<!-- Scanning Line Effect -->
+<div class="scanning-line"></div>
+<!-- Detected Spines Overlay (Simulated) -->
+<div class="absolute inset-0 p-lg grid grid-cols-[repeat(14,minmax(0,1fr))] gap-1 md:gap-2">
+<!-- Example Spines -->
+<div class="h-full border-[1px] border-primary-container/30 rounded-sm"></div>
+<div class="h-full border-[1px] border-primary-container/30 rounded-sm"></div>
+<div class="h-[95%] mt-[5%] border-[1px] border-primary-container spine-highlight rounded-sm relative overflow-hidden">
+<div class="absolute inset-0 bg-primary-container/10"></div>
+</div>
+<div class="h-[80%] mt-[20%] border-[1px] border-primary-container/30 rounded-sm"></div>
+<div class="h-full border-[1px] border-primary-container spine-highlight rounded-sm relative overflow-hidden" style="animation-delay: 0.5s;">
+<div class="absolute inset-0 bg-primary-container/10"></div>
+</div>
+<div class="h-[90%] mt-[10%] border-[1px] border-primary-container/30 rounded-sm"></div>
+<div class="h-full border-[1px] border-primary-container/30 rounded-sm"></div>
+<div class="h-[85%] mt-[15%] border-[1px] border-primary-container spine-highlight rounded-sm relative overflow-hidden" style="animation-delay: 1s;">
+<div class="absolute inset-0 bg-primary-container/10"></div>
+</div>
+<div class="h-full border-[1px] border-primary-container/30 rounded-sm"></div>
+<div class="h-full border-[1px] border-primary-container/30 rounded-sm"></div>
+<div class="h-[75%] mt-[25%] border-[1px] border-primary-container spine-highlight rounded-sm relative overflow-hidden" style="animation-delay: 1.5s;">
+<div class="absolute inset-0 bg-primary-container/10"></div>
+</div>
+<div class="h-[95%] mt-[5%] border-[1px] border-primary-container/30 rounded-sm"></div>
+<div class="h-full border-[1px] border-primary-container/30 rounded-sm"></div>
+<div class="h-full border-[1px] border-primary-container/30 rounded-sm"></div>
+</div>
+<!-- Centered Vignette for focus -->
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_30%,rgba(21,19,17,0.8)_100%)] pointer-events-none"></div>
+</div>
+</main>
+<!-- Bottom Status Overlay -->
+<div class="absolute bottom-0 w-full flex flex-col items-center bg-surface-container-lowest border-t border-outline-variant pt-lg pb-xxl px-lg shadow-[0_-10px_30px_rgba(16,14,12,0.9)] z-50">
+<div class="w-full max-w-2xl flex flex-col gap-md">
+<!-- Technical Status Text -->
+<div class="flex justify-between items-end">
+<div class="font-metadata-caps text-metadata-caps text-primary tracking-widest typing-text">
+                    SEGMENTING 14 SPINES / READING TEXT / MATCHING
+                </div>
+<div class="font-label-mono text-label-mono text-on-surface-variant">
+                    68%
+                </div>
+</div>
+<!-- Precision Progress Bar -->
+<div class="w-full h-[2px] bg-surface-container-highest relative overflow-hidden">
+<div class="absolute top-0 left-0 h-full bg-primary-container shadow-[0_0_8px_rgba(201,150,63,0.5)] transition-all duration-1000 ease-out" style="width: 68%;"></div>
+</div>
+<!-- Contextual Hint -->
+<div class="text-center mt-sm">
+<span class="font-body-sm text-body-sm text-on-surface-variant opacity-60">Please keep the device steady. Analyzing typographic structures...</span>
+</div>
+</div>
+</div>
+<!-- BottomNavBar Placeholder (Hidden for this specific transactional screen intent) -->
+<script>
+        // Simple script to update the typing text periodically to simulate processing phases
+        const statusTexts = [
+            "SEGMENTING 14 SPINES / EXTRACTING FEATURES",
+            "READING TEXT / ENHANCING CONTRAST / OCR",
+            "MATCHING / QUERYING ARCHIVE DATABASE",
+            "ANALYZING TYPOGRAPHY / VERIFYING METADATA"
+        ];
+        
+        let currentIndex = 0;
+        const textElement = document.querySelector('.typing-text');
+        
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % statusTexts.length;
+            textElement.textContent = statusTexts[currentIndex];
+        }, 4000);
+    </script>
+</body></html>

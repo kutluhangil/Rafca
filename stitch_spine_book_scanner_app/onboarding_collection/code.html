@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Onboarding - Slide 3</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&amp;family=Inter:wght@400;500&amp;family=Literata:opsz,wght@7..72,500;7..72,700&amp;family=Fraunces:opsz,wght@9..144,400;9..144,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#151311",
+                        "primary-fixed": "#ffdeae",
+                        "secondary-fixed": "#c8ecc1",
+                        "on-secondary-fixed-variant": "#304e2e",
+                        "inverse-primary": "#7f5700",
+                        "surface": "#151311",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed-dim": "#ffb785",
+                        "surface-tint": "#f5bd62",
+                        "outline-variant": "#4f4537",
+                        "on-secondary-fixed": "#042107",
+                        "surface-container-low": "#1d1b19",
+                        "surface-container-lowest": "#100e0c",
+                        "primary-container": "#c9963f",
+                        "inverse-on-surface": "#33302d",
+                        "on-tertiary": "#502400",
+                        "on-tertiary-fixed-variant": "#723700",
+                        "inverse-surface": "#e8e1dd",
+                        "on-tertiary-fixed": "#301400",
+                        "on-primary-fixed": "#281900",
+                        "on-tertiary-container": "#582900",
+                        "tertiary-container": "#de8b4e",
+                        "tertiary-fixed": "#ffdcc6",
+                        "tertiary": "#ffb785",
+                        "secondary-fixed-dim": "#add0a7",
+                        "surface-container": "#221f1d",
+                        "on-secondary": "#19371a",
+                        "on-surface-variant": "#d3c4b2",
+                        "on-primary-fixed-variant": "#604100",
+                        "surface-container-highest": "#373432",
+                        "on-primary": "#432c00",
+                        "surface-container-high": "#2c2927",
+                        "surface-bright": "#3c3936",
+                        "secondary-container": "#304e2e",
+                        "on-secondary-container": "#9cbe96",
+                        "primary-fixed-dim": "#f5bd62",
+                        "primary": "#f5bd62",
+                        "on-error": "#690005",
+                        "outline": "#9c8f7e",
+                        "on-background": "#e8e1dd",
+                        "on-error-container": "#ffdad6",
+                        "on-primary-container": "#4b3100",
+                        "secondary": "#add0a7",
+                        "background": "#151311",
+                        "on-surface": "#e8e1dd",
+                        "surface-variant": "#373432",
+                        "error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "lg": "24px",
+                        "base": "16px",
+                        "md": "12px",
+                        "xxl": "48px",
+                        "sm": "8px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Literata"],
+                        "label-mono": ["IBM Plex Mono"],
+                        "body-md": ["Inter"],
+                        "headline-sm": ["Literata"],
+                        "body-sm": ["Inter"],
+                        "metadata-caps": ["IBM Plex Mono"],
+                        "headline-md": ["Literata"],
+                        "body-lg": ["Inter"],
+                        "serif-alt": ["Fraunces", "serif"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-mono": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-sm": ["24px", { "lineHeight": "32px", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "500" }],
+                        "metadata-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "headline-md": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .font-fraunces { font-family: 'Fraunces', serif; }
+        .gradient-overlay {
+            background: linear-gradient(to top, rgba(18, 16, 14, 1) 0%, rgba(18, 16, 14, 0.8) 30%, rgba(18, 16, 14, 0) 100%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface h-screen w-screen overflow-hidden relative font-body-md">
+<!-- Full Bleed Image Background -->
+<div class="absolute inset-0 z-0 w-full h-full">
+<img class="w-full h-full object-cover object-center" data-alt="A beautifully organized digital collection of vintage books and artifacts. The scene is shot from a top-down perspective, showcasing a rich, dark wooden texture serving as the backdrop. Volumes are neatly arranged by subtle color gradients ranging from deep leather browns to faded parchment yellows. Lighting is moody and cinematic, like a quiet library at midnight, with soft, directional light highlighting the embossed textures and gilded edges. The overall aesthetic is tactile, skeuomorphic, and premium, evoking a sense of heritage and meticulous curation in a dark mode setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzlbvUX6L16NPCxreaCQJU-zzfKee_gUI42CEninD57PJ8KrQpCSA3Zs6fO4l7CtpAzQ5zFOC0u670AeUCLiVFcE42JGjoIo6St26cOqsO3sjkWik82hS4cNllALXcvfRShowlQI7asJOQsr47ys73-QJXw83UEUnz5cA4aXtUw1AUlq5t5K_g4Z9Y0379DpuwxPYsZJKD5vnlgPed_NOhNtiqnU9_oxXj6g_jgkwcQpGIIQDt5uZe"/>
+</div>
+<!-- Gradient Overlay for Readability -->
+<div class="absolute inset-0 z-10 gradient-overlay pointer-events-none"></div>
+<!-- Content Container -->
+<div class="relative z-20 h-full w-full flex flex-col justify-end px-lg pb-xxl pt-xl max-w-md mx-auto">
+<!-- Text Content -->
+<div class="mb-xl text-center md:text-left">
+<h1 class="font-fraunces text-4xl leading-tight font-bold text-on-surface mb-base tracking-tight" style="font-size: 2.5rem; line-height: 1.1;">
+                Organize by color or mood.
+            </h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xs mx-auto md:mx-0">
+                Curate your personal archive with meticulous precision.
+            </p>
+</div>
+<!-- Interactive Elements -->
+<div class="flex flex-col items-center gap-xl w-full">
+<!-- Dot Indicators -->
+<div class="flex gap-md justify-center">
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<div class="w-2 h-2 rounded-full bg-outline-variant"></div>
+<div class="w-10 h-2 rounded-full bg-primary transition-all duration-300"></div>
+</div>
+<!-- CTA Button -->
+<button class="w-full bg-primary-container text-[#12100E] font-body-md text-body-md font-medium py-base rounded-full hover:bg-surface-tint transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background">
+                Get started
+            </button>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,27 @@
+# Dart / Flutter
+.dart_tool/
+.packages
+build/
+pubspec.lock
+*.iml
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Spike çıktıları (dataset kalır, üretilen sonuçlar kalmaz)
+spike/out/
+spike/tool/vision_ocr
+spike/report.md
+
+# Ortam
+.env
+.env.local
+*.keystore
+*.jks
+key.properties
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/

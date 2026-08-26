@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Your Collection</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;500;700&amp;family=IBM+Plex+Mono:wght@400;600&amp;family=Inter:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-dim": "#151311",
+                      "primary-fixed": "#ffdeae",
+                      "secondary-fixed": "#c8ecc1",
+                      "on-secondary-fixed-variant": "#304e2e",
+                      "inverse-primary": "#7f5700",
+                      "surface": "#151311",
+                      "error": "#ffb4ab",
+                      "tertiary-fixed-dim": "#ffb785",
+                      "surface-tint": "#f5bd62",
+                      "outline-variant": "#4f4537",
+                      "on-secondary-fixed": "#042107",
+                      "surface-container-low": "#1d1b19",
+                      "surface-container-lowest": "#100e0c",
+                      "primary-container": "#c9963f",
+                      "inverse-on-surface": "#33302d",
+                      "on-tertiary": "#502400",
+                      "on-tertiary-fixed-variant": "#723700",
+                      "inverse-surface": "#e8e1dd",
+                      "on-tertiary-fixed": "#301400",
+                      "on-primary-fixed": "#281900",
+                      "on-tertiary-container": "#582900",
+                      "tertiary-container": "#de8b4e",
+                      "tertiary-fixed": "#ffdcc6",
+                      "tertiary": "#ffb785",
+                      "secondary-fixed-dim": "#add0a7",
+                      "surface-container": "#221f1d",
+                      "on-secondary": "#19371a",
+                      "on-surface-variant": "#d3c4b2",
+                      "on-primary-fixed-variant": "#604100",
+                      "surface-container-highest": "#373432",
+                      "on-primary": "#432c00",
+                      "surface-container-high": "#2c2927",
+                      "surface-bright": "#3c3936",
+                      "secondary-container": "#304e2e",
+                      "on-secondary-container": "#9cbe96",
+                      "primary-fixed-dim": "#f5bd62",
+                      "primary": "#f5bd62",
+                      "on-error": "#690005",
+                      "outline": "#9c8f7e",
+                      "on-background": "#e8e1dd",
+                      "on-error-container": "#ffdad6",
+                      "on-primary-container": "#4b3100",
+                      "secondary": "#add0a7",
+                      "background": "#151311",
+                      "on-surface": "#e8e1dd",
+                      "surface-variant": "#373432",
+                      "error-container": "#93000a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xs": "4px",
+                      "lg": "24px",
+                      "base": "16px",
+                      "md": "12px",
+                      "xxl": "48px",
+                      "sm": "8px",
+                      "xl": "32px"
+              },
+              "fontFamily": {
+                      "display-lg": [
+                              "Literata"
+                      ],
+                      "label-mono": [
+                              "IBM Plex Mono"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-sm": [
+                              "Literata"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "metadata-caps": [
+                              "IBM Plex Mono"
+                      ],
+                      "headline-md": [
+                              "Literata"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-mono": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-sm": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "metadata-caps": [
+                              "11px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: #12100E;
+            color: #e8e1dd;
+        }
+        .shelf-strip {
+            height: 40px;
+            display: flex;
+            width: 100%;
+        }
+        .shelf-bar {
+            flex-grow: 1;
+            transition: all 0.2s ease;
+        }
+        .shelf-bar:hover {
+            opacity: 0.8;
+            transform: scaleY(1.1);
+        }
+        .glow-top {
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen flex flex-col font-body-md text-body-md">
+<!-- Top App Bar -->
+<header class="w-full top-0 sticky bg-surface border-b border-outline-variant flat no shadows z-40 hidden md:flex">
+<div class="flex justify-between items-center px-lg h-16 w-full max-w-[1200px] mx-auto">
+<button class="text-on-surface-variant hover:bg-surface-container-high transition-colors duration-300 ease-in-out p-xs rounded-full">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">SPINE</h1>
+<button class="text-on-surface-variant hover:bg-surface-container-high transition-colors duration-300 ease-in-out p-xs rounded-full">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Full Bleed Shelf Strip -->
+<div class="shelf-strip w-full sticky top-0 md:top-16 z-30">
+<div class="shelf-bar bg-[#304e2e] w-[2%]"></div>
+<div class="shelf-bar bg-[#c9963f] w-[5%]"></div>
+<div class="shelf-bar bg-[#9c8f7e] w-[1%]"></div>
+<div class="shelf-bar bg-[#7f5700] w-[8%]"></div>
+<div class="shelf-bar bg-[#4f4537] w-[3%]"></div>
+<div class="shelf-bar bg-[#ffb4ab] w-[2%]"></div>
+<div class="shelf-bar bg-[#add0a7] w-[10%]"></div>
+<div class="shelf-bar bg-[#373432] w-[4%]"></div>
+<div class="shelf-bar bg-[#c9963f] w-[1%]"></div>
+<div class="shelf-bar bg-[#19371a] w-[6%]"></div>
+<div class="shelf-bar bg-[#9c8f7e] w-[7%]"></div>
+<div class="shelf-bar bg-[#304e2e] w-[3%]"></div>
+<div class="shelf-bar bg-[#c9963f] w-[2%]"></div>
+<div class="shelf-bar bg-[#7f5700] w-[5%]"></div>
+<div class="shelf-bar bg-[#4f4537] w-[8%]"></div>
+<div class="shelf-bar bg-[#ffb4ab] w-[1%]"></div>
+<div class="shelf-bar bg-[#add0a7] w-[4%]"></div>
+<div class="shelf-bar bg-[#373432] w-[9%]"></div>
+<div class="shelf-bar bg-[#19371a] w-[2%]"></div>
+<div class="shelf-bar bg-[#9c8f7e] w-[5%]"></div>
+<div class="shelf-bar bg-[#304e2e] w-[3%]"></div>
+<div class="shelf-bar bg-[#c9963f] w-[6%]"></div>
+<div class="shelf-bar bg-[#7f5700] w-[2%]"></div>
+<div class="shelf-bar bg-[#4f4537] w-[1%]"></div>
+</div>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-[1200px] mx-auto px-lg md:px-xl py-xl pb-[100px] md:pb-xl flex flex-col gap-xl">
+<!-- Header & Filters -->
+<div class="flex flex-col gap-base">
+<h2 class="font-display-lg text-display-lg text-on-surface">Your Collection</h2>
+<div class="flex gap-sm overflow-x-auto pb-sm hide-scrollbar sticky top-[40px] md:top-[104px] bg-[#12100E] z-20 pt-sm border-b border-outline-variant">
+<button class="px-base py-sm rounded-full bg-surface-container-high text-on-surface border border-outline-variant whitespace-nowrap hover:bg-surface-container-highest transition-colors font-body-sm text-body-sm">
+                    All
+                </button>
+<button class="px-base py-sm rounded-full bg-secondary-container text-on-secondary-container border border-[#304e2e] whitespace-nowrap hover:opacity-90 transition-opacity flex items-center gap-xs font-body-sm text-body-sm">
+<div class="w-1.5 h-1.5 rounded-full bg-secondary"></div>
+                    Matched
+                </button>
+<button class="px-base py-sm rounded-full bg-surface text-primary-container border border-primary-container whitespace-nowrap hover:bg-surface-container transition-colors flex items-center gap-xs font-body-sm text-body-sm">
+<div class="w-1.5 h-1.5 rounded-full bg-primary-container"></div>
+                    Review
+                </button>
+<button class="px-base py-sm rounded-full bg-surface text-error border border-error whitespace-nowrap hover:bg-surface-container transition-colors flex items-center gap-xs font-body-sm text-body-sm">
+<div class="w-1.5 h-1.5 rounded-full bg-error"></div>
+                    Unknown
+                </button>
+</div>
+</div>
+<!-- Book Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-lg">
+<!-- Book Card 1 (Matched) -->
+<article class="bg-[#1C1916] rounded-xl flex border border-[#3A332A] relative overflow-hidden glow-top hover:bg-surface-container transition-colors cursor-pointer group">
+<div class="w-[3px] bg-secondary absolute left-0 top-0 bottom-0 h-full"></div>
+<div class="w-1/3 min-w-[100px]">
+<img class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-500" data-alt="A vintage, worn hardcover copy of The Secret History by Donna Tartt. Dark green cloth spine, gold foil stamping slightly faded. Resting on dark wood in moody, dramatic library lighting, deep shadows. Tactile, literary aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCEjM2QZzSHCbIFQHWxX-92JKFr7mLNiba7ggXlVPpWuMefGXJPvx7Qn-K7j92twsRf2aBWGnTz-SLA-qnXLWCQy6iUDv1V0zcEXElJmHPTMgPnqx0Gt3OcqB0IL77XsSopBf7pScdm8lbecKxDImC_rDI-XjAYKgspS_ZtJxqRuD98D3rNIU0rGd8tPaBPiZ2i8r6aV7i-r2v55CgN2zNCldBGWf2wG9zLKWMjkKTf4VhMHsJkfe97"/>
+</div>
+<div class="p-base flex flex-col justify-between w-2/3 pl-lg">
+<div>
+<div class="flex justify-between items-start mb-xs">
+<span class="font-metadata-caps text-metadata-caps text-secondary tracking-widest">MATCHED</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">more_vert</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-xs leading-tight">The Secret History</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Donna Tartt</p>
+</div>
+<div class="mt-md pt-md border-t border-[#3A332A] flex justify-between items-center">
+<span class="font-label-mono text-label-mono text-outline">1992 EDITION</span>
+<span class="material-symbols-outlined text-outline text-[18px]">bookmark</span>
+</div>
+</div>
+</article>
+<!-- Book Card 2 (Review) -->
+<article class="bg-[#1C1916] rounded-xl flex border border-[#3A332A] relative overflow-hidden glow-top hover:bg-surface-container transition-colors cursor-pointer group">
+<div class="w-[3px] bg-primary-container absolute left-0 top-0 bottom-0 h-full"></div>
+<div class="w-1/3 min-w-[100px]">
+<img class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-500" data-alt="A heavily battered, unidentifiable leather-bound book from the 19th century. Spine is cracked, title illegible. Resting on a dark mahogany table, illuminated by a single warm reading lamp in a midnight library setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFSwFNqx4Whm1GJvqMqMcDE42yMPnH06mmJxJQKxzwL0QFCgXHkP75Bjgkq4RG6nAoxBJZXjorNFeRfO47T7WjuMVhW_eghaHT9yGSORIzq9Fn4l3O4BvbvJ02eHmG5x961RmOG6QEa-PTg4OqFuNCDXVyBK7WM5-yJaAKEovn8y7dnM4RwO3MerOpy_0_pWlvSZulxYdqQtVLpz2r6gKBWFnLbC41xESj0OFPDzZXXLpkDafl_M5p"/>
+</div>
+<div class="p-base flex flex-col justify-between w-2/3 pl-lg">
+<div>
+<div class="flex justify-between items-start mb-xs">
+<span class="font-metadata-caps text-metadata-caps text-primary-container tracking-widest">REVIEW</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">more_vert</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-xs leading-tight italic opacity-70">Unknown Title</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Unknown Author</p>
+</div>
+<div class="mt-md pt-md border-t border-[#3A332A] flex justify-between items-center">
+<button class="text-primary-container font-label-mono text-label-mono hover:underline">RESOLVE</button>
+</div>
+</div>
+</article>
+<!-- Book Card 3 (Matched) -->
+<article class="bg-[#1C1916] rounded-xl flex border border-[#3A332A] relative overflow-hidden glow-top hover:bg-surface-container transition-colors cursor-pointer group">
+<div class="w-[3px] bg-secondary absolute left-0 top-0 bottom-0 h-full"></div>
+<div class="w-1/3 min-w-[100px]">
+<img class="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 transition-all duration-500" data-alt="A pristine, modernist paperback edition of 1984 by George Orwell. Stark black and white geometric cover design. Resting on slate in cold, clinical lighting contrasting with the dark library background. Intellectual, sharp aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgfJlo0mujZw6PDXIj_WGMiaYqIpzEt5Nkmlg928gW1jFqyjByEi6LB_TVX0Y9WseSVHWiCpw_jxkRPRz5kSE8oilY8L4VeNd5ctQBFTO1XxmWkGsk2djVpONnwALhPLv6a74NM9VHqxCY2AefFmv5LYJy60uoJdkReTuxowURZYNeRCRBRQDjljbYJJVYXa1u56FTI5vXHTt7FRjWCI6RV86LUbAvQQzGeTALEOsND5FB1cBdIray"/>
+</div>
+<div class="p-base flex flex-col justify-between w-2/3 pl-lg">
+<div>
+<div class="flex justify-between items-start mb-xs">
+<span class="font-metadata-caps text-metadata-caps text-secondary tracking-widest">MATCHED</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">more_vert</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-xs leading-tight">1984</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">George Orwell</p>
+</div>
+<div class="mt-md pt-md border-t border-[#3A332A] flex justify-between items-center">
+<span class="font-label-mono text-label-mono text-outline">PENGUIN CLASSICS</span>
+<span class="material-symbols-outlined text-outline text-[18px]">bookmark_border</span>
+</div>
+</div>
+</article>
+<!-- Book Card 4 (Unknown) -->
+<article class="bg-[#1C1916] rounded-xl flex border border-[#3A332A] relative overflow-hidden glow-top hover:bg-surface-container transition-colors cursor-pointer group">
+<div class="w-[3px] bg-error absolute left-0 top-0 bottom-0 h-full"></div>
+<div class="w-1/3 min-w-[100px] bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-outline text-4xl opacity-50">broken_image</span>
+</div>
+<div class="p-base flex flex-col justify-between w-2/3 pl-lg">
+<div>
+<div class="flex justify-between items-start mb-xs">
+<span class="font-metadata-caps text-metadata-caps text-error tracking-widest">UNKNOWN</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">more_vert</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-error mb-xs leading-tight">Scan Failed</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Blurry image</p>
+</div>
+<div class="mt-md pt-md border-t border-[#3A332A] flex justify-between items-center">
+<button class="text-error font-label-mono text-label-mono hover:underline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">photo_camera</span>
+                            RESCAN
+                        </button>
+</div>
+</div>
+</article>
+</div>
+</main>
+<!-- Bottom Nav Bar (Mobile Only) -->
+<nav class="fixed bottom-0 w-full z-50 h-20 border-t border-outline-variant bg-surface-container-lowest flat no shadows md:hidden">
+<div class="flex justify-around items-center w-full px-base pb-safe relative h-full">
+<button class="flex flex-col items-center justify-center text-primary bg-secondary-container rounded-full px-md py-xs scale-95 active:scale-90 transition-transform duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">library_books</span>
+<span class="font-label-mono text-label-mono mt-1">Library</span>
+</button>
+<!-- Centered FAB Spacer -->
+<div class="w-16"></div>
+<button class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:bg-surface-container-highest transition-all scale-95 active:scale-90 transition-transform duration-200 p-2 rounded-lg">
+<span class="material-symbols-outlined">shelves</span>
+<span class="font-label-mono text-label-mono mt-1">Shelves</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:bg-surface-container-highest transition-all scale-95 active:scale-90 transition-transform duration-200 p-2 rounded-lg">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-mono text-label-mono mt-1">Profile</span>
+</button>
+<!-- Scan FAB -->
+<button class="absolute -top-6 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-primary-container text-[#12100E] rounded-2xl flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 border border-[#c9963f] glow-top">
+<span class="material-symbols-outlined text-[32px]">photo_camera</span>
+</button>
+</div>
+</nav>
+<style>
+        /* Utility to hide scrollbar but keep functionality */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</body></html>
