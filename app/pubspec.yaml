@@ -1,0 +1,68 @@
+name: rafca
+description: "Rafça — raf fotoğrafından kitap sırtlarını tanıyıp fiziksel kütüphaneyi dijitalleştiren mobil uygulama."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.12.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State. Code generated providers, per SPINE_BLUEPRINT.md 3.1.
+  flutter_riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.1
+
+  # Routing. Deep links and platform transitions.
+  go_router: ^14.6.2
+
+  # Local-first storage. The library opens with no network.
+  drift: ^2.23.1
+  sqlite3: ^2.4.7
+  sqlite3_flutter_libs: ^0.5.28
+  path_provider: ^2.1.5
+  path: ^1.9.1
+
+  # AdaptiveScaffold builds a CupertinoSliverNavigationBar on Apple platforms,
+  # and that bar draws its back chevron from the CupertinoIcons font. Without
+  # this dependency the glyph is missing at runtime and the build warns that
+  # packages/cupertino_icons/CupertinoIcons could not be found.
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+  build_runner: ^2.4.14
+  riverpod_generator: ^2.6.3
+  drift_dev: ^2.23.1
+  custom_lint: ^0.7.0
+  riverpod_lint: ^2.6.3
+
+flutter:
+  uses-material-design: true
+
+  # SPINE_BLUEPRINT.md 4.2: the three faces are embedded rather than pulled by
+  # the google_fonts package, so the app renders correctly offline and the
+  # store download size stays predictable.
+  fonts:
+    # Literata and Inter ship from Google Fonts only as variable fonts, so each
+    # family is one file and weight is selected at use time with
+    # FontVariation('wght', n) in RafcaTypography. Declaring the same file under
+    # several weight entries would not instance it — Flutter would render the
+    # default weight and synthesise the rest.
+    - family: Literata
+      fonts:
+        - asset: assets/fonts/Literata.ttf
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter.ttf
+    - family: IBMPlexMono
+      fonts:
+        - asset: assets/fonts/IBMPlexMono-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/IBMPlexMono-SemiBold.ttf
+          weight: 600
