@@ -4,6 +4,14 @@ Newest entries at top.
 
 ## Unreleased
 
+- Faz 4: `services/index/` eklendi — `ol-index` üç geçişte çalışır (filter → authors → join); 12 GB'lık editions dump'ı tek seferde belleğe sığmadığı için yazar adları ayrı geçişte çözülür.
+- Faz 4: `internal/copyfmt` eklendi — PostgreSQL COPY text formatı için kaçış; ters bölü, tab, satır sonu ve `text[]` dizileri round-trip doğrulandı.
+- Faz 4: `index-bench` eklendi — pgx ile arama p95 ölçümü, Faz 4 kabul kriteri.
+- Faz 4: `ingest.sh` katalogu değiştirmiyor, birleştiriyor — `user_books` satırları `books_index`'e id ile bağlı; truncate-and-reload'u foreign key reddeder, kabul etseydi birinin kütüphanesini başka kitaba bağlardı. Staging tablosu + `on conflict (ol_key) do update` ile id'ler kalıcı.
+- Faz 4: `ingest.sh` geçişleri yeniden kullanılabilir — çıktısı duran geçiş atlanıyor; yükleme adımında kesilen bir koşu 12 GB'ı yeniden taramak zorunda kalmıyor.
+- Faz 4: `ingest.sh` indeks tanımlarını `pg_indexes` yerine migration dosyasından okuyor — drop ile rebuild arasında kesilen bir koşuda katalog o indeksleri artık tutmadığı için, sonraki koşu hiçbir indeksi geri kurmuyordu.
+- Faz 4: `supabase/harness/apply.sh` ayrıldı — test ve geliştirme veritabanı aynı adımlardan kuruluyor.
+
 - Faz 3: `SyncQueueDao` eklendi — outbox kuyruğu; kuyruk kaydı ile satırın `pending_sync` bayrağı tek transaction'da yazılır, aynı satırın tekrar sıraya girmesi tek kayda indirgenir.
 - Faz 3: Drift yerel şeması dolduruldu — `CatalogBooks`, `Shelves`, `UserBooks`, `Scans`, `SyncQueueEntries`; sunucuda karşılığı olmayan iki alan: `capture_path` (görseller cihazda kalır) ve `pending_sync`.
 - Faz 3: `supabase/harness/` eklendi — `auth` şeması shim'i ve runner; migration'lar ve pgTAP suite'i Docker olmadan düz PostgreSQL üzerinde koşuyor, `make db-start` / `make db-test`.

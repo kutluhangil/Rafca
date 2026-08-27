@@ -21,16 +21,7 @@ TEST_DB="${TEST_DB:-rafca_test}"
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 root="$(dirname "$here")"
 
-psql -X -q -d postgres -v ON_ERROR_STOP=1 \
-  -c "drop database if exists ${TEST_DB} with (force)" \
-  -c "create database ${TEST_DB}"
-
-psql -X -q -d "$TEST_DB" -v ON_ERROR_STOP=1 -f "$here/supabase_shim.sql"
-
-for migration in "$root"/migrations/*.sql; do
-  echo "-- applying $(basename "$migration")"
-  psql -X -q -d "$TEST_DB" -v ON_ERROR_STOP=1 -f "$migration"
-done
+"$here/apply.sh" "$TEST_DB"
 
 status=0
 for test_file in "$root"/tests/*.sql; do
