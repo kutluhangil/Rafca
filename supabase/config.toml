@@ -1,0 +1,29 @@
+# Local Supabase stack for Rafça.
+#
+# SPINE_BLUEPRINT.md 3.1: local Docker first, cloud later. The values below are
+# the ones Rafça actually depends on; everything else is left at the CLI's
+# default on purpose so that a CLI upgrade does not have to be mirrored here.
+
+project_id = "rafca"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public"]
+# pg_trgm and unaccent live in the `extensions` schema, and PostgREST has to be
+# able to resolve them when a search hits books_index.
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+major_version = 17
+
+[auth]
+enabled = true
+site_url = "http://localhost:3000"
+
+# SPINE_BLUEPRINT.md 6.1: a first-run user is anonymous. There is no sign-up
+# wall in front of scanning; the account, if it ever happens, is an upgrade of
+# an existing anonymous identity so the rows keep their user_id.
+enable_anonymous_sign_ins = true

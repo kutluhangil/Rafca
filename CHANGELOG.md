@@ -4,6 +4,14 @@ Newest entries at top.
 
 ## Unreleased
 
+- Faz 3: `SyncQueueDao` eklendi — outbox kuyruğu; kuyruk kaydı ile satırın `pending_sync` bayrağı tek transaction'da yazılır, aynı satırın tekrar sıraya girmesi tek kayda indirgenir.
+- Faz 3: Drift yerel şeması dolduruldu — `CatalogBooks`, `Shelves`, `UserBooks`, `Scans`, `SyncQueueEntries`; sunucuda karşılığı olmayan iki alan: `capture_path` (görseller cihazda kalır) ve `pending_sync`.
+- Faz 3: `supabase/harness/` eklendi — `auth` şeması shim'i ve runner; migration'lar ve pgTAP suite'i Docker olmadan düz PostgreSQL üzerinde koşuyor, `make db-start` / `make db-test`.
+- Faz 3: `public.spine_join_authors` eklendi — `array_to_string` da yalnızca STABLE olduğu için generated column'da kullanılamıyordu.
+- Faz 3: `supabase/tests/rls_test.sql` eklendi — pgTAP; başka kullanıcının satırına select, id ile select, insert, update ve delete denemeleri.
+- Faz 3: Supabase migration'ları eklendi — `books_index` (trigram + FTS indeksleri, herkese açık salt okuma), `profiles`/`shelves`/`user_books`/`scans` (komut başına ayrı RLS policy), anonim auth ve yeni kullanıcıda profil tetikleyicisi.
+- Faz 3: `public.spine_unaccent` eklendi — `unaccent(text)` yalnızca STABLE olduğu için generated column'da kullanılamıyordu; sözlüğü sabitleyen IMMUTABLE sarmalayıcı.
+
 - Faz 2: `design/gallery.dart` eklendi — her bileşen tek tek, iki temada; tema, reduce-motion ve animasyon tekrar oynatma anahtarlarıyla. `/gallery` rotasından erişilir.
 - Faz 2: `AdaptiveSheet` eklendi — Android'de Material bottom sheet, Apple'da detentli sheet; chrome'un tek sahibi `_SheetSurface`, Cupertino dalı için saydam `Material` ile sarılı.
 - Faz 2: `ShelfStrip` (compact/hero/empty), `ConfidenceBadge`, `BookCard`, `SpineCropView`, `MonoLabel`, `PrimaryButton` bileşenleri eklendi.

@@ -17,7 +17,26 @@ işaretlenir.
 | Commit / push | Faz aralarında yapılır (önceki kural iptal) | 2026-08-27 |
 | Pirinç rengi | `SpineSemanticColors.brass` semantik token — iki tema ramp'ın zıt uçlarından alır | 2026-08-27 |
 
-Faz detayları: [PROGRESS_FAZ1.md](PROGRESS_FAZ1.md) · [PROGRESS_FAZ2.md](PROGRESS_FAZ2.md).
+| Yerel doğrulama veritabanı | Düz PostgreSQL 17 + pgTAP (Docker diski dolu); `supabase start` kanonik yol olarak kalır | 2026-08-27 |
+
+Faz detayları: [PROGRESS_FAZ1.md](PROGRESS_FAZ1.md) · [PROGRESS_FAZ2.md](PROGRESS_FAZ2.md) · [PROGRESS_FAZ3.md](PROGRESS_FAZ3.md).
+
+## FAZ 3 — Veri (A3)
+
+**Durum: KAPALI.**
+
+Supabase migration'ları (§6.1), komut başına ayrı RLS policy'leri, anonim auth
+ve Drift yerel şeması + senkron kuyruğu yazıldı.
+
+Kabul kriteri geçildi: `make db-test` → 17/17. Başka kullanıcının satırına
+filtresiz select, id ile select, insert, update ve delete denendi; hiçbiri satır
+döndürmedi ya da değiştirmedi. `flutter analyze` temiz, `flutter test` 58/58.
+
+Blueprint §6.1'deki SQL iki yerde olduğu gibi çalışmıyordu (`unaccent` ve
+`array_to_string` STABLE, generated column'a girmiyorlar); IMMUTABLE
+sarmalayıcılarla düzeltildi. Docker bu makinede kullanılamadığı için suite düz
+PostgreSQL üzerinde koşacak hale getirildi. Detay:
+[PROGRESS_FAZ3.md](PROGRESS_FAZ3.md).
 
 ## FAZ 2 — Tasarım Sistemi (A2)
 

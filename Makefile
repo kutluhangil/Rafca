@@ -4,9 +4,17 @@
 # re-runs the whole capture pipeline over spike/dataset and fails when accuracy
 # drops more than 3 points below the last recorded report.
 
-.PHONY: eval eval-build test analyze clean
+.PHONY: eval eval-build test analyze clean db-start db-stop db-test
 
 VISION_BIN := spike/tool/vision_ocr
+
+# Local PostgreSQL for the Supabase migrations. `supabase start` is the
+# canonical stack and stays that way; these targets are the same schema on a
+# plain server, which is what CI runs and what a machine without Docker gets.
+PG_BIN   ?= /opt/homebrew/opt/postgresql@17/bin
+PGDATA   ?= $(CURDIR)/../.rafca-pgdata
+PGHOST   ?= /tmp
+PGPORT   ?= 54329
 
 $(VISION_BIN): spike/tool/vision_ocr.swift
 	swiftc -O -o $(VISION_BIN) spike/tool/vision_ocr.swift
@@ -23,6 +31,16 @@ test:
 analyze:
 	cd packages/spine_clustering && dart analyze
 	cd spike && dart analyze
+
+db-start:
+	@test -d $(PGDATA) || $(PG_BIN)/initdb -D $(PGDATA) -U postgres --locale=en_US.UTF-8 -E UTF-8
+	$(PG_BIN)/pg_ctl -D $(PGDATA) -o "-p $(PGPORT) -k $(PGHOST)" -l $(PGDATA)/server.log start
+
+db-stop:
+	$(PG_BIN)/pg_ctl -D $(PGDATA) stop
+
+db-test:
+	PATH=$(PG_BIN):$$PATH PGHOST=$(PGHOST) PGPORT=$(PGPORT) supabase/harness/run_tests.sh
 
 clean:
 	rm -rf spike/out $(VISION_BIN)
