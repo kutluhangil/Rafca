@@ -4,6 +4,14 @@ Newest entries at top.
 
 ## Unreleased
 
+- Faz 2: `design/gallery.dart` eklendi — her bileşen tek tek, iki temada; tema, reduce-motion ve animasyon tekrar oynatma anahtarlarıyla. `/gallery` rotasından erişilir.
+- Faz 2: `AdaptiveSheet` eklendi — Android'de Material bottom sheet, Apple'da detentli sheet; chrome'un tek sahibi `_SheetSurface`, Cupertino dalı için saydam `Material` ile sarılı.
+- Faz 2: `ShelfStrip` (compact/hero/empty), `ConfidenceBadge`, `BookCard`, `SpineCropView`, `MonoLabel`, `PrimaryButton` bileşenleri eklendi.
+- Faz 2: `design/motion/motion.dart` eklendi — §4.7 süreleri, 400ms tavanı assert ile, reduce-motion 120ms crossfade'e düşürüyor.
+- Faz 2: `SpineSemanticColors.brass` / `onBrass` eklendi — `primaryContainer` ışık temasında birincil butonu ve kırpım ayraçlarını zeminden ayrıştıramıyordu.
+- Faz 2: `uppercaseForLocale` eklendi — Dart'ın `toUpperCase()` metodu locale duyarlı olmadığı için Türkçe `i` → `İ` ve `ı` → `I` açıkça ele alınıyor.
+- Faz 2: `flutter_localizations` delegate'leri Faz 8'den öne çekildi; `tr` locale'i olmadan çerçeve metinleri İngilizce kalıyor ve her build uyarı veriyordu.
+- Faz 2: web platformu eklendi (yalnız faz içi görsel doğrulama yüzeyi); Drift bağlantısı koşullu import'a ayrıldı, web dalı sessiz geri düşüş yerine `UnsupportedError` fırlatıyor.
 - Faz 1: Android kabul kriteri doğrulandı — Pixel 9 emülatöründe profile APK cold start 970–1405 ms (bütçe 2s), tema anahtarı SYSTEM/DARK/LIGHT döngüsü çalışıyor.
 - Faz 1: `cupertino_icons` bağımlılığı eklendi — `AdaptiveScaffold`'un Apple dalındaki `CupertinoSliverNavigationBar` geri chevron glifi bu font olmadan boş çiziliyordu.
 - Faz 1: GitHub Actions CI eklendi — saf Dart paketleri ve Flutter uygulaması için analyze + test, ayrıca üretilmiş kaynakların güncelliğini doğrulayan adım.

@@ -9,18 +9,30 @@
 - Package / bundle id: `com.kutluhangil.rafca` (Android + iOS aynı).
 
 ## Git kuralları
-- `git commit` ve `git push` ÇALIŞTIRILMAZ. Tüm commit ve push işlemlerini
-  yalnızca Kutluhan manuel yapar.
-- Branch AÇILMAZ (`git branch`, `git checkout -b` yok). Çalışma mevcut
-  branch üzerinde kalır.
+- Faz aralarında `git commit` ve `git push` YAPILIR (kullanıcı talimatı,
+  2026-08-26). Bir fazın kabul kriterleri geçtikten sonra o fazın işi
+  commit'lenir ve `origin/main`'e push edilir.
+- Commit ve push ayrı komutlardır, zincirlenmez. Faz ortasında commit atılmaz.
+- Branch AÇILMAZ (`git branch`, `git checkout -b` yok). Çalışma `main`
+  üzerinde kalır.
 - Commit mesajlarına "Co-Authored-By: Claude" veya herhangi bir AI/Claude
   atfı EKLENMEZ. GitHub Contributors listesinde yalnızca Kutluhan görünür.
-- Değişiklikler yapılır, `git status` ile özet sunulur, commit kullanıcıya bırakılır.
+- Commit mesajları İngilizce yazılır.
 
 ## Platform kararı
 Flutter 3.44+ tek kod tabanı, iOS + Android. Backend ortak.
 Sıra: önce Android'de doğrulanır, sonra iOS adaptive katmanı + platform testleri.
 Özellik kodu asla `Platform.isIOS` kontrolü yapmaz — yalnızca `app/lib/design/adaptive/` bileşenlerini çağırır.
+
+### Faz içi doğrulama yüzeyi
+Faz çalışması sırasında görsel doğrulama **Chrome'da (`flutter run -d chrome`)**
+yapılır, emülatörde değil (kullanıcı talimatı, 2026-08-26). Emülatör ve fiziksel
+cihaz doğrulaması tüm fazlar bittikten sonra toplu yapılır.
+
+Web yalnızca bir geliştirme/önizleme yüzeyidir, dağıtım hedefi DEĞİLDİR.
+Bu yüzden cihaza bağlı katmanlar (Drift/SQLite, kamera, ML Kit) web'de
+koşullu import ile ayrılır ve web dalı sessizce geri düşmez — açıkça
+`UnsupportedError` fırlatır.
 
 ## Stack (sabit, tartışmaya kapalı)
 | Katman | Karar |

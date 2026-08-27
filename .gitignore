@@ -22,6 +22,9 @@ key.properties
 # macOS
 .DS_Store
 
+# Doğrulama araçlarının çıktısı
+.playwright-mcp/
+
 # IDE
 .idea/
 .vscode/

@@ -14,16 +14,16 @@ abstract final class SpineTheme {
   const SpineTheme._();
 
   static ThemeData get dark => _build(
-        brightness: Brightness.dark,
-        scheme: _darkScheme,
-        semantic: SpineSemanticColors.dark,
-      );
+    brightness: Brightness.dark,
+    scheme: _darkScheme,
+    semantic: SpineSemanticColors.dark,
+  );
 
   static ThemeData get light => _build(
-        brightness: Brightness.light,
-        scheme: _lightScheme,
-        semantic: SpineSemanticColors.light,
-      );
+    brightness: Brightness.light,
+    scheme: _lightScheme,
+    semantic: SpineSemanticColors.light,
+  );
 
   static const _darkScheme = ColorScheme(
     brightness: Brightness.dark,
@@ -215,9 +215,7 @@ abstract final class SpineTheme {
       // focus (DESIGN.md, "Input Fields").
       inputDecorationTheme: InputDecorationTheme(
         filled: false,
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: SpineSpacing.md,
-        ),
+        contentPadding: const EdgeInsets.symmetric(vertical: SpineSpacing.md),
         labelStyle: SpineTypography.metadataCaps.copyWith(
           color: scheme.onSurfaceVariant,
         ),

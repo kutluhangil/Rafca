@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:go_router/go_router.dart';
+
+import '../../core/router/app_router.dart';
 import '../../core/theme/theme_mode_controller.dart';
 import '../../design/adaptive/adaptive_scaffold.dart';
+import '../../design/components/primary_button.dart';
 import '../../design/tokens/colors.dart';
 import '../../design/tokens/spacing.dart';
 import '../../design/tokens/typography.dart';
@@ -35,16 +39,20 @@ class HomeScreen extends ConsumerWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('THEME: ${mode.name.toUpperCase()}',
-              style: SpineTypography.metadataCaps
-                  .copyWith(color: scheme.onSurfaceVariant)),
+          Text(
+            'THEME: ${mode.name.toUpperCase()}',
+            style: SpineTypography.metadataCaps.copyWith(
+              color: scheme.onSurfaceVariant,
+            ),
+          ),
           const SizedBox(height: SpineSpacing.base),
           Text('Nocturnal Archivist', style: SpineTypography.headlineSmall),
           const SizedBox(height: SpineSpacing.sm),
           Text(
             'Faz 1 iskeleti. Tema motoru, yönlendirme ve adaptive kabuk bağlı.',
-            style: SpineTypography.bodyMedium
-                .copyWith(color: scheme.onSurfaceVariant),
+            style: SpineTypography.bodyMedium.copyWith(
+              color: scheme.onSurfaceVariant,
+            ),
           ),
           const SizedBox(height: SpineSpacing.lg),
           Row(
@@ -55,6 +63,13 @@ class HomeScreen extends ConsumerWidget {
               const SizedBox(width: SpineSpacing.md),
               _SwatchDot(color: semantic.unknown, label: 'UNKNOWN'),
             ],
+          ),
+          const SizedBox(height: SpineSpacing.lg),
+          PrimaryButton(
+            label: 'Design gallery',
+            variant: SpineButtonVariant.secondary,
+            expand: false,
+            onPressed: () => context.push(Routes.gallery),
           ),
           const SizedBox(height: SpineSpacing.xxl),
         ],
@@ -74,11 +89,7 @@ class _SwatchDot extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          width: SpineBorders.confidenceBar,
-          height: 16,
-          color: color,
-        ),
+        Container(width: SpineBorders.confidenceBar, height: 16, color: color),
         const SizedBox(width: SpineSpacing.sm),
         Text(label, style: SpineTypography.metadataCaps.copyWith(color: color)),
       ],

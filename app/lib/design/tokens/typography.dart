@@ -11,6 +11,19 @@ import 'package:flutter/material.dart';
 /// Both families also carry an optical size axis, which is set from the point
 /// size so that a 48px headline is drawn with headline-grade contrast and an
 /// 11px label is not.
+/// Uppercases [text] the way [locale] expects.
+///
+/// Dart's [String.toUpperCase] is not locale-aware: it maps `i` to `I` and
+/// leaves `ı` alone, which is wrong in Turkish, where `i` uppercases to `İ`
+/// and `ı` to `I`. Rafça falls back to Turkish and uppercases every mono
+/// string and every button label, so the mapping lives here rather than being
+/// rediscovered at each call site.
+String uppercaseForLocale(String text, Locale? locale) {
+  final language = locale?.languageCode;
+  if (language != 'tr' && language != 'az') return text.toUpperCase();
+  return text.replaceAll('i', 'İ').replaceAll('ı', 'I').toUpperCase();
+}
+
 abstract final class SpineTypography {
   const SpineTypography._();
 
@@ -84,12 +97,20 @@ abstract final class SpineTypography {
   }
 
   /// Welcome and hero headings.
-  static final displayLarge =
-      _literata(size: 48, height: 56, weight: 700, letterSpacing: -0.96);
+  static final displayLarge = _literata(
+    size: 48,
+    height: 56,
+    weight: 700,
+    letterSpacing: -0.96,
+  );
 
   /// Screen titles.
-  static final headlineMedium =
-      _literata(size: 32, height: 40, weight: 500, letterSpacing: -0.32);
+  static final headlineMedium = _literata(
+    size: 32,
+    height: 40,
+    weight: 500,
+    letterSpacing: -0.32,
+  );
 
   /// Book titles in a card, section headings.
   static final headlineSmall = _literata(size: 24, height: 32, weight: 500);

@@ -13,9 +13,28 @@ işaretlenir.
 | Tasarım token otoritesi | `stitch_spine_book_scanner_app/nocturnal_archivist/DESIGN.md` (blueprint §4.1 değil) | 2026-08-26 |
 | Arayüz dili | Cihaz dili takip edilir, fallback TR | 2026-08-26 |
 | Backend | Önce yerel Docker (Supabase CLI + compose), sonra bulut | 2026-08-26 |
-| Doğrulama sırası | Her fazda önce Android emülatöründe ölçülür; iOS Faz 9'da toplu doğrulanır | 2026-08-26 |
+| Doğrulama sırası | Faz içi doğrulama Chrome'da (`flutter run -d chrome`); emülatör ve cihaz tüm fazlar bitince | 2026-08-27 |
+| Commit / push | Faz aralarında yapılır (önceki kural iptal) | 2026-08-27 |
+| Pirinç rengi | `SpineSemanticColors.brass` semantik token — iki tema ramp'ın zıt uçlarından alır | 2026-08-27 |
 
-Faz 1 detayı: [PROGRESS_FAZ1.md](PROGRESS_FAZ1.md).
+Faz detayları: [PROGRESS_FAZ1.md](PROGRESS_FAZ1.md) · [PROGRESS_FAZ2.md](PROGRESS_FAZ2.md).
+
+## FAZ 2 — Tasarım Sistemi (A2)
+
+**Durum: KAPALI.**
+
+`ShelfStrip` (3 varyant), `ConfidenceBadge`, `BookCard`, `SpineCropView`,
+`AdaptiveSheet`, `MonoLabel`, `PrimaryButton`, `motion/` sabitleri ve
+`design/gallery.dart` yazıldı. `flutter analyze` temiz, `flutter test` 47/47.
+
+Kabul kriteri Chrome'da doğrulandı (emülatör değil — kullanıcı talimatı):
+dokuz bölümün hepsi galeride tek tek görülüyor, koyu ve açık tema ayrı ayrı
+kontrol edildi, Material ve Cupertino dalları ayrı ayrı açıldı.
+
+Doğrulamada dört kusur bulunup düzeltildi: ışık temasında pirinç rengi zeminden
+ayrışmıyordu, sheet chrome'u iki kez çiziliyordu, Cupertino dalında metin debug
+stiliyle çiziliyordu, ve `ConfidenceBadge` Türkçe İ'yi bozuyordu. Detay:
+[PROGRESS_FAZ2.md](PROGRESS_FAZ2.md).
 
 ## FAZ 1 — Temel (A1)
 

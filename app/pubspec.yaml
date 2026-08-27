@@ -11,6 +11,13 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Material and Cupertino strings in Turkish. Pulled forward from Faz 8
+  # because Rafça falls back to Turkish (CLAUDE.md, "Yerelleştirme") and
+  # without these delegates a `tr` locale renders English framework strings
+  # and warns on every build.
+  flutter_localizations:
+    sdk: flutter
+
   # State. Code generated providers, per SPINE_BLUEPRINT.md 3.1.
   flutter_riverpod: ^2.6.1
   riverpod_annotation: ^2.6.1

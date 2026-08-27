@@ -37,23 +37,29 @@ void main() {
       expect(theme.snackBarTheme.elevation, 0);
     });
 
-    test('suppresses Material 3 surface tint, which would wash the palette', () {
-      expect(theme.appBarTheme.surfaceTintColor, Colors.transparent);
-      expect(theme.cardTheme.surfaceTintColor, Colors.transparent);
-      expect(theme.bottomSheetTheme.surfaceTintColor, Colors.transparent);
-    });
+    test(
+      'suppresses Material 3 surface tint, which would wash the palette',
+      () {
+        expect(theme.appBarTheme.surfaceTintColor, Colors.transparent);
+        expect(theme.cardTheme.surfaceTintColor, Colors.transparent);
+        expect(theme.bottomSheetTheme.surfaceTintColor, Colors.transparent);
+      },
+    );
 
     test('sheets round only their top corners', () {
       final shape = theme.bottomSheetTheme.shape! as RoundedRectangleBorder;
-      expect(shape.borderRadius, const BorderRadius.vertical(
-        top: Radius.circular(24),
-      ));
+      expect(
+        shape.borderRadius,
+        const BorderRadius.vertical(top: Radius.circular(24)),
+      );
     });
 
     test('input fields have no fill and a bottom rule only', () {
       expect(theme.inputDecorationTheme.filled, isFalse);
-      expect(theme.inputDecorationTheme.enabledBorder,
-          isA<UnderlineInputBorder>());
+      expect(
+        theme.inputDecorationTheme.enabledBorder,
+        isA<UnderlineInputBorder>(),
+      );
       final focused =
           theme.inputDecorationTheme.focusedBorder! as UnderlineInputBorder;
       expect(focused.borderSide.color, theme.colorScheme.primary);
@@ -89,23 +95,26 @@ void main() {
       // Literata and Inter are declared once each in pubspec.yaml. Without an
       // explicit axis value they would render at their default weight and the
       // engine would fake the rest.
-      final wght = SpineTypography.displayLarge.fontVariations!
-          .firstWhere((v) => v.axis == 'wght');
+      final wght = SpineTypography.displayLarge.fontVariations!.firstWhere(
+        (v) => v.axis == 'wght',
+      );
       expect(wght.value, 700);
       expect(SpineTypography.displayLarge.fontWeight, FontWeight.w700);
     });
 
     test('sets optical size from the point size', () {
-      final opsz = SpineTypography.displayLarge.fontVariations!
-          .firstWhere((v) => v.axis == 'opsz');
+      final opsz = SpineTypography.displayLarge.fontVariations!.firstWhere(
+        (v) => v.axis == 'opsz',
+      );
       expect(opsz.value, 48);
     });
 
     test('clamps optical size into the axis range the face publishes', () {
       // Inter's opsz axis stops at 32; an unclamped 48 would be ignored and
       // the style would silently fall back to the default instance.
-      final opsz = SpineTypography.bodyLarge.fontVariations!
-          .firstWhere((v) => v.axis == 'opsz');
+      final opsz = SpineTypography.bodyLarge.fontVariations!.firstWhere(
+        (v) => v.axis == 'opsz',
+      );
       expect(opsz.value, greaterThanOrEqualTo(14));
       expect(opsz.value, lessThanOrEqualTo(32));
     });

@@ -7,12 +7,9 @@ import 'package:rafca/design/adaptive/adaptive_scaffold.dart';
 import 'package:rafca/design/theme/spine_theme.dart';
 
 Widget _harness() => MaterialApp(
-      theme: SpineTheme.dark,
-      home: const AdaptiveScaffold(
-        title: 'Kütüphane',
-        body: Text('content'),
-      ),
-    );
+  theme: SpineTheme.dark,
+  home: const AdaptiveScaffold(title: 'Kütüphane', body: Text('content')),
+);
 
 /// Pumps the harness as [platform] and restores the override before the body
 /// ends — `testWidgets` asserts that no foundation debug variable is left set,

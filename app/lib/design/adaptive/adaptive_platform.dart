@@ -11,9 +11,9 @@ enum AdaptivePlatform {
   cupertino;
 
   static AdaptivePlatform get current => switch (defaultTargetPlatform) {
-        TargetPlatform.iOS || TargetPlatform.macOS => AdaptivePlatform.cupertino,
-        _ => AdaptivePlatform.material,
-      };
+    TargetPlatform.iOS || TargetPlatform.macOS => AdaptivePlatform.cupertino,
+    _ => AdaptivePlatform.material,
+  };
 
   bool get isCupertino => this == AdaptivePlatform.cupertino;
 }

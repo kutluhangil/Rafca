@@ -122,6 +122,8 @@ class SpineSemanticColors extends ThemeExtension<SpineSemanticColors> {
     required this.hairline,
     required this.surfaceRaised,
     required this.topEdgeGlow,
+    required this.brass,
+    required this.onBrass,
   });
 
   /// MATCHED badge and its 3px leading bar.
@@ -144,6 +146,19 @@ class SpineSemanticColors extends ThemeExtension<SpineSemanticColors> {
   /// catching the top of a book.
   final Color topEdgeGlow;
 
+  /// The gold-leaf accent: primary button fills, crop brackets, focus rings.
+  ///
+  /// Not a [ColorScheme] role because the two themes take it from opposite
+  /// ends of the ramp. Dark uses `primaryContainer` (#C9963F), the brass the
+  /// mockups fill buttons with. Light cannot: its `primaryContainer` is the
+  /// pale #FFDEAE, which on a parchment ground gives a primary action almost
+  /// no separation from the page. Light therefore takes the deep #7F5700,
+  /// which still reads as brass but carries the weight the role needs.
+  final Color brass;
+
+  /// What sits on [brass].
+  final Color onBrass;
+
   static const dark = SpineSemanticColors(
     matched: SpineColors.darkMatched,
     review: SpineColors.darkReview,
@@ -151,6 +166,8 @@ class SpineSemanticColors extends ThemeExtension<SpineSemanticColors> {
     hairline: SpineColors.darkOutlineVariant,
     surfaceRaised: SpineColors.darkSurfaceContainerHigh,
     topEdgeGlow: Color(0x1AFFFFFF),
+    brass: SpineColors.darkPrimaryContainer,
+    onBrass: SpineColors.darkOnPrimaryContainer,
   );
 
   static const light = SpineSemanticColors(
@@ -160,6 +177,8 @@ class SpineSemanticColors extends ThemeExtension<SpineSemanticColors> {
     hairline: SpineColors.lightOutlineVariant,
     surfaceRaised: SpineColors.lightSurfaceContainerLowest,
     topEdgeGlow: Color(0x14000000),
+    brass: SpineColors.lightPrimary,
+    onBrass: SpineColors.lightOnPrimary,
   );
 
   @override
@@ -170,6 +189,8 @@ class SpineSemanticColors extends ThemeExtension<SpineSemanticColors> {
     Color? hairline,
     Color? surfaceRaised,
     Color? topEdgeGlow,
+    Color? brass,
+    Color? onBrass,
   }) {
     return SpineSemanticColors(
       matched: matched ?? this.matched,
@@ -178,6 +199,8 @@ class SpineSemanticColors extends ThemeExtension<SpineSemanticColors> {
       hairline: hairline ?? this.hairline,
       surfaceRaised: surfaceRaised ?? this.surfaceRaised,
       topEdgeGlow: topEdgeGlow ?? this.topEdgeGlow,
+      brass: brass ?? this.brass,
+      onBrass: onBrass ?? this.onBrass,
     );
   }
 
@@ -191,6 +214,8 @@ class SpineSemanticColors extends ThemeExtension<SpineSemanticColors> {
       hairline: Color.lerp(hairline, other.hairline, t)!,
       surfaceRaised: Color.lerp(surfaceRaised, other.surfaceRaised, t)!,
       topEdgeGlow: Color.lerp(topEdgeGlow, other.topEdgeGlow, t)!,
+      brass: Color.lerp(brass, other.brass, t)!,
+      onBrass: Color.lerp(onBrass, other.onBrass, t)!,
     );
   }
 }
