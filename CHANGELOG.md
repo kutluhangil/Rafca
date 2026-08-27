@@ -4,6 +4,14 @@ Newest entries at top.
 
 ## Unreleased
 
+- Faz 5: `services/match/` eklendi — Go eşleştirme servisi; `/v1/match`, `/v1/enhance`, `/v1/health`, IP başına dakikada 60 istek.
+- Faz 5: `internal/normalize` eklendi — spike'ın Dart normalizasyonundan port; Türkçe I/İ katlaması, yayınevi adı sorgudan çıkarılıp ayrı skor sinyali oluyor, uzun imprint adı başlığı boğmasın diye.
+- Faz 5: `internal/score` eklendi — §8.3 ağırlıkları ve §8.4 bantları; yüksek skorlu ama farkı az sonuç MATCHED değil REVIEW, "Dune 1965" ile "Dune 50th Anniversary" tam da düzeltme akışının var olma sebebi.
+- Faz 5: Sırtın iki okuması da skorlanıyor — hangisinin düz olduğu eşleştirmeden önce bilinemiyor, iyi olan kazanıyor.
+- Faz 5: `internal/vlm` eklendi — düşük güvenli kırpımlar için claude-opus-5 ile structured output.
+- Faz 5: Google Books ikinci katmanı bulduğunu `books_index`'e yazıp sonucu birinci katmandan yeniden skorluyor — cevap hep aynı skorlayıcıdan çıkıyor, indeks de kitabı öğreniyor.
+- Faz 5: `internal/matcher/golden_test.go` eklendi — §9 regresyon kapısı; fixture'ı gerçek Postgres'e yükleyip normalize → retrieve → score → band zincirini uçtan uca koşuyor, `make match-golden`. Boş olmayan bir `books_index`'e denk gelirse çalışmayı reddediyor.
+
 - Faz 4: `services/index/` eklendi — `ol-index` üç geçişte çalışır (filter → authors → join); 12 GB'lık editions dump'ı tek seferde belleğe sığmadığı için yazar adları ayrı geçişte çözülür.
 - Faz 4: `internal/copyfmt` eklendi — PostgreSQL COPY text formatı için kaçış; ters bölü, tab, satır sonu ve `text[]` dizileri round-trip doğrulandı.
 - Faz 4: `index-bench` eklendi — pgx ile arama p95 ölçümü, Faz 4 kabul kriteri.

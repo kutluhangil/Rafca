@@ -1,0 +1,94 @@
+{
+  "provenance": "Hand-written pipeline fixture. It exercises normalisation, retrieval, scoring and banding end to end against a real Postgres index, and it is deterministic. It is NOT the Faz 0 accuracy set: SPINE_BLUEPRINT.md 9 requires the golden test to reproduce the Faz 0 report within three points, and Faz 0 has no photographs yet. Replace catalog and cases with the Faz 0 derived set, and min_accuracy with that report's rate, once the gate opens.",
+  "min_accuracy": 1.0,
+  "catalog": [
+    {"ol_key": "/works/OL_TUT", "title": "Tutunamayanlar", "authors": ["Oğuz Atay"], "publisher": "İletişim Yayınları", "publish_year": 1972, "language": "tur"},
+    {"ol_key": "/works/OL_1984", "title": "1984", "authors": ["George Orwell"], "publisher": "Can Yayınları", "publish_year": 1949, "language": "tur"},
+    {"ol_key": "/works/OL_SUC", "title": "Suç ve Ceza", "authors": ["Fyodor Dostoyevski"], "publisher": "İş Bankası Kültür Yayınları", "publish_year": 1866, "language": "tur"},
+    {"ol_key": "/works/OL_YUZ", "title": "Yüzyıllık Yalnızlık", "authors": ["Gabriel García Márquez"], "publisher": "Can Yayınları", "publish_year": 1967, "language": "tur"},
+    {"ol_key": "/works/OL_DUNE_A", "title": "Dune", "authors": ["Frank Herbert"], "publisher": "Ace Books", "publish_year": 1965, "language": "eng"},
+    {"ol_key": "/works/OL_DUNE_B", "title": "Dune", "authors": ["Frank Herbert"], "publisher": "Penguin", "publish_year": 2005, "language": "eng"}
+  ],
+  "cases": [
+    {
+      "name": "clean Turkish spine with the publisher printed on it",
+      "forward": "Tutunamayanlar Oğuz Atay İletişim Yayınları",
+      "reverse": "İletişim Yayınları Atay Oğuz Tutunamayanlar",
+      "language_hint": "tur",
+      "expect_ol_key": "/works/OL_TUT",
+      "expect_band": "matched"
+    },
+    {
+      "name": "all caps, which is how most spines are set",
+      "forward": "TUTUNAMAYANLAR OĞUZ ATAY",
+      "reverse": "ATAY OĞUZ TUTUNAMAYANLAR",
+      "language_hint": "tur",
+      "expect_ol_key": "/works/OL_TUT",
+      "expect_band": "matched"
+    },
+    {
+      "name": "a numeric title",
+      "forward": "1984 George Orwell",
+      "reverse": "Orwell George 1984",
+      "language_hint": "tur",
+      "expect_ol_key": "/works/OL_1984",
+      "expect_band": "matched"
+    },
+    {
+      "name": "Turkish characters on both sides of the match",
+      "forward": "Suç ve Ceza Fyodor Dostoyevski",
+      "reverse": "Dostoyevski Fyodor Ceza ve Suç",
+      "language_hint": "tur",
+      "expect_ol_key": "/works/OL_SUC",
+      "expect_band": "matched"
+    },
+    {
+      "name": "accented author name",
+      "forward": "Yüzyıllık Yalnızlık Gabriel García Márquez",
+      "reverse": "Márquez García Gabriel Yalnızlık Yüzyıllık",
+      "language_hint": "tur",
+      "expect_ol_key": "/works/OL_YUZ",
+      "expect_band": "matched"
+    },
+    {
+      "name": "the spine was upside down, so only the reverse reading is usable",
+      "forward": "!!! ??? ---",
+      "reverse": "1984 George Orwell",
+      "language_hint": "tur",
+      "expect_ol_key": "/works/OL_1984",
+      "expect_band": "matched"
+    },
+    {
+      "name": "two editions of the same book are never MATCHED",
+      "forward": "Dune Frank Herbert",
+      "reverse": "Herbert Frank Dune",
+      "language_hint": "eng",
+      "expect_ol_key": "",
+      "expect_band": "review"
+    },
+    {
+      "name": "half the title was read",
+      "forward": "Tutunamay Oguz",
+      "reverse": "Oguz Tutunamay",
+      "language_hint": "tur",
+      "expect_ol_key": "/works/OL_TUT",
+      "expect_band": "review"
+    },
+    {
+      "name": "unreadable crop",
+      "forward": "### %%% ***",
+      "reverse": "*** %%% ###",
+      "language_hint": "tur",
+      "expect_ol_key": "",
+      "expect_band": "unknown"
+    },
+    {
+      "name": "a real book the catalogue does not hold",
+      "forward": "Sefiller Victor Hugo",
+      "reverse": "Hugo Victor Sefiller",
+      "language_hint": "tur",
+      "expect_ol_key": "",
+      "expect_band": "unknown"
+    }
+  ]
+}

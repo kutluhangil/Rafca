@@ -4,7 +4,7 @@
 # re-runs the whole capture pipeline over spike/dataset and fails when accuracy
 # drops more than 3 points below the last recorded report.
 
-.PHONY: eval eval-build test analyze clean db-start db-stop db-test db-apply index-ingest index-bench
+.PHONY: eval eval-build test analyze clean db-start db-stop db-test db-apply index-ingest index-bench match-golden
 
 VISION_BIN := spike/tool/vision_ocr
 
@@ -56,6 +56,17 @@ index-ingest:
 
 index-bench:
 	cd services/index && $(GO_BIN)/go run ./cmd/index-bench -database-url "$(DATABASE_URL)"
+
+# The section 9 regression gate. It runs against its own database, rebuilt from
+# the migrations on every run: the fixture bands only hold when books_index
+# contains the fixture catalogue and nothing else, so it must never be pointed
+# at $(DEV_DB).
+GOLDEN_DB ?= rafca_golden
+
+match-golden:
+	PATH=$(PG_BIN):$$PATH PGHOST=$(PGHOST) PGPORT=$(PGPORT) supabase/harness/apply.sh $(GOLDEN_DB)
+	cd services/match && RAFCA_GOLDEN_DATABASE_URL="postgres://$(PGUSER)@localhost:$(PGPORT)/$(GOLDEN_DB)?host=$(PGHOST)" \
+	  $(GO_BIN)/go test ./internal/matcher/
 
 clean:
 	rm -rf spike/out $(VISION_BIN)
