@@ -11,6 +11,7 @@ import '../../features/library/screens/book_detail_screen.dart';
 import '../../features/library/screens/shelves_screen.dart';
 import '../../features/review/models/review_models.dart';
 import '../../features/review/screens/scan_results_screen.dart';
+import '../../features/settings/screens/settings_screen.dart';
 
 part 'app_router.g.dart';
 
@@ -37,6 +38,9 @@ abstract final class Routes {
   /// Faz 8 — Library & Shelves routes
   static const bookDetail = '/book';
   static const shelves = '/shelves';
+
+  /// Faz 9 — Settings route
+  static const settings = '/settings';
 }
 
 @Riverpod(keepAlive: true)
@@ -96,6 +100,11 @@ GoRouter appRouter(Ref ref) {
         path: Routes.shelves,
         name: 'shelves',
         builder: (context, state) => const ShelvesScreen(),
+      ),
+      GoRoute(
+        path: Routes.settings,
+        name: 'settings',
+        builder: (context, state) => const SettingsScreen(),
       ),
     ],
   );

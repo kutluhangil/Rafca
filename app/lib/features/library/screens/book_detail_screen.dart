@@ -9,6 +9,7 @@ import '../../../design/components/primary_button.dart';
 import '../../../design/tokens/colors.dart';
 import '../../../design/tokens/spacing.dart';
 import '../../../design/tokens/typography.dart';
+import '../../../l10n/app_localizations.dart';
 import '../data/library_repository.dart';
 import '../models/library_models.dart';
 
@@ -37,6 +38,7 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
   }
 
   void _showEditDialog(BuildContext context, LibraryBook book) {
+    final l10n = AppLocalizations.of(context);
     _titleController.text = book.title;
     _authorController.text = book.author;
 
@@ -44,28 +46,28 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
       context: context,
       builder: (dialogCtx) => AlertDialog(
         backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
-        title: Text('Kitap Detaylarını Düzenle', style: SpineTypography.headlineSmall),
+        title: Text(l10n?.editDetails ?? 'Kitap Detaylarını Düzenle', style: SpineTypography.headlineSmall),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: _titleController,
-              decoration: const InputDecoration(labelText: 'Kitap Başlığı'),
+              decoration: InputDecoration(labelText: l10n?.titleLabel ?? 'Kitap Başlığı'),
             ),
             const SizedBox(height: SpineSpacing.md),
             TextField(
               controller: _authorController,
-              decoration: const InputDecoration(labelText: 'Yazar'),
+              decoration: InputDecoration(labelText: l10n?.authorLabel ?? 'Yazar'),
             ),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogCtx).pop(),
-            child: const Text('İptal'),
+            child: Text(l10n?.cancel ?? 'İptal'),
           ),
           PrimaryButton(
-            label: 'Kaydet',
+            label: l10n?.save ?? 'Kaydet',
             expand: false,
             variant: SpineButtonVariant.primary,
             onPressed: () async {
@@ -87,18 +89,21 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
   }
 
   void _confirmDelete(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     showDialog<void>(
       context: context,
       builder: (dialogCtx) => AlertDialog(
         backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
-        title: Text('Kitabı Sil', style: SpineTypography.headlineSmall),
-        content: const Text(
-          'Bu kitabı arşivinizden kaldırmak istediğinize emin misiniz? Bu işlem geri alınamaz.',
+        title: Text(l10n?.deleteConfirmTitle ?? 'Kitabı Kaldır', style: SpineTypography.headlineSmall),
+        content: Text(
+          l10n?.deleteConfirmMessage ??
+              'Bu kitabı arşivinizden kaldırmak istediğinize emin misiniz? Bu işlem geri alınamaz.',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogCtx).pop(),
-            child: const Text('Vazgeç'),
+            child: Text(l10n?.cancel ?? 'Vazgeç'),
           ),
           TextButton(
             style: TextButton.styleFrom(
@@ -111,7 +116,7 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
                 Navigator.of(context).maybePop();
               }
             },
-            child: const Text('Kaldır / Remove'),
+            child: Text(l10n?.remove ?? 'Kaldır'),
           ),
         ],
       ),
@@ -130,6 +135,7 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
     return StreamBuilder<LibraryBook?>(
       stream: bookStream,
       builder: (context, snapshot) {
+        final l10n = AppLocalizations.of(context);
         final book = snapshot.data;
 
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -156,7 +162,7 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
         return Scaffold(
           backgroundColor: scheme.surface,
           appBar: AppBar(
-            title: const Text('Kitap Detayı'),
+            title: Text(l10n?.bookDetailTitle ?? 'Kitap Detayı'),
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () => context.pop(),
@@ -166,12 +172,12 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
             actions: [
               IconButton(
                 icon: const Icon(Icons.edit_outlined),
-                tooltip: 'Düzenle',
+                tooltip: l10n?.edit ?? 'Düzenle',
                 onPressed: () => _showEditDialog(context, book),
               ),
               IconButton(
                 icon: Icon(Icons.delete_outline, color: scheme.error),
-                tooltip: 'Kaldır',
+                tooltip: l10n?.remove ?? 'Kaldır',
                 onPressed: () => _confirmDelete(context),
               ),
             ],
@@ -188,7 +194,7 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
                     const SizedBox(height: SpineSpacing.xl),
 
                     // Proof of Capture
-                    _buildProofOfCapture(book, scheme, semantic),
+                    _buildProofOfCapture(context, book, scheme, semantic),
                   ],
                 );
 
@@ -250,7 +256,7 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'RAF YERLEŞİMİ / SHELF ASSIGNMENT',
+                            l10n?.shelfLabel ?? 'RAF YERLEŞİMİ',
                             style: SpineTypography.metadataCaps.copyWith(
                               color: scheme.onSurfaceVariant,
                             ),
@@ -271,9 +277,9 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
                               ),
                             ),
                             items: [
-                              const DropdownMenuItem<String?>(
+                              DropdownMenuItem<String?>(
                                 value: null,
-                                child: Text('Rafsız / No Shelf'),
+                                child: Text(l10n?.unassignedShelf ?? 'Rafsız / No Shelf'),
                               ),
                               for (final s in shelves)
                                 DropdownMenuItem<String?>(
@@ -290,7 +296,7 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
                           const SizedBox(height: SpineSpacing.lg),
 
                           Text(
-                            'OKUMA DURUMU / READING STATUS',
+                            l10n?.readingStatusLabel ?? 'OKUMA DURUMU',
                             style: SpineTypography.metadataCaps.copyWith(
                               color: scheme.onSurfaceVariant,
                             ),
@@ -310,18 +316,18 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
                                 ),
                               ),
                             ),
-                            items: const [
+                            items: [
                               DropdownMenuItem(
                                 value: ReadingStatus.unread,
-                                child: Text('Okunacak / Want to Read'),
+                                child: Text(l10n?.filterUnread ?? 'Okunacak'),
                               ),
                               DropdownMenuItem(
                                 value: ReadingStatus.reading,
-                                child: Text('Okunuyor / Reading'),
+                                child: Text(l10n?.filterReading ?? 'Okunuyor'),
                               ),
                               DropdownMenuItem(
                                 value: ReadingStatus.read,
-                                child: Text('Okundu / Read'),
+                                child: Text(l10n?.filterRead ?? 'Okundu'),
                               ),
                             ],
                             onChanged: (newStatus) {
@@ -342,7 +348,7 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
                       children: [
                         Expanded(
                           child: PrimaryButton(
-                            label: 'Düzenle',
+                            label: l10n?.edit ?? 'Düzenle',
                             variant: SpineButtonVariant.primary,
                             onPressed: () => _showEditDialog(context, book),
                           ),
@@ -350,7 +356,7 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
                         const SizedBox(width: SpineSpacing.md),
                         Expanded(
                           child: PrimaryButton(
-                            label: 'Kaldır',
+                            label: l10n?.remove ?? 'Kaldır',
                             variant: SpineButtonVariant.secondary,
                             onPressed: () => _confirmDelete(context),
                           ),
@@ -448,7 +454,8 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
     );
   }
 
-  Widget _buildProofOfCapture(LibraryBook book, ColorScheme scheme, SpineSemanticColors semantic) {
+  Widget _buildProofOfCapture(BuildContext context, LibraryBook book, ColorScheme scheme, SpineSemanticColors semantic) {
+    final l10n = AppLocalizations.of(context);
     final hasCapture = book.capturePath != null && File(book.capturePath!).existsSync();
 
     return Container(
@@ -466,7 +473,7 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'PROOF OF CAPTURE (FİZİKSEL SIRT)',
+            l10n?.proofOfCapture ?? 'PROOF OF CAPTURE',
             style: SpineTypography.metadataCaps.copyWith(
               color: scheme.onSurfaceVariant,
             ),

@@ -5,6 +5,9 @@ import '../../../design/components/primary_button.dart';
 import '../../../design/tokens/colors.dart';
 import '../../../design/tokens/spacing.dart';
 import '../../../design/tokens/typography.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../share/models/share_models.dart';
+import '../../share/widgets/share_bottom_sheet.dart';
 import '../data/library_repository.dart';
 import '../widgets/shelf_card.dart';
 import 'library_screen.dart';
@@ -28,26 +31,27 @@ class _ShelvesScreenState extends ConsumerState<ShelvesScreen> {
 
   void _showCreateShelfDialog(BuildContext context) {
     _nameController.clear();
+    final l10n = AppLocalizations.of(context);
 
     showDialog<void>(
       context: context,
       builder: (dialogCtx) => AlertDialog(
         backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
-        title: Text('Yeni Raf Oluştur', style: SpineTypography.headlineSmall),
+        title: Text(l10n?.createShelf ?? 'Yeni Raf Oluştur', style: SpineTypography.headlineSmall),
         content: TextField(
           controller: _nameController,
           autofocus: true,
-          decoration: const InputDecoration(
-            labelText: 'Raf Adı (örn. Tarih, Felsefe, Okunacaklar)',
+          decoration: InputDecoration(
+            labelText: l10n?.shelfNamePlaceholder ?? 'Raf Adı',
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogCtx).pop(),
-            child: const Text('İptal'),
+            child: Text(l10n?.cancel ?? 'İptal'),
           ),
           PrimaryButton(
-            label: 'Oluştur',
+            label: l10n?.confirm ?? 'Oluştur',
             expand: false,
             variant: SpineButtonVariant.primary,
             onPressed: () async {
@@ -64,18 +68,21 @@ class _ShelvesScreenState extends ConsumerState<ShelvesScreen> {
   }
 
   void _confirmDeleteShelf(BuildContext context, String shelfId, String shelfName) {
+    final l10n = AppLocalizations.of(context);
+
     showDialog<void>(
       context: context,
       builder: (dialogCtx) => AlertDialog(
         backgroundColor: Theme.of(context).colorScheme.surfaceContainerHigh,
-        title: Text('Rafı Sil', style: SpineTypography.headlineSmall),
+        title: Text(l10n?.deleteShelfTitle ?? 'Rafı Sil', style: SpineTypography.headlineSmall),
         content: Text(
-          '"$shelfName" rafını silmek istediğinize emin misiniz? Raftaki kitaplar arşivinizde kalır, sadece raf bağlantısı kaldırılır.',
+          l10n?.deleteShelfMessage(shelfName) ??
+              '"$shelfName" rafını silmek istediğinize emin misiniz? (Raftaki kitaplar silinmez, sahipsiz kalır.)',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogCtx).pop(),
-            child: const Text('Vazgeç'),
+            child: Text(l10n?.cancel ?? 'İptal'),
           ),
           TextButton(
             style: TextButton.styleFrom(
@@ -85,7 +92,7 @@ class _ShelvesScreenState extends ConsumerState<ShelvesScreen> {
               Navigator.of(dialogCtx).pop();
               await ref.read(libraryRepositoryProvider).deleteShelf(shelfId);
             },
-            child: const Text('Sil / Delete'),
+            child: Text(l10n?.delete ?? 'Sil'),
           ),
         ],
       ),
@@ -96,12 +103,13 @@ class _ShelvesScreenState extends ConsumerState<ShelvesScreen> {
   Widget build(BuildContext context) {
     final semantic = context.spineColors;
     final scheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context);
     final shelvesAsync = ref.watch(libraryShelvesProvider);
 
     return Scaffold(
       backgroundColor: scheme.surface,
       appBar: AppBar(
-        title: const Text('Raflarınız / Shelves'),
+        title: Text(l10n?.shelvesTitle ?? 'Raflarınız / Shelves'),
         backgroundColor: scheme.surface,
         surfaceTintColor: Colors.transparent,
       ),
@@ -111,7 +119,7 @@ class _ShelvesScreenState extends ConsumerState<ShelvesScreen> {
         foregroundColor: semantic.onBrass,
         icon: const Icon(Icons.add),
         label: Text(
-          'YENİ RAF',
+          l10n?.createShelf ?? 'YENİ RAF',
           style: SpineTypography.metadataCaps.copyWith(
             color: semantic.onBrass,
           ),
@@ -135,12 +143,13 @@ class _ShelvesScreenState extends ConsumerState<ShelvesScreen> {
                     ),
                     const SizedBox(height: SpineSpacing.base),
                     Text(
-                      'Henüz raf oluşturulmadı.',
+                      l10n?.noShelves ?? 'Henüz raf oluşturulmadı.',
                       style: SpineTypography.headlineSmall,
                     ),
                     const SizedBox(height: SpineSpacing.sm),
                     Text(
-                      'Kitaplarınızı temalarına, odalarınıza veya türlerine göre düzenlemek için bir raf oluşturun.',
+                      l10n?.noShelvesDesc ??
+                          'Kitaplarınızı temalarına, odalarınıza veya türlerine göre düzenlemek için bir raf oluşturun.',
                       style: SpineTypography.bodyMedium.copyWith(
                         color: scheme.onSurfaceVariant,
                       ),
@@ -148,7 +157,7 @@ class _ShelvesScreenState extends ConsumerState<ShelvesScreen> {
                     ),
                     const SizedBox(height: SpineSpacing.xl),
                     PrimaryButton(
-                      label: 'İlk Rafı Oluştur',
+                      label: l10n?.createShelf ?? 'İlk Rafı Oluştur',
                       variant: SpineButtonVariant.primary,
                       expand: false,
                       onPressed: () => _showCreateShelfDialog(context),
@@ -191,6 +200,17 @@ class _ShelvesScreenState extends ConsumerState<ShelvesScreen> {
                                   initialShelfName: shelf.name,
                                 ),
                               ),
+                            ),
+                          );
+                        },
+                        onShare: () {
+                          ShareBottomSheet.show(
+                            context,
+                            data: ShareCollectionData(
+                              title: shelf.name,
+                              subtitle: shelf.name,
+                              bookCount: shelf.bookCount,
+                              spineColors: shelf.spineColors,
                             ),
                           );
                         },

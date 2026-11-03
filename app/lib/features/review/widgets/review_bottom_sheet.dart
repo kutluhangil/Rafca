@@ -8,6 +8,7 @@ import '../../../design/components/primary_button.dart';
 import '../../../design/tokens/colors.dart';
 import '../../../design/tokens/spacing.dart';
 import '../../../design/tokens/typography.dart';
+import '../../../l10n/app_localizations.dart';
 import '../models/review_models.dart';
 
 /// Bottom sheet allowing user to review multiple candidate editions or manually fix a spine.
@@ -31,6 +32,7 @@ class ReviewBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final semantic = context.spineColors;
     final scheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context);
 
     return Container(
       decoration: BoxDecoration(
@@ -160,7 +162,7 @@ class ReviewBottomSheet extends StatelessWidget {
 
               // 4. Candidate List
               Text(
-                'DOĞRU BASKIYI SEÇİN',
+                (l10n?.suggestedEditions ?? 'DOĞRU BASKIYI SEÇİN').toUpperCase(),
                 style: SpineTypography.metadataCaps.copyWith(
                   color: scheme.onSurfaceVariant,
                 ),
@@ -171,7 +173,7 @@ class ReviewBottomSheet extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: SpineSpacing.md),
                   child: Text(
-                    'Öneri bulunamadı. Lütfen manuel arayın.',
+                    l10n?.noSuggestions ?? 'Öneri bulunamadı. Lütfen manuel arayın.',
                     style: SpineTypography.bodyMedium.copyWith(
                       color: scheme.onSurfaceVariant,
                     ),
@@ -192,7 +194,7 @@ class ReviewBottomSheet extends StatelessWidget {
 
               // 5. Secondary Actions
               PrimaryButton(
-                label: 'Manuel Ara',
+                label: l10n?.searchManually ?? 'Manuel Ara',
                 variant: SpineButtonVariant.secondary,
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -207,7 +209,7 @@ class ReviewBottomSheet extends StatelessWidget {
                   Navigator.of(context).pop();
                 },
                 child: Text(
-                  'Kitap Değil / Not a book',
+                  l10n?.notABook ?? 'Kitap Değil',
                   style: SpineTypography.bodySmall.copyWith(
                     color: scheme.error,
                   ),

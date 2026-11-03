@@ -8,6 +8,7 @@ import 'package:rafca/core/database/tables.dart';
 import 'package:rafca/design/components/primary_button.dart';
 import 'package:rafca/design/theme/spine_theme.dart';
 import 'package:rafca/features/library/screens/book_detail_screen.dart';
+import 'package:rafca/l10n/app_localizations.dart';
 
 void main() {
   group('BookDetailScreen', () {
@@ -28,6 +29,9 @@ void main() {
         ],
         child: MaterialApp(
           theme: SpineTheme.dark,
+          locale: const Locale('tr'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           home: child,
         ),
       );
@@ -101,7 +105,7 @@ void main() {
       await tester.tap(find.widgetWithText(PrimaryButton, 'DÜZENLE'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Kitap Detaylarını Düzenle'), findsOneWidget);
+      expect(find.text('Bilgileri Düzenle'), findsOneWidget);
 
       // Change title
       final titleField = find.widgetWithText(TextField, 'Eski Başlık');
@@ -144,10 +148,15 @@ void main() {
       await tester.tap(find.widgetWithText(PrimaryButton, 'KALDIR'));
       await tester.pumpAndSettle();
 
-      expect(find.text('Kitabı Sil'), findsOneWidget);
+      expect(find.text('Kitabı Kaldır'), findsOneWidget);
 
       // Confirm delete
-      await tester.tap(find.text('Kaldır / Remove'));
+      await tester.tap(
+        find.descendant(
+          of: find.byType(AlertDialog),
+          matching: find.text('KALDIR'),
+        ),
+      );
       await tester.pumpAndSettle();
 
       final exists = await (db.select(db.userBooks)..where((u) => u.id.equals('bd_del'))).getSingleOrNull();

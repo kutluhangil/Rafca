@@ -14,6 +14,7 @@ import '../../../design/adaptive/adaptive_scaffold.dart';
 import '../../../design/tokens/colors.dart';
 import '../../../design/tokens/spacing.dart';
 import '../../../design/tokens/typography.dart';
+import '../../../l10n/app_localizations.dart';
 import '../state/capture_notifier.dart';
 import '../state/capture_state.dart';
 import '../widgets/level_indicator.dart';
@@ -220,6 +221,8 @@ class _CameraScreenState extends ConsumerState<CameraScreen>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     if (!_isPermissionChecked) {
       return const Scaffold(
         body: Center(child: CircularProgressIndicator()),
@@ -239,7 +242,7 @@ class _CameraScreenState extends ConsumerState<CameraScreen>
 
     if (_initError != null) {
       return AdaptiveScaffold(
-        title: 'Kamera',
+        title: l10n?.cameraTitle ?? 'Kamera',
         largeTitle: false,
         leading: IconButton(
           icon: const Icon(Icons.close),
@@ -283,7 +286,7 @@ class _CameraScreenState extends ConsumerState<CameraScreen>
           CameraPreview(controller),
 
           // 2. Shelf alignment guideline overlay
-          _buildAlignmentGuide(semantic),
+          _buildAlignmentGuide(context, semantic),
 
           // 3. Top bar (Close, Spirit level, Flash toggle)
           SafeArea(
@@ -362,7 +365,8 @@ class _CameraScreenState extends ConsumerState<CameraScreen>
     );
   }
 
-  Widget _buildAlignmentGuide(SpineSemanticColors semantic) {
+  Widget _buildAlignmentGuide(BuildContext context, SpineSemanticColors semantic) {
+    final l10n = AppLocalizations.of(context);
     return IgnorePointer(
       child: Center(
         child: Container(
@@ -379,7 +383,7 @@ class _CameraScreenState extends ConsumerState<CameraScreen>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'RAF KILAVUZU / ALIGN SHELF',
+                (l10n?.cameraTitle ?? 'RAF KILAVUZU').toUpperCase(),
                 style: SpineTypography.metadataCaps.copyWith(
                   color: semantic.brass.withValues(alpha: 0.7),
                 ),

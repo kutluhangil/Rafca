@@ -2,11 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:rafca/core/app/rafca_app.dart';
+import 'package:rafca/core/localization/locale_controller.dart';
 import 'package:rafca/core/theme/theme_mode_controller.dart';
+
+class _TrLocaleController extends LocaleController {
+  _TrLocaleController() {
+    state = const Locale('tr');
+  }
+}
 
 void main() {
   testWidgets('app boots and renders the home screen', (tester) async {
-    await tester.pumpWidget(const ProviderScope(child: RafcaApp()));
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          localeControllerProvider.overrideWith((ref) => _TrLocaleController()),
+        ],
+        child: const RafcaApp(),
+      ),
+    );
     await tester.pumpAndSettle();
 
     expect(find.text('Rafça'), findsWidgets);

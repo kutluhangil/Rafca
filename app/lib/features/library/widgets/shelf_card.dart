@@ -4,6 +4,7 @@ import '../../../design/components/shelf_strip.dart';
 import '../../../design/tokens/colors.dart';
 import '../../../design/tokens/spacing.dart';
 import '../../../design/tokens/typography.dart';
+import '../../../l10n/app_localizations.dart';
 import '../models/library_models.dart';
 
 /// Shelf card per SPINE_BLUEPRINT.md and shelves_list mockup (Image 14).
@@ -13,16 +14,19 @@ class ShelfCard extends StatelessWidget {
     required this.shelf,
     required this.onTap,
     this.onDelete,
+    this.onShare,
   });
 
   final LibraryShelf shelf;
   final VoidCallback onTap;
   final VoidCallback? onDelete;
+  final VoidCallback? onShare;
 
   @override
   Widget build(BuildContext context) {
     final semantic = context.spineColors;
     final scheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context);
 
     final bars = shelf.spineColors.isNotEmpty
         ? [
@@ -71,7 +75,8 @@ class ShelfCard extends StatelessWidget {
                           ),
                           const SizedBox(height: SpineSpacing.xs),
                           Text(
-                            '${shelf.bookCount} CİLT / VOLUMES',
+                            l10n?.bookCount(shelf.bookCount) ??
+                                '${shelf.bookCount} CİLT',
                             style: SpineTypography.metadataCaps.copyWith(
                               color: scheme.onSurfaceVariant,
                             ),
@@ -79,7 +84,7 @@ class ShelfCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    if (onDelete != null)
+                    if (onDelete != null || onShare != null)
                       PopupMenuButton<String>(
                         icon: Icon(
                           Icons.more_vert,
@@ -87,22 +92,41 @@ class ShelfCard extends StatelessWidget {
                           color: scheme.onSurfaceVariant,
                         ),
                         onSelected: (val) {
+                          if (val == 'share') onShare?.call();
                           if (val == 'delete') onDelete?.call();
                         },
                         itemBuilder: (context) => [
-                          PopupMenuItem(
-                            value: 'delete',
-                            child: Row(
-                              children: [
-                                Icon(Icons.delete_outline, color: scheme.error, size: 18),
-                                const SizedBox(width: SpineSpacing.sm),
-                                Text(
-                                  'Rafı Sil',
-                                  style: SpineTypography.bodySmall.copyWith(color: scheme.error),
-                                ),
-                              ],
+                          if (onShare != null)
+                            PopupMenuItem(
+                              value: 'share',
+                              child: Row(
+                                children: [
+                                  Icon(Icons.share_outlined,
+                                      color: semantic.brass, size: 18),
+                                  const SizedBox(width: SpineSpacing.sm),
+                                  Text(
+                                    l10n?.shareShelf ?? 'Rafı Paylaş',
+                                    style: SpineTypography.bodySmall,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
+                          if (onDelete != null)
+                            PopupMenuItem(
+                              value: 'delete',
+                              child: Row(
+                                children: [
+                                  Icon(Icons.delete_outline,
+                                      color: scheme.error, size: 18),
+                                  const SizedBox(width: SpineSpacing.sm),
+                                  Text(
+                                    l10n?.deleteShelfTitle ?? 'Rafı Sil',
+                                    style: SpineTypography.bodySmall
+                                        .copyWith(color: scheme.error),
+                                  ),
+                                ],
+                              ),
+                            ),
                         ],
                       ),
                   ],

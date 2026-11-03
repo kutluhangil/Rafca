@@ -19,7 +19,18 @@ işaretlenir.
 
 | Yerel doğrulama veritabanı | Düz PostgreSQL 17 + pgTAP (Docker diski dolu); `supabase start` kanonik yol olarak kalır | 2026-08-27 |
 
-Faz detayları: [PROGRESS_FAZ1.md](PROGRESS_FAZ1.md) · [PROGRESS_FAZ2.md](PROGRESS_FAZ2.md) · [PROGRESS_FAZ3.md](PROGRESS_FAZ3.md) · [PROGRESS_FAZ6.md](PROGRESS_FAZ6.md) · [PROGRESS_FAZ7.md](PROGRESS_FAZ7.md) · [PROGRESS_FAZ8.md](PROGRESS_FAZ8.md).
+Faz detayları: [PROGRESS_FAZ1.md](PROGRESS_FAZ1.md) · [PROGRESS_FAZ2.md](PROGRESS_FAZ2.md) · [PROGRESS_FAZ3.md](PROGRESS_FAZ3.md) · [PROGRESS_FAZ6.md](PROGRESS_FAZ6.md) · [PROGRESS_FAZ7.md](PROGRESS_FAZ7.md) · [PROGRESS_FAZ8.md](PROGRESS_FAZ8.md) · [PROGRESS_FAZ9.md](PROGRESS_FAZ9.md).
+
+## FAZ 9 — Paylaşım ve Yerelleştirme (A9)
+
+**Durum: KAPALI.**
+
+Paylaşılabilir koleksiyon kartı (Image 13 - `ShareCard`, `ShareBottomSheet`, `share_plus` PNG/metin dışa aktarma),
+TR/EN i18n altyapısı (`flutter_localizations`, ARB dosyaları, `LocaleController`, tüm ekranların yerelleştirilmesi),
+Ayarlar ekranı (`SettingsScreen` - tema modu, dil seçici, bulut senkronu anahtarı, RFC 4180 CSV & JSON veri dışa aktarımı,
+kütüphaneyi sıfırlama ve gizlilik bildirimi) tamamlandı.
+`flutter analyze` temiz (0 issue), `flutter test` 118/118 yeşil.
+Detay: [PROGRESS_FAZ9.md](PROGRESS_FAZ9.md).
 
 ## FAZ 8 — Kütüphane ve Raflar (A8)
 

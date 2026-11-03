@@ -47,6 +47,8 @@ dependencies:
   palette_generator: ^0.3.3+4
   spine_clustering:
     path: ../packages/spine_clustering
+  intl: ^0.20.3
+  share_plus: ^13.3.1
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +63,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true
 
   # SPINE_BLUEPRINT.md 4.2: the three faces are embedded rather than pulled by
   # the google_fonts package, so the app renders correctly offline and the

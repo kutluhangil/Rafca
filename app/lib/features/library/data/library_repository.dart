@@ -46,51 +46,53 @@ class LibraryRepository {
 
     query.orderBy([OrderingTerm.desc(_db.userBooks.addedAt)]);
 
-    return query.watch().map((rows) {
-      final list = <LibraryBook>[];
+    return query.watch().map((rows) => _mapRows(rows, searchQuery));
+  }
 
-      for (final row in rows) {
-        final userBook = row.readTable(_db.userBooks);
-        final catalogBook = row.readTableOrNull(_db.catalogBooks);
-        final shelf = row.readTableOrNull(_db.shelves);
+  List<LibraryBook> _mapRows(List<TypedResult> rows, [String? searchQuery]) {
+    final list = <LibraryBook>[];
 
-        final title = catalogBook?.title ?? userBook.manualTitle ?? 'Bilinmeyen Eser';
-        final author = (catalogBook?.authors.isNotEmpty ?? false)
-            ? catalogBook!.authors.first
-            : (userBook.manualAuthor ?? 'Bilinmeyen Yazar');
+    for (final row in rows) {
+      final userBook = row.readTable(_db.userBooks);
+      final catalogBook = row.readTableOrNull(_db.catalogBooks);
+      final shelf = row.readTableOrNull(_db.shelves);
 
-        if (searchQuery != null && searchQuery.trim().isNotEmpty) {
-          final q = searchQuery.toLowerCase().trim();
-          final matchesTitle = title.toLowerCase().contains(q);
-          final matchesAuthor = author.toLowerCase().contains(q);
-          final matchesPub = (catalogBook?.publisher ?? '').toLowerCase().contains(q);
-          if (!matchesTitle && !matchesAuthor && !matchesPub) {
-            continue;
-          }
+      final title = catalogBook?.title ?? userBook.manualTitle ?? 'Bilinmeyen Eser';
+      final author = (catalogBook?.authors.isNotEmpty ?? false)
+          ? catalogBook!.authors.first
+          : (userBook.manualAuthor ?? 'Bilinmeyen Yazar');
+
+      if (searchQuery != null && searchQuery.trim().isNotEmpty) {
+        final q = searchQuery.toLowerCase().trim();
+        final matchesTitle = title.toLowerCase().contains(q);
+        final matchesAuthor = author.toLowerCase().contains(q);
+        final matchesPub = (catalogBook?.publisher ?? '').toLowerCase().contains(q);
+        if (!matchesTitle && !matchesAuthor && !matchesPub) {
+          continue;
         }
-
-        list.add(
-          LibraryBook(
-            id: userBook.id,
-            catalogBookId: userBook.bookId,
-            title: title,
-            author: author,
-            publisher: catalogBook?.publisher,
-            publishYear: catalogBook?.publishYear,
-            coverUrl: catalogBook?.coverUrl,
-            status: userBook.status,
-            confidence: userBook.confidence,
-            spineColor: userBook.spineColor,
-            capturePath: userBook.capturePath,
-            shelfId: userBook.shelfId,
-            shelfName: shelf?.name,
-            addedAt: userBook.addedAt,
-          ),
-        );
       }
 
-      return list;
-    });
+      list.add(
+        LibraryBook(
+          id: userBook.id,
+          catalogBookId: userBook.bookId,
+          title: title,
+          author: author,
+          publisher: catalogBook?.publisher,
+          publishYear: catalogBook?.publishYear,
+          coverUrl: catalogBook?.coverUrl,
+          status: userBook.status,
+          confidence: userBook.confidence,
+          spineColor: userBook.spineColor,
+          capturePath: userBook.capturePath,
+          shelfId: userBook.shelfId,
+          shelfName: shelf?.name,
+          addedAt: userBook.addedAt,
+        ),
+      );
+    }
+
+    return list;
   }
 
   /// Watch count of items pending review or correction (BLUEPRINT §8).
@@ -284,6 +286,40 @@ class LibraryRepository {
         rowId: shelfId,
         operation: SyncOperation.delete,
       );
+    });
+  }
+
+  /// Fetches all books in the library once (for export).
+  Future<List<LibraryBook>> getAllBooks({String? shelfId}) async {
+    final query = _db.select(_db.userBooks).join([
+      leftOuterJoin(
+        _db.catalogBooks,
+        _db.catalogBooks.id.equalsExp(_db.userBooks.bookId),
+      ),
+      leftOuterJoin(
+        _db.shelves,
+        _db.shelves.id.equalsExp(_db.userBooks.shelfId),
+      ),
+    ]);
+
+    query.where(_db.userBooks.confidence.equalsValue(MatchConfidence.matched));
+
+    if (shelfId != null) {
+      query.where(_db.userBooks.shelfId.equals(shelfId));
+    }
+
+    query.orderBy([OrderingTerm.desc(_db.userBooks.addedAt)]);
+    final rows = await query.get();
+    return _mapRows(rows);
+  }
+
+  /// Completely wipes local library data (userBooks, shelves, scans, syncQueue).
+  Future<void> clearAllData() async {
+    await _db.transaction(() async {
+      await _db.delete(_db.userBooks).go();
+      await _db.delete(_db.shelves).go();
+      await _db.delete(_db.scans).go();
+      await _db.delete(_db.syncQueueEntries).go();
     });
   }
 }

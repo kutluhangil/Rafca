@@ -8,6 +8,7 @@ import 'package:rafca/core/database/tables.dart';
 import 'package:rafca/design/components/primary_button.dart';
 import 'package:rafca/design/theme/spine_theme.dart';
 import 'package:rafca/features/library/screens/shelves_screen.dart';
+import 'package:rafca/l10n/app_localizations.dart';
 
 void main() {
   group('ShelvesScreen', () {
@@ -32,6 +33,9 @@ void main() {
         ],
         child: MaterialApp(
           theme: SpineTheme.dark,
+          locale: const Locale('tr'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           home: child,
         ),
       );
@@ -77,7 +81,7 @@ void main() {
       await tester.pump(const Duration(seconds: 1));
 
       expect(find.text('Tarih'), findsOneWidget);
-      expect(find.text('1 CİLT / VOLUMES'), findsOneWidget);
+      expect(find.text('1 Kitap'), findsOneWidget);
 
       await tester.pumpWidget(const SizedBox());
       await tester.pumpAndSettle();
@@ -93,12 +97,12 @@ void main() {
       await tester.tap(find.byType(PrimaryButton));
       await tester.pumpAndSettle();
 
-      expect(find.text('Yeni Raf Oluştur'), findsOneWidget);
+      expect(find.descendant(of: find.byType(AlertDialog), matching: find.text('Yeni Raf Oluştur')), findsOneWidget);
 
       await tester.enterText(find.byType(TextField), 'Felsefe');
       await tester.pumpAndSettle();
 
-      await tester.tap(find.widgetWithText(PrimaryButton, 'OLUŞTUR'));
+      await tester.tap(find.descendant(of: find.byType(AlertDialog), matching: find.byType(PrimaryButton)));
       await tester.pumpAndSettle();
 
       final shelves = await db.select(db.shelves).get();

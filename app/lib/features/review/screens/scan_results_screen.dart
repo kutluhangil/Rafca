@@ -13,6 +13,7 @@ import '../../../design/components/shelf_strip.dart';
 import '../../../design/tokens/colors.dart';
 import '../../../design/tokens/spacing.dart';
 import '../../../design/tokens/typography.dart';
+import '../../../l10n/app_localizations.dart';
 import '../models/review_models.dart';
 import '../state/review_controller.dart';
 import '../widgets/review_bottom_sheet.dart';
@@ -120,6 +121,7 @@ class _ScanResultsScreenState extends ConsumerState<ScanResultsScreen> {
     final batch = ref.watch(reviewControllerProvider(widget.initialBatch));
     final semantic = context.spineColors;
     final scheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context);
 
     final matched = batch.matchedItems;
     final needsReview = batch.reviewItems;
@@ -140,7 +142,7 @@ class _ScanResultsScreenState extends ConsumerState<ScanResultsScreen> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar.large(
-            title: const Text('Tarama Sonuçları'),
+            title: Text(l10n?.scanResultsTitle ?? 'Tarama Sonuçları'),
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () => context.pop(),
@@ -237,7 +239,7 @@ class _ScanResultsScreenState extends ConsumerState<ScanResultsScreen> {
                 // 3. MATCHED GROUP
                 if (matched.isNotEmpty) ...[
                   _SectionHeader(
-                    title: 'Eşleşen Kitaplar / Matched',
+                    title: l10n?.matchedGroup ?? 'Eşleşen Kitaplar',
                     count: matched.length,
                     color: semantic.matched,
                   ),
@@ -253,7 +255,7 @@ class _ScanResultsScreenState extends ConsumerState<ScanResultsScreen> {
                 // 4. NEEDS REVIEW GROUP
                 if (needsReview.isNotEmpty) ...[
                   _SectionHeader(
-                    title: 'İnceleme Gerekenler / Needs Review',
+                    title: l10n?.needsReviewGroup ?? 'İnceleme Gerekenler',
                     count: needsReview.length,
                     color: semantic.review,
                   ),
@@ -269,7 +271,7 @@ class _ScanResultsScreenState extends ConsumerState<ScanResultsScreen> {
                 // 5. UNRECOGNIZED GROUP
                 if (unrecognized.isNotEmpty) ...[
                   _SectionHeader(
-                    title: 'Tanınamayanlar / Unrecognized',
+                    title: l10n?.unrecognizedGroup ?? 'Tanınamayanlar',
                     count: unrecognized.length,
                     color: semantic.unknown,
                   ),
@@ -310,7 +312,8 @@ class _ScanResultsScreenState extends ConsumerState<ScanResultsScreen> {
               if (batch.totalIssuesCount > 0)
                 Expanded(
                   child: PrimaryButton(
-                    label: '${batch.totalIssuesCount} SORUNU İNCELE',
+                    label: l10n?.reviewIssuesButton(batch.totalIssuesCount) ??
+                        '${batch.totalIssuesCount} SORUNU İNCELE',
                     variant: SpineButtonVariant.secondary,
                     onPressed: () {
                       final firstIssue = needsReview.isNotEmpty
@@ -325,8 +328,9 @@ class _ScanResultsScreenState extends ConsumerState<ScanResultsScreen> {
               Expanded(
                 child: PrimaryButton(
                   label: _isSaving
-                      ? 'KAYDEDİLİYOR...'
-                      : '${matched.length} KİTABI EKLE',
+                      ? (l10n?.processing ?? 'KAYDEDİLİYOR...')
+                      : (l10n?.addMatchedBooksButton(matched.length) ??
+                          '${matched.length} KİTABI EKLE'),
                   variant: SpineButtonVariant.primary,
                   onPressed: _isSaving || matched.isEmpty
                       ? null

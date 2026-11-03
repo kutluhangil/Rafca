@@ -13,6 +13,9 @@ import '../../../design/components/shelf_strip.dart';
 import '../../../design/tokens/colors.dart';
 import '../../../design/tokens/spacing.dart';
 import '../../../design/tokens/typography.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../share/models/share_models.dart';
+import '../../share/widgets/share_bottom_sheet.dart';
 import '../data/library_repository.dart';
 import '../models/library_models.dart';
 import '../widgets/pending_reviews_banner.dart';
@@ -85,6 +88,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
   /// Empty state per Image 3 & SPINE_BLUEPRINT.md 4.4.
   Widget _buildEmptyState(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context);
 
     return CustomScrollView(
       slivers: [
@@ -101,13 +105,14 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                 const Spacer(),
                 // Greeting
                 Text(
-                  'İyi akşamlar.',
+                  l10n?.goodEvening ?? 'İyi akşamlar.',
                   style: SpineTypography.headlineMedium,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: SpineSpacing.xs),
                 Text(
-                  'Arşiv raflarınız kürasyonunuzu bekliyor.',
+                  l10n?.emptyLibraryDesc ??
+                      'Arşiv raflarınız kürasyonunuzu bekliyor.',
                   style: SpineTypography.bodyLarge.copyWith(
                     color: scheme.onSurfaceVariant,
                   ),
@@ -130,7 +135,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
 
                 // CTA
                 Text(
-                  'Kütüphane sessiz.',
+                  l10n?.libraryQuiet ?? 'Kütüphane sessiz.',
                   style: SpineTypography.headlineSmall,
                   textAlign: TextAlign.center,
                 ),
@@ -138,7 +143,8 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                 ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 340),
                   child: Text(
-                    'Raflarınızdaki fiziksel kitapları fotoğraflayarak arşivleme yolculuğunuza başlayın.',
+                    l10n?.emptyLibraryDesc ??
+                        'Raflarınızdaki fiziksel kitapları fotoğraflayarak arşivleme yolculuğunuza başlayın.',
                     style: SpineTypography.bodyMedium.copyWith(
                       color: scheme.onSurfaceVariant,
                     ),
@@ -149,7 +155,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
 
                 // Scan Button
                 PrimaryButton(
-                  label: 'İlk Rafınızı Tarayın',
+                  label: l10n?.scanFirstShelf ?? 'İlk Rafınızı Tarayın',
                   variant: SpineButtonVariant.primary,
                   expand: false,
                   onPressed: () => context.push(Routes.capture),
@@ -171,6 +177,8 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
     required SpineSemanticColors semantic,
     required ColorScheme scheme,
   }) {
+    final l10n = AppLocalizations.of(context);
+
     // Build full-bleed ShelfStrip bars from books
     final shelfBars = [
       for (final book in books)
@@ -208,7 +216,8 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(
-                        '$pendingCount bekleyen sırt bulunuyor. Düzeltme akışını açmak için tarama sonuçlarına gidin.',
+                        l10n?.pendingReviewBanner(pendingCount) ??
+                            '$pendingCount bekleyen sırt bulunuyor.',
                       ),
                       backgroundColor: semantic.review,
                     ),
@@ -230,16 +239,33 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                   children: [
                     Expanded(
                       child: Text(
-                        widget.initialShelfName != null
-                            ? widget.initialShelfName!
-                            : 'Koleksiyonunuz / Library',
+                        widget.initialShelfName ?? (l10n?.libraryTab ?? 'Kütüphane'),
                         style: SpineTypography.headlineMedium,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
+                    IconButton(
+                      icon: const Icon(Icons.share_outlined),
+                      tooltip: l10n?.shareCollectionTitle ?? 'Paylaş',
+                      color: semantic.brass,
+                      onPressed: () {
+                        ShareBottomSheet.show(
+                          context,
+                          data: ShareCollectionData(
+                            title: widget.initialShelfName ?? 'Rafça',
+                            subtitle: widget.initialShelfName ??
+                                (l10n?.autumnCollection ?? 'Koleksiyon'),
+                            bookCount: books.length,
+                            spineColors: books
+                                .map((b) => b.spineColor ?? '#C9963F')
+                                .toList(),
+                          ),
+                        );
+                      },
+                    ),
                     Text(
-                      '${books.length} CİLT',
+                      l10n?.bookCount(books.length) ?? '${books.length} CİLT',
                       style: SpineTypography.metadataCaps.copyWith(
                         color: semantic.brass,
                       ),
@@ -253,7 +279,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                   controller: _searchController,
                   style: SpineTypography.bodyMedium,
                   decoration: InputDecoration(
-                    hintText: 'Başlık, yazar veya yayınevi ara...',
+                    hintText: l10n?.searchPlaceholder ?? 'Başlık, yazar veya yayınevi ara...',
                     hintStyle: SpineTypography.bodyMedium.copyWith(
                       color: scheme.onSurfaceVariant.withValues(alpha: 0.6),
                     ),
@@ -302,25 +328,25 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                   child: Row(
                     children: [
                       _FilterChip(
-                        label: 'Tümü',
+                        label: l10n?.filterAll ?? 'Tümü',
                         isSelected: _selectedStatus == null,
                         onTap: () => setState(() => _selectedStatus = null),
                       ),
                       const SizedBox(width: SpineSpacing.sm),
                       _FilterChip(
-                        label: 'Okunacak',
+                        label: l10n?.filterUnread ?? 'Okunacak',
                         isSelected: _selectedStatus == ReadingStatus.unread,
                         onTap: () => setState(() => _selectedStatus = ReadingStatus.unread),
                       ),
                       const SizedBox(width: SpineSpacing.sm),
                       _FilterChip(
-                        label: 'Okunuyor',
+                        label: l10n?.filterReading ?? 'Okunuyor',
                         isSelected: _selectedStatus == ReadingStatus.reading,
                         onTap: () => setState(() => _selectedStatus = ReadingStatus.reading),
                       ),
                       const SizedBox(width: SpineSpacing.sm),
                       _FilterChip(
-                        label: 'Okundu',
+                        label: l10n?.filterRead ?? 'Okundu',
                         isSelected: _selectedStatus == ReadingStatus.read,
                         onTap: () => setState(() => _selectedStatus = ReadingStatus.read),
                       ),
@@ -341,7 +367,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                     padding: const EdgeInsets.all(SpineSpacing.xxl),
                     child: Center(
                       child: Text(
-                        'Aramanızla eşleşen kitap bulunamadı.',
+                        l10n?.noResults ?? 'Aramanızla eşleşen kitap bulunamadı.',
                         style: SpineTypography.bodyMedium.copyWith(
                           color: scheme.onSurfaceVariant,
                         ),

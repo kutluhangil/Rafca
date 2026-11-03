@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../design/theme/spine_theme.dart';
+import '../../l10n/app_localizations.dart';
+import '../localization/locale_controller.dart';
 import '../router/app_router.dart';
 import '../theme/theme_mode_controller.dart';
 
@@ -10,7 +11,7 @@ import '../theme/theme_mode_controller.dart';
 ///
 /// Turkish is first because it is the fallback: an unsupported device
 /// language lands on `tr`, not on English (CLAUDE.md, "Yerelleştirme").
-const rafcaSupportedLocales = [Locale('tr'), Locale('en')];
+const rafcaSupportedLocales = AppLocalizations.supportedLocales;
 
 /// Application root.
 class RafcaApp extends ConsumerWidget {
@@ -21,12 +22,9 @@ class RafcaApp extends ConsumerWidget {
     return MaterialApp.router(
       title: 'Rafça',
       debugShowCheckedModeBanner: false,
-      supportedLocales: rafcaSupportedLocales,
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
+      locale: ref.watch(localeControllerProvider),
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
       theme: SpineTheme.light,
       darkTheme: SpineTheme.dark,
       themeMode: ref.watch(themeModeControllerProvider),

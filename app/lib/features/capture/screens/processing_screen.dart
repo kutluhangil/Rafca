@@ -13,6 +13,7 @@ import '../../../design/components/primary_button.dart';
 import '../../../design/tokens/colors.dart';
 import '../../../design/tokens/spacing.dart';
 import '../../../design/tokens/typography.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../review/models/review_models.dart';
 import '../scan/scan_controller.dart';
 import '../widgets/spine_overlay.dart';
@@ -174,9 +175,10 @@ class _ProcessingScreenState extends ConsumerState<ProcessingScreen> {
   Widget build(BuildContext context) {
     final semantic = context.spineColors;
     final scheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context);
 
     return AdaptiveScaffold(
-      title: 'İşleniyor',
+      title: l10n?.processingTitle ?? 'İşleniyor',
       largeTitle: false,
       leading: IconButton(
         icon: const Icon(Icons.close),
@@ -231,7 +233,9 @@ class _ProcessingScreenState extends ConsumerState<ProcessingScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    _isDone ? 'ANALİZ TAMAMLANDI' : 'TARAMA DEVAM EDİYOR',
+                    _isDone
+                        ? (l10n?.processingComplete ?? 'ANALİZ TAMAMLANDI').toUpperCase()
+                        : (l10n?.processing ?? 'TARAMA DEVAM EDİYOR').toUpperCase(),
                     style: SpineTypography.metadataCaps.copyWith(
                       color: semantic.brass,
                     ),
@@ -317,13 +321,14 @@ class _ProcessingScreenState extends ConsumerState<ProcessingScreen> {
               // 4. Bottom action
               if (_isDone) ...[
                 Text(
-                  '${_detectedCandidates.length} KİTAP SIRTI BULUNDU',
+                  l10n?.bookCount(_detectedCandidates.length).toUpperCase() ??
+                      '${_detectedCandidates.length} KİTAP SIRTI BULUNDU',
                   style: SpineTypography.headlineSmall,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: SpineSpacing.md),
                 PrimaryButton(
-                  label: 'Sonuçları Görüntüle',
+                  label: l10n?.scanResultsTitle ?? 'Sonuçları Görüntüle',
                   variant: SpineButtonVariant.primary,
                   onPressed: () {
                     if (_scanResult != null) {

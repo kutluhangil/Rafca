@@ -9,6 +9,7 @@ import '../../../design/components/primary_button.dart';
 import '../../../design/tokens/colors.dart';
 import '../../../design/tokens/spacing.dart';
 import '../../../design/tokens/typography.dart';
+import '../../../l10n/app_localizations.dart';
 import '../models/review_models.dart';
 
 /// Screen for searching catalog or entering custom book details manually.
@@ -100,9 +101,10 @@ class _ManualSearchScreenState extends ConsumerState<ManualSearchScreen> {
   Widget build(BuildContext context) {
     final semantic = context.spineColors;
     final scheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context);
 
     return AdaptiveScaffold(
-      title: 'Kitap Ara',
+      title: l10n?.manualSearchTitle ?? 'Kitap Ara',
       largeTitle: false,
       leading: IconButton(
         icon: const Icon(Icons.close),
@@ -113,7 +115,7 @@ class _ManualSearchScreenState extends ConsumerState<ManualSearchScreen> {
         children: [
           // 1. Minimalist Search Field
           Text(
-            'KATALOGDA ARA / SEARCH CATALOG',
+            (l10n?.searchPlaceholder ?? 'KATALOGDA ARA').toUpperCase(),
             style: SpineTypography.metadataCaps.copyWith(
               color: scheme.onSurfaceVariant,
             ),
@@ -123,7 +125,7 @@ class _ManualSearchScreenState extends ConsumerState<ManualSearchScreen> {
             controller: _searchController,
             style: SpineTypography.bodyLarge.copyWith(color: scheme.onSurface),
             decoration: InputDecoration(
-              hintText: 'Kitap adı veya yazar yazın...',
+              hintText: l10n?.searchPlaceholder ?? 'Kitap adı veya yazar yazın...',
               hintStyle: SpineTypography.bodyLarge.copyWith(
                 color: scheme.onSurfaceVariant.withValues(alpha: 0.6),
               ),
@@ -153,7 +155,7 @@ class _ManualSearchScreenState extends ConsumerState<ManualSearchScreen> {
             child: _isSearching
                 ? const Center(child: CircularProgressIndicator())
                 : _showCustomEntry
-                    ? _buildCustomEntryForm(semantic, scheme)
+                    ? _buildCustomEntryForm(semantic, scheme, l10n)
                     : _buildSearchResults(semantic, scheme),
           ),
 
@@ -163,7 +165,7 @@ class _ManualSearchScreenState extends ConsumerState<ManualSearchScreen> {
               padding: const EdgeInsets.symmetric(vertical: SpineSpacing.sm),
               child: TextButton.icon(
                 icon: const Icon(Icons.edit_note_outlined),
-                label: const Text('Katalogda bulamadınız mı? Elle giriş yapın'),
+                label: Text(l10n?.customBookTitle ?? 'Özel Kitap Girişi'),
                 onPressed: () => setState(() => _showCustomEntry = true),
               ),
             ),
@@ -267,7 +269,7 @@ class _ManualSearchScreenState extends ConsumerState<ManualSearchScreen> {
     );
   }
 
-  Widget _buildCustomEntryForm(SpineSemanticColors semantic, ColorScheme scheme) {
+  Widget _buildCustomEntryForm(SpineSemanticColors semantic, ColorScheme scheme, AppLocalizations? l10n) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -276,7 +278,7 @@ class _ManualSearchScreenState extends ConsumerState<ManualSearchScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'ELLE KİTAP GİRİŞİ / CUSTOM ENTRY',
+                (l10n?.customBookTitle ?? 'ELLE KİTAP GİRİŞİ').toUpperCase(),
                 style: SpineTypography.metadataCaps.copyWith(
                   color: semantic.brass,
                 ),
@@ -290,22 +292,22 @@ class _ManualSearchScreenState extends ConsumerState<ManualSearchScreen> {
           const SizedBox(height: SpineSpacing.md),
           TextField(
             controller: _customTitleController,
-            decoration: const InputDecoration(
-              labelText: 'Kitap Başlığı *',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: l10n?.titleLabel ?? 'Kitap Başlığı *',
+              border: const OutlineInputBorder(),
             ),
           ),
           const SizedBox(height: SpineSpacing.md),
           TextField(
             controller: _customAuthorController,
-            decoration: const InputDecoration(
-              labelText: 'Yazar Adı *',
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              labelText: l10n?.authorLabel ?? 'Yazar Adı *',
+              border: const OutlineInputBorder(),
             ),
           ),
           const SizedBox(height: SpineSpacing.xl),
           PrimaryButton(
-            label: 'Bu Kitabı Eşle',
+            label: l10n?.confirm ?? 'Bu Kitabı Eşle',
             variant: SpineButtonVariant.primary,
             onPressed: () {
               final title = _customTitleController.text.trim();

@@ -1,0 +1,179 @@
+{
+  "@@locale": "tr",
+  "appName": "Rafça",
+  "@appName": { "description": "Uygulama adı" },
+
+  "cancel": "İPTAL",
+  "save": "KAYDET",
+  "delete": "SİL",
+  "remove": "KALDIR",
+  "edit": "DÜZENLE",
+  "search": "Ara...",
+  "close": "Kapat",
+  "confirm": "ONAYLA",
+  "retry": "Yeniden Dene",
+  "unknown": "Bilinmiyor",
+  "notSpecified": "Belirtilmemiş",
+  "error": "Hata",
+  "success": "Başarılı",
+
+  "libraryTab": "Kütüphane",
+  "shelvesTab": "Raflar",
+  "scanShelf": "Raf Tara",
+  "designGallery": "Tasarım Galerisi",
+  "settings": "Ayarlar",
+
+  "cameraTitle": "Raf Tara",
+  "levelCamera": "Kamerayı Düz Tutun",
+  "cameraLevel": "Kamera Düz",
+  "cameraTooTilted": "Kamera Çok Eğik",
+  "holdSteady": "Sabit Tutun",
+  "adjustCrop": "Kırpımı Ayarla",
+  "dragCorners": "Köşeleri raf kenarlarına sürükleyin",
+  "scanButton": "TARA",
+  "processing": "İşleniyor...",
+  "cameraPermissionRequired": "Kamera İzni Gerekli",
+  "cameraPermissionDesc": "Kitap sırtlarını tarayabilmek için kamera erişimine ihtiyaç var.",
+  "grantPermission": "İzin Ver",
+
+  "processingTitle": "Raf Analiz Ediliyor",
+  "perspectiveCorrection": "Perspektif düzeltiliyor",
+  "runningOcr": "Sırt metinleri okunuyor (OCR)",
+  "segmentingSpines": "Kitap sırtları ayrıştırılıyor",
+  "matchingCatalog": "Katalogla eşleştiriliyor",
+  "processingComplete": "Tamamlandı",
+
+  "scanResultsTitle": "Tarama Sonuçları",
+  "viewOriginalPhoto": "Orijinal Fotoğrafı Göster",
+  "hideOriginalPhoto": "Orijinal Fotoğrafı Gizle",
+  "matchedGroup": "Eşleşen Kitaplar",
+  "needsReviewGroup": "İnceleme Gerekenler",
+  "unrecognizedGroup": "Tanınamayanlar",
+  "reviewIssuesButton": "{count} SORUNU İNCELE",
+  "@reviewIssuesButton": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "addMatchedBooksButton": "{count} KİTABI EKLE",
+  "@addMatchedBooksButton": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "reviewSheetTitle": "Baskı Düzeltme",
+  "suggestedEditions": "Önerilen Baskılar",
+  "searchManually": "Manuel Ara",
+  "notABook": "Kitap Değil",
+  "manualSearchTitle": "Kitap Ara / Ekle",
+  "searchPlaceholder": "Kitap adı, yazar veya ISBN...",
+  "customBookTitle": "Özel Kitap Girişi",
+  "titleLabel": "Kitap Adı",
+  "authorLabel": "Yazar",
+  "publisherLabel": "Yayınevi",
+  "yearLabel": "Basım Yılı",
+  "isbnLabel": "ISBN",
+  "saveToLibrary": "Kütüphaneye Ekle",
+
+  "goodEvening": "İyi akşamlar.",
+  "libraryQuiet": "Kütüphane sessiz.",
+  "scanFirstShelf": "İlk Rafınızı Tarayın",
+  "emptyLibraryDesc": "Fiziksel kitap sırtlarınızı fotoğraflayarak dijital rafınızı oluşturmaya başlayın.",
+  "pendingReviewBanner": "{count} bekleyen öğe — incele ve düzelt",
+  "@pendingReviewBanner": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "filterAll": "Tümü",
+  "filterReading": "Okunuyor",
+  "filterUnread": "Okunacak",
+  "filterRead": "Okundu",
+  "filterAbandoned": "Bırakıldı",
+  "noResults": "Aramanızla eşleşen kitap bulunamadı.",
+  "noSuggestions": "Öneri bulunamadı. Lütfen manuel arayın.",
+  "bookCount": "{count} Kitap",
+  "@bookCount": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+
+  "bookDetailTitle": "Kitap Detayı",
+  "proofOfCapture": "PROOF OF CAPTURE",
+  "proofOfCaptureDesc": "Fiziksel raf taramasından elde edilen sırt kırpımı",
+  "readingStatusLabel": "Okuma Durumu",
+  "shelfLabel": "Bulunduğu Raf",
+  "unassignedShelf": "Sahipsiz / Genel",
+  "editDetails": "Bilgileri Düzenle",
+  "removeFromLibrary": "Kütüphaneden Kaldır",
+  "deleteConfirmTitle": "Kitabı Kaldır",
+  "deleteConfirmMessage": "Bu kitabı kütüphanenizden kaldırmak istediğinizden emin misiniz?",
+
+  "shelvesTitle": "Raflarım",
+  "createShelf": "Yeni Raf Oluştur",
+  "shelfNamePlaceholder": "Raf adı (ör. Klasikler, Bilim Kurgu)...",
+  "noShelves": "Henüz raf oluşturulmadı.",
+  "noShelvesDesc": "Kitaplarınızı temalarına veya konumlarına göre organize etmek için yeni bir raf ekleyin.",
+  "deleteShelfTitle": "Rafı Sil",
+  "deleteShelfMessage": "\"{name}\" rafını silmek istediğinizden emin misiniz? (Raftaki kitaplar silinmez, sahipsiz kalır.)",
+  "@deleteShelfMessage": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "shareShelf": "Rafı Paylaş",
+
+  "shareCollectionTitle": "Koleksiyonu Paylaş",
+  "shareShelfTitle": "Rafı Paylaş",
+  "autumnCollection": "Koleksiyon",
+  "saveImage": "Görseli Kaydet",
+  "shareStory": "Hikaye",
+  "shareLink": "Bağlantı",
+  "shareMessage": "Mesaj",
+  "imageSaved": "Görsel kaydedildi",
+  "shareTextSummary": "Rafça Kütüphanem: {count} kitap",
+  "@shareTextSummary": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "capturedDate": "{month} {year} TARİHİNDE YAKALANDI",
+  "@capturedDate": {
+    "placeholders": {
+      "month": { "type": "String" },
+      "year": { "type": "String" }
+    }
+  },
+
+  "settingsTitle": "Ayarlar",
+  "appearanceSection": "Görünüm",
+  "themeLabel": "Tema",
+  "themeDark": "Koyu Gece (Dark)",
+  "themeLight": "Gündüz (Light)",
+  "themeSystem": "Sistem Teması",
+  "languageSection": "Dil / Language",
+  "languageLabel": "Uygulama Dili",
+  "langTurkish": "Türkçe",
+  "langEnglish": "English",
+  "langSystem": "Sistem Varsayılanı",
+  "syncSection": "Bulut ve Yedekleme",
+  "cloudSync": "Bulut Senkronizasyonu",
+  "cloudSyncSubtitle": "Değişiklikleri şifreli Supabase bulutuna yedekle",
+  "dataSection": "Veri Yönetimi",
+  "exportCsv": "CSV Olarak Dışa Aktar",
+  "exportCsvSubtitle": "Tüm kütüphanenizi elektronik tablo formatında indirin",
+  "exportJson": "JSON Olarak Dışa Aktar",
+  "exportJsonSubtitle": "Geliştiriciler ve yedekleme için tam veri dökümü",
+  "clearLibrary": "Kütüphaneyi Sıfırla",
+  "clearLibrarySubtitle": "Tüm kitapları, rafları ve taramaları yerel cihazdan sil",
+  "clearLibraryConfirmTitle": "Kütüphaneyi Sıfırla?",
+  "clearLibraryConfirmMessage": "Bu işlem tüm yerel verilerinizi kalıcı olarak silecektir. Bu işlem geri alınamaz!",
+  "libraryCleared": "Kütüphane temizlendi.",
+  "exportSuccess": "Veriler dışa aktarıldı.",
+  "aboutSection": "Hakkında & Gizlilik",
+  "appVersion": "Sürüm",
+  "privacyStatement": "Gizlilik Sözleşmesi",
+  "privacyContent": "Fotoğraflar ve sırt kırpımları yalnızca cihazınızda saklanır. Sunucuya yalnızca OCR ile okunan düz metin gönderilir — o da yalnızca eşleştirme için.",
+  "nocturnalArchivist": "Nocturnal Archivist Tasarım Sistemi"
+}

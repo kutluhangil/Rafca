@@ -9,6 +9,7 @@ import 'package:rafca/design/components/book_card.dart';
 import 'package:rafca/design/components/primary_button.dart';
 import 'package:rafca/design/theme/spine_theme.dart';
 import 'package:rafca/features/library/screens/library_screen.dart';
+import 'package:rafca/l10n/app_localizations.dart';
 
 void main() {
   group('LibraryScreen', () {
@@ -33,6 +34,9 @@ void main() {
         ],
         child: MaterialApp(
           theme: SpineTheme.dark,
+          locale: const Locale('tr'),
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
           home: Scaffold(body: child),
         ),
       );
@@ -89,8 +93,8 @@ void main() {
       await tester.pump();
       await tester.pump(const Duration(seconds: 1));
 
-      expect(find.textContaining('Koleksiyonunuz'), findsOneWidget);
-      expect(find.text('2 CİLT'), findsOneWidget);
+      expect(find.text('Kütüphane'), findsWidgets);
+      expect(find.text('2 Kitap'), findsOneWidget);
       expect(find.text('Tutunamayanlar'), findsOneWidget);
       expect(find.text('Tehlikeli Oyunlar'), findsOneWidget);
       expect(find.text('Oğuz Atay'), findsNWidgets(2));

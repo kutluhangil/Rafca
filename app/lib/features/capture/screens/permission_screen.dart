@@ -6,6 +6,7 @@ import '../../../design/components/primary_button.dart';
 import '../../../design/tokens/colors.dart';
 import '../../../design/tokens/spacing.dart';
 import '../../../design/tokens/typography.dart';
+import '../../../l10n/app_localizations.dart';
 import '../state/capture_notifier.dart';
 
 /// Camera permission prompt screen based on camera_permission mockup.
@@ -23,6 +24,7 @@ class CameraPermissionScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final semantic = context.spineColors;
     final scheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context);
 
     return AdaptiveScaffold(
       title: 'Rafça',
@@ -62,7 +64,7 @@ class CameraPermissionScreen extends ConsumerWidget {
               const SizedBox(height: SpineSpacing.xl),
 
               Text(
-                'KAMERA ERİŞİMİ',
+                (l10n?.cameraPermissionRequired ?? 'KAMERA ERİŞİMİ').toUpperCase(),
                 style: SpineTypography.metadataCaps.copyWith(
                   color: semantic.brass,
                 ),
@@ -70,15 +72,16 @@ class CameraPermissionScreen extends ConsumerWidget {
               const SizedBox(height: SpineSpacing.sm),
 
               Text(
-                'Kitap Sırtlarını Tara',
+                l10n?.cameraTitle ?? 'Kitap Sırtlarını Tara',
                 style: SpineTypography.headlineMedium,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: SpineSpacing.md),
 
               Text(
-                'Fiziksel kütüphaneni dijitalleştirmek için raf fotoğrafı çekmen gerekir. '
-                'Fotoğraflar cihazında kalır; eşleştirme için yalnızca okunan metin gönderilir.',
+                l10n?.cameraPermissionDesc ??
+                    'Fiziksel kütüphaneni dijitalleştirmek için raf fotoğrafı çekmen gerekir. '
+                    'Fotoğraflar cihazında kalır; eşleştirme için yalnızca okunan metin gönderilir.',
                 style: SpineTypography.bodyMedium.copyWith(
                   color: scheme.onSurfaceVariant,
                 ),
@@ -87,7 +90,7 @@ class CameraPermissionScreen extends ConsumerWidget {
               const SizedBox(height: SpineSpacing.xxl),
 
               PrimaryButton(
-                label: 'Kamerayı Etkinleştir',
+                label: l10n?.grantPermission ?? 'Kamerayı Etkinleştir',
                 variant: SpineButtonVariant.primary,
                 onPressed: () async {
                   final granted = await ref

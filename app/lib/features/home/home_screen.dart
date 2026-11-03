@@ -7,6 +7,7 @@ import '../../core/theme/theme_mode_controller.dart';
 import '../../design/tokens/colors.dart';
 import '../../design/tokens/spacing.dart';
 import '../../design/tokens/typography.dart';
+import '../../l10n/app_localizations.dart';
 import '../library/screens/library_screen.dart';
 import '../library/screens/shelves_screen.dart';
 
@@ -25,6 +26,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
     final mode = ref.watch(themeModeControllerProvider);
     final scheme = Theme.of(context).colorScheme;
     final semantic = context.spineColors;
@@ -33,7 +35,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       backgroundColor: scheme.surface,
       appBar: AppBar(
         title: Text(
-          'Rafça',
+          l10n?.appName ?? 'Rafça',
           style: SpineTypography.headlineMedium.copyWith(
             color: semantic.brass,
           ),
@@ -53,9 +55,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             tooltip: 'Theme: ${mode.name}',
           ),
           IconButton(
+            onPressed: () => context.push(Routes.settings),
+            icon: const Icon(Icons.settings_outlined),
+            tooltip: l10n?.settings ?? 'Settings',
+          ),
+          IconButton(
             onPressed: () => context.push(Routes.gallery),
             icon: const Icon(Icons.palette_outlined),
-            tooltip: 'Design Gallery',
+            tooltip: l10n?.designGallery ?? 'Design Gallery',
           ),
         ],
       ),
@@ -84,7 +91,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               children: [
                 _NavBarItem(
                   icon: Icons.library_books,
-                  label: 'Kütüphane',
+                  label: l10n?.libraryTab ?? 'Kütüphane',
                   isActive: _tabIndex == 0,
                   onTap: () => setState(() => _tabIndex = 0),
                 ),
@@ -114,7 +121,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 ),
                 _NavBarItem(
                   icon: Icons.shelves,
-                  label: 'Raflar',
+                  label: l10n?.shelvesTab ?? 'Raflar',
                   isActive: _tabIndex == 1,
                   onTap: () => setState(() => _tabIndex = 1),
                 ),

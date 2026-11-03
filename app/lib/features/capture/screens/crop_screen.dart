@@ -16,6 +16,7 @@ import '../../../design/components/primary_button.dart';
 import '../../../design/tokens/colors.dart';
 import '../../../design/tokens/spacing.dart';
 import '../../../design/tokens/typography.dart';
+import '../../../l10n/app_localizations.dart';
 import '../preprocessing/preprocessor.dart';
 import '../widgets/quad_clipper.dart';
 
@@ -111,9 +112,10 @@ class _CropScreenState extends ConsumerState<CropScreen> {
   @override
   Widget build(BuildContext context) {
     final semantic = context.spineColors;
+    final l10n = AppLocalizations.of(context);
 
     return AdaptiveScaffold(
-      title: 'Rafı Sınırla',
+      title: l10n?.adjustCrop ?? 'Rafı Sınırla',
       largeTitle: false,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back),
@@ -136,7 +138,7 @@ class _CropScreenState extends ConsumerState<CropScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: SpineSpacing.sm),
                 child: Text(
-                  'KÖŞELERİ SÜRÜKLEYEREK RAFI BELİRLEYİN',
+                  (l10n?.dragCorners ?? 'KÖŞELERİ SÜRÜKLEYEREK RAFI BELİRLEYİN').toUpperCase(),
                   style: SpineTypography.metadataCaps.copyWith(
                     color: semantic.brass,
                   ),
@@ -173,7 +175,7 @@ class _CropScreenState extends ConsumerState<CropScreen> {
                 children: [
                   Expanded(
                     child: PrimaryButton(
-                      label: 'Yeniden Çek',
+                      label: l10n?.retry ?? 'Yeniden Çek',
                       variant: SpineButtonVariant.secondary,
                       onPressed: _isProcessing ? null : () => context.pop(),
                     ),
@@ -181,7 +183,9 @@ class _CropScreenState extends ConsumerState<CropScreen> {
                   const SizedBox(width: SpineSpacing.base),
                   Expanded(
                     child: PrimaryButton(
-                      label: _isProcessing ? 'İşleniyor...' : 'Kırp ve Tara',
+                      label: _isProcessing
+                          ? (l10n?.processing ?? 'İşleniyor...')
+                          : (l10n?.scanButton ?? 'Kırp ve Tara'),
                       variant: SpineButtonVariant.primary,
                       onPressed: _isProcessing
                           ? null

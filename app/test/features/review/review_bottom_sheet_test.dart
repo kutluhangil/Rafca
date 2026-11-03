@@ -6,11 +6,15 @@ import 'package:rafca/design/components/primary_button.dart';
 import 'package:rafca/design/theme/spine_theme.dart';
 import 'package:rafca/features/review/models/review_models.dart';
 import 'package:rafca/features/review/widgets/review_bottom_sheet.dart';
+import 'package:rafca/l10n/app_localizations.dart';
 
 Widget _wrap(Widget child) {
   return ProviderScope(
     child: MaterialApp(
       theme: SpineTheme.dark,
+      locale: const Locale('tr'),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       home: Scaffold(body: child),
     ),
   );
@@ -134,7 +138,7 @@ void main() {
         ),
       );
 
-      await tester.tap(find.text('Kitap Değil / Not a book'));
+      await tester.tap(find.text('Kitap Değil'));
       await tester.pumpAndSettle();
 
       expect(discardCalled, isTrue);
