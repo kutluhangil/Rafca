@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Background Radial Gradient -->
+    <radialGradient id="bgGrad" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#1E1A16"/>
+      <stop offset="100%" stop-color="#0E0C0A"/>
+    </radialGradient>
+
+    <!-- Brass Gradient -->
+    <linearGradient id="brassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E5C178"/>
+      <stop offset="50%" stop-color="#C9963F"/>
+      <stop offset="100%" stop-color="#8F6218"/>
+    </linearGradient>
+
+    <!-- Warm Glow -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Deep Obsidian Base -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)"/>
+  
+  <!-- Outer Archival Inset Border -->
+  <rect x="24" y="24" width="464" height="464" rx="92" fill="none" stroke="#C9963F" stroke-width="2" stroke-opacity="0.25"/>
+  <rect x="36" y="36" width="440" height="440" rx="80" fill="none" stroke="#C9963F" stroke-width="1" stroke-opacity="0.12" stroke-dasharray="6,4"/>
+
+  <!-- Centered Archival Shelf Motif -->
+  <g transform="translate(106, 96)">
+    <!-- Arch Outline -->
+    <path d="M 0 320 L 0 150 A 150 150 0 0 1 300 150 L 300 320 Z" 
+          fill="none" 
+          stroke="url(#brassGrad)" 
+          stroke-width="5" 
+          stroke-opacity="0.6"/>
+
+    <!-- Inner Arch Inset -->
+    <path d="M 16 320 L 16 154 A 134 134 0 0 1 284 154 L 284 320 Z" 
+          fill="#15120F" 
+          stroke="#C9963F" 
+          stroke-width="1.5" 
+          stroke-opacity="0.3"/>
+
+    <!-- Physical Book Spines Sitting on Shelf -->
+    <!-- Spine 1: Deep Burgundy -->
+    <rect x="42" y="110" width="34" height="206" rx="4" fill="#6B1D28" stroke="#8C2D19" stroke-width="1.5"/>
+    <line x1="59" y1="126" x2="59" y2="290" stroke="#C9963F" stroke-width="1" stroke-opacity="0.4"/>
+    <circle cx="59" cy="140" r="3" fill="#C9963F" fill-opacity="0.8"/>
+
+    <!-- Spine 2: Midnight Brass (Tallest) -->
+    <rect x="84" y="74" width="40" height="242" rx="4" fill="#24211D" stroke="#C9963F" stroke-width="2"/>
+    <line x1="104" y1="94" x2="104" y2="294" stroke="#C9963F" stroke-width="1.5" stroke-opacity="0.8"/>
+    <!-- Gilded Spine Title Mark -->
+    <path d="M 98 130 L 110 130 M 98 136 L 108 136 M 98 142 L 110 142" stroke="#E5C178" stroke-width="1.5" stroke-linecap="round"/>
+    
+    <!-- Spine 3: Forest Green -->
+    <rect x="132" y="128" width="36" height="188" rx="4" fill="#1C3829" stroke="#2D5A3C" stroke-width="1.5"/>
+    <line x1="150" y1="144" x2="150" y2="298" stroke="#C9963F" stroke-width="1" stroke-opacity="0.4"/>
+    <circle cx="150" cy="160" r="2.5" fill="#E5C178" fill-opacity="0.7"/>
+
+    <!-- Spine 4: Classic Indigo -->
+    <rect x="176" y="96" width="38" height="220" rx="4" fill="#18233C" stroke="#2A3D66" stroke-width="1.5"/>
+    <line x1="195" y1="116" x2="195" y2="296" stroke="#C9963F" stroke-width="1" stroke-opacity="0.5"/>
+
+    <!-- Spine 5: Terracotta Rust (Tilted book) -->
+    <g transform="translate(222, 140) rotate(8)">
+      <rect x="0" y="0" width="34" height="174" rx="4" fill="#8C3A27" stroke="#B84E34" stroke-width="1.5"/>
+      <line x1="17" y1="16" x2="17" y2="158" stroke="#E5C178" stroke-width="1" stroke-opacity="0.6"/>
+    </g>
+
+    <!-- Archival Shelf Base Strip -->
+    <rect x="-10" y="316" width="320" height="10" rx="3" fill="url(#brassGrad)"/>
+    <!-- Shelf shadow -->
+    <rect x="-6" y="326" width="312" height="3" fill="#000000" fill-opacity="0.6"/>
+  </g>
+
+  <!-- Archival Compass Star (Top Centered) -->
+  <g transform="translate(256, 78)" filter="url(#glow)">
+    <path d="M 0 -16 L 4 -4 L 16 0 L 4 4 L 0 16 L -4 4 L -16 0 L -4 -4 Z" fill="#E5C178"/>
+    <circle cx="0" cy="0" r="2.5" fill="#FFFFFF"/>
+  </g>
+</svg>

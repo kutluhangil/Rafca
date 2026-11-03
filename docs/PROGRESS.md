@@ -19,7 +19,19 @@ işaretlenir.
 
 | Yerel doğrulama veritabanı | Düz PostgreSQL 17 + pgTAP (Docker diski dolu); `supabase start` kanonik yol olarak kalır | 2026-08-27 |
 
-Faz detayları: [PROGRESS_FAZ1.md](PROGRESS_FAZ1.md) · [PROGRESS_FAZ2.md](PROGRESS_FAZ2.md) · [PROGRESS_FAZ3.md](PROGRESS_FAZ3.md) · [PROGRESS_FAZ6.md](PROGRESS_FAZ6.md) · [PROGRESS_FAZ7.md](PROGRESS_FAZ7.md) · [PROGRESS_FAZ8.md](PROGRESS_FAZ8.md) · [PROGRESS_FAZ9.md](PROGRESS_FAZ9.md).
+Faz detayları: [PROGRESS_FAZ1.md](PROGRESS_FAZ1.md) · [PROGRESS_FAZ2.md](PROGRESS_FAZ2.md) · [PROGRESS_FAZ3.md](PROGRESS_FAZ3.md) · [PROGRESS_FAZ6.md](PROGRESS_FAZ6.md) · [PROGRESS_FAZ7.md](PROGRESS_FAZ7.md) · [PROGRESS_FAZ8.md](PROGRESS_FAZ8.md) · [PROGRESS_FAZ9.md](PROGRESS_FAZ9.md) · [PROGRESS_FAZ10.md](PROGRESS_FAZ10.md).
+
+## FAZ 10 — Sertleştirme ve Mağaza (A9)
+
+**Durum: KAPALI.**
+
+Performans bütçeleri (`PerformanceBudgets`: cold start < 2s, scan pipeline < 8s, APK < 45MB, RAM < 250MB) ve CI doğrulama betiği (`scripts/check_performance_budgets.sh`),
+çevrimdışı hata kuyruğu ve telemetri servisi (`OfflineErrorQueue`, `AppTelemetryService`, Sentry uyumluluğu, global error hooks),
+gizlilik ve güvenlik formları (`/docs/privacy/`: `PRIVACY_POLICY.md`, `APP_STORE_NUTRITION_LABEL.md`, `PLAY_DATA_SAFETY.md`),
+mağaza metaverileri ve test planları (`/docs/store/`: `STORE_LISTINGS_TR.md`, `_EN.md`, `PLAY_CLOSED_TEST_PLAN.md`, `APP_STORE_CONNECT.md`, `SCREENSHOTS_SPEC.md`),
+vektörel uygulama ikonları (`app/assets/icons/app_icon*.svg`) ve kabul kontrol listesi (`/docs/RELEASE_CHECKLIST.md`) tamamlandı.
+`flutter analyze` temiz (0 issue), `flutter test` 124/124 yeşil.
+Detay: [PROGRESS_FAZ10.md](PROGRESS_FAZ10.md).
 
 ## FAZ 9 — Paylaşım ve Yerelleştirme (A9)
 

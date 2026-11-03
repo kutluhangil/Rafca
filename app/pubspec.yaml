@@ -65,6 +65,9 @@ flutter:
   uses-material-design: true
   generate: true
 
+  assets:
+    - assets/icons/
+
   # SPINE_BLUEPRINT.md 4.2: the three faces are embedded rather than pulled by
   # the google_fonts package, so the app renders correctly offline and the
   # store download size stays predictable.
