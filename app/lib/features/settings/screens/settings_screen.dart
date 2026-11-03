@@ -8,6 +8,8 @@ import '../../../design/tokens/colors.dart';
 import '../../../design/tokens/spacing.dart';
 import '../../../design/tokens/typography.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../analytics/screens/archivist_wrapped_screen.dart';
+import '../../analytics/services/collection_analytics_service.dart';
 import '../../library/data/library_repository.dart';
 import '../services/export_service.dart';
 
@@ -285,6 +287,20 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             margin: const EdgeInsets.only(bottom: SpineSpacing.lg),
             child: Column(
               children: [
+                ListTile(
+                  leading: Icon(Icons.auto_stories_outlined, color: semantic.brass),
+                  title: Text(l10n?.archivistWrappedTitle ?? 'Arşiv Özeti (Archivist Wrapped)'),
+                  subtitle: Text(l10n?.colorHarmonyTitle ?? 'Kütüphane DNA’sı ve infografik kart'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () {
+                    final analytics = ref.read(collectionAnalyticsProvider);
+                    ArchivistWrappedBottomSheet.show(
+                      context,
+                      analytics: analytics,
+                    );
+                  },
+                ),
+                const Divider(height: 1),
                 ListTile(
                   leading: Icon(Icons.table_chart_outlined, color: semantic.brass),
                   title: Text(l10n?.exportCsv ?? 'CSV Olarak Dışa Aktar'),

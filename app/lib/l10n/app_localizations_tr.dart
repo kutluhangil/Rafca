@@ -490,4 +490,57 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get borrowerNameRequired => 'Lütfen ödünç alan kişinin adını girin.';
+
+  @override
+  String get archivistWrappedTitle => 'Arşiv Özeti';
+
+  @override
+  String shelfMetersEstimate(double meters) {
+    return '$meters METRE FİZİKSEL RAF';
+  }
+
+  @override
+  String get colorHarmonyTitle => 'RENK SPEKTRUMU & AURA';
+
+  @override
+  String get dominantPalette => 'Baskın Karakter';
+
+  @override
+  String get topAuthorLabel => 'Baş Yazar: ';
+
+  @override
+  String get topPublisherLabel => 'Yayınevi: ';
+
+  @override
+  String get archetypeGrandArchivist => 'Büyük Arşiv Muhafızı';
+
+  @override
+  String get archetypeDevotedReader => 'Edebi Gezgin';
+
+  @override
+  String get archetypePassionateCurator => 'Tutkulu Küratör';
+
+  @override
+  String get archetypeNocturnalSeeker => 'Gece Arşivcisi';
+
+  @override
+  String get readCountLabel => 'OKUNDU';
+
+  @override
+  String get authorsLabel => 'YAZAR';
+
+  @override
+  String get onLoanStatLabel => 'ÖDÜNÇTE';
+
+  @override
+  String get shareImage => 'Görseli Paylaş';
+
+  @override
+  String get shareText => 'Metin Paylaş';
+
+  @override
+  String get copyText => 'Metni Kopyala';
+
+  @override
+  String get exporting => 'Dışa Aktarılıyor...';
 }

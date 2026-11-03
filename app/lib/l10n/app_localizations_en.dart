@@ -486,4 +486,57 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get borrowerNameRequired => 'Please enter borrower name.';
+
+  @override
+  String get archivistWrappedTitle => 'Archivist Wrapped';
+
+  @override
+  String shelfMetersEstimate(double meters) {
+    return '$meters METERS OF SHELVES';
+  }
+
+  @override
+  String get colorHarmonyTitle => 'COLOR HARMONY & SPECTRUM';
+
+  @override
+  String get dominantPalette => 'Dominant Character';
+
+  @override
+  String get topAuthorLabel => 'Top Author: ';
+
+  @override
+  String get topPublisherLabel => 'Publisher: ';
+
+  @override
+  String get archetypeGrandArchivist => 'Grand Archivist';
+
+  @override
+  String get archetypeDevotedReader => 'Devoted Reader';
+
+  @override
+  String get archetypePassionateCurator => 'Passionate Curator';
+
+  @override
+  String get archetypeNocturnalSeeker => 'Nocturnal Archivist';
+
+  @override
+  String get readCountLabel => 'READ';
+
+  @override
+  String get authorsLabel => 'AUTHORS';
+
+  @override
+  String get onLoanStatLabel => 'ON LOAN';
+
+  @override
+  String get shareImage => 'Share Image';
+
+  @override
+  String get shareText => 'Share Text';
+
+  @override
+  String get copyText => 'Copy Text';
+
+  @override
+  String get exporting => 'Exporting...';
 }

@@ -160,5 +160,22 @@
   "loanSuccess": "Book marked as loaned.",
   "returnSuccess": "Book marked as returned.",
   "loanDate": "Loan Date",
-  "borrowerNameRequired": "Please enter borrower name."
+  "borrowerNameRequired": "Please enter borrower name.",
+  "archivistWrappedTitle": "Archivist Wrapped",
+  "shelfMetersEstimate": "{meters} METERS OF SHELVES",
+  "colorHarmonyTitle": "COLOR HARMONY & SPECTRUM",
+  "dominantPalette": "Dominant Character",
+  "topAuthorLabel": "Top Author: ",
+  "topPublisherLabel": "Publisher: ",
+  "archetypeGrandArchivist": "Grand Archivist",
+  "archetypeDevotedReader": "Devoted Reader",
+  "archetypePassionateCurator": "Passionate Curator",
+  "archetypeNocturnalSeeker": "Nocturnal Archivist",
+  "readCountLabel": "READ",
+  "authorsLabel": "AUTHORS",
+  "onLoanStatLabel": "ON LOAN",
+  "shareImage": "Share Image",
+  "shareText": "Share Text",
+  "copyText": "Copy Text",
+  "exporting": "Exporting..."
 }

@@ -203,5 +203,27 @@
   "loanSuccess": "Kitap ödünç verildi olarak kaydedildi.",
   "returnSuccess": "Kitap kütüphaneye iade alındı.",
   "loanDate": "Veriliş Tarihi",
-  "borrowerNameRequired": "Lütfen ödünç alan kişinin adını girin."
+  "borrowerNameRequired": "Lütfen ödünç alan kişinin adını girin.",
+  "archivistWrappedTitle": "Arşiv Özeti",
+  "shelfMetersEstimate": "{meters} METRE FİZİKSEL RAF",
+  "@shelfMetersEstimate": {
+    "placeholders": {
+      "meters": { "type": "double" }
+    }
+  },
+  "colorHarmonyTitle": "RENK SPEKTRUMU & AURA",
+  "dominantPalette": "Baskın Karakter",
+  "topAuthorLabel": "Baş Yazar: ",
+  "topPublisherLabel": "Yayınevi: ",
+  "archetypeGrandArchivist": "Büyük Arşiv Muhafızı",
+  "archetypeDevotedReader": "Edebi Gezgin",
+  "archetypePassionateCurator": "Tutkulu Küratör",
+  "archetypeNocturnalSeeker": "Gece Arşivcisi",
+  "readCountLabel": "OKUNDU",
+  "authorsLabel": "YAZAR",
+  "onLoanStatLabel": "ÖDÜNÇTE",
+  "shareImage": "Görseli Paylaş",
+  "shareText": "Metin Paylaş",
+  "copyText": "Metni Kopyala",
+  "exporting": "Dışa Aktarılıyor..."
 }

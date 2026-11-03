@@ -1009,6 +1009,108 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Lütfen ödünç alan kişinin adını girin.'**
   String get borrowerNameRequired;
+
+  /// No description provided for @archivistWrappedTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Arşiv Özeti'**
+  String get archivistWrappedTitle;
+
+  /// No description provided for @shelfMetersEstimate.
+  ///
+  /// In tr, this message translates to:
+  /// **'{meters} METRE FİZİKSEL RAF'**
+  String shelfMetersEstimate(double meters);
+
+  /// No description provided for @colorHarmonyTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'RENK SPEKTRUMU & AURA'**
+  String get colorHarmonyTitle;
+
+  /// No description provided for @dominantPalette.
+  ///
+  /// In tr, this message translates to:
+  /// **'Baskın Karakter'**
+  String get dominantPalette;
+
+  /// No description provided for @topAuthorLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Baş Yazar: '**
+  String get topAuthorLabel;
+
+  /// No description provided for @topPublisherLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yayınevi: '**
+  String get topPublisherLabel;
+
+  /// No description provided for @archetypeGrandArchivist.
+  ///
+  /// In tr, this message translates to:
+  /// **'Büyük Arşiv Muhafızı'**
+  String get archetypeGrandArchivist;
+
+  /// No description provided for @archetypeDevotedReader.
+  ///
+  /// In tr, this message translates to:
+  /// **'Edebi Gezgin'**
+  String get archetypeDevotedReader;
+
+  /// No description provided for @archetypePassionateCurator.
+  ///
+  /// In tr, this message translates to:
+  /// **'Tutkulu Küratör'**
+  String get archetypePassionateCurator;
+
+  /// No description provided for @archetypeNocturnalSeeker.
+  ///
+  /// In tr, this message translates to:
+  /// **'Gece Arşivcisi'**
+  String get archetypeNocturnalSeeker;
+
+  /// No description provided for @readCountLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'OKUNDU'**
+  String get readCountLabel;
+
+  /// No description provided for @authorsLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'YAZAR'**
+  String get authorsLabel;
+
+  /// No description provided for @onLoanStatLabel.
+  ///
+  /// In tr, this message translates to:
+  /// **'ÖDÜNÇTE'**
+  String get onLoanStatLabel;
+
+  /// No description provided for @shareImage.
+  ///
+  /// In tr, this message translates to:
+  /// **'Görseli Paylaş'**
+  String get shareImage;
+
+  /// No description provided for @shareText.
+  ///
+  /// In tr, this message translates to:
+  /// **'Metin Paylaş'**
+  String get shareText;
+
+  /// No description provided for @copyText.
+  ///
+  /// In tr, this message translates to:
+  /// **'Metni Kopyala'**
+  String get copyText;
+
+  /// No description provided for @exporting.
+  ///
+  /// In tr, this message translates to:
+  /// **'Dışa Aktarılıyor...'**
+  String get exporting;
 }
 
 class _AppLocalizationsDelegate

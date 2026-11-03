@@ -19,7 +19,18 @@ işaretlenir.
 
 | Yerel doğrulama veritabanı | Düz PostgreSQL 17 + pgTAP (Docker diski dolu); `supabase start` kanonik yol olarak kalır | 2026-08-27 |
 
-Faz detayları: [PROGRESS_FAZ1.md](PROGRESS_FAZ1.md) · [PROGRESS_FAZ2.md](PROGRESS_FAZ2.md) · [PROGRESS_FAZ3.md](PROGRESS_FAZ3.md) · [PROGRESS_FAZ6.md](PROGRESS_FAZ6.md) · [PROGRESS_FAZ7.md](PROGRESS_FAZ7.md) · [PROGRESS_FAZ8.md](PROGRESS_FAZ8.md) · [PROGRESS_FAZ9.md](PROGRESS_FAZ9.md) · [PROGRESS_FAZ10.md](PROGRESS_FAZ10.md) · [PROGRESS_FAZ11.md](PROGRESS_FAZ11.md).
+Faz detayları: [PROGRESS_FAZ1.md](PROGRESS_FAZ1.md) · [PROGRESS_FAZ2.md](PROGRESS_FAZ2.md) · [PROGRESS_FAZ3.md](PROGRESS_FAZ3.md) · [PROGRESS_FAZ6.md](PROGRESS_FAZ6.md) · [PROGRESS_FAZ7.md](PROGRESS_FAZ7.md) · [PROGRESS_FAZ8.md](PROGRESS_FAZ8.md) · [PROGRESS_FAZ9.md](PROGRESS_FAZ9.md) · [PROGRESS_FAZ10.md](PROGRESS_FAZ10.md) · [PROGRESS_FAZ11.md](PROGRESS_FAZ11.md) · [PROGRESS_FAZ12.md](PROGRESS_FAZ12.md).
+
+## FAZ 12 — Archivist Wrapped (Kütüphane Özeti & İnfografik Paylaşım Kartları)
+
+**Durum: KAPALI.**
+
+Kütüphane analitik motoru (`CollectionAnalyticsService`), 6 renk ailesi HSL/HSV spektrum analitiği,
+fiziksel raf metre hesabı (2.8 cm katsayısı), baş yazar/yayınevi ve en eski eser tespiti, okuma durumu rasyoları,
+çift formatlı infografik kart (`WrappedCard`: 9:16 Story & 1:1 Square) ve `ArchivistWrappedBottomSheet`,
+`LibraryScreen` ve `SettingsScreen` giriş noktaları, TR/EN ARB yerelleştirme ve `ShareService` görsel/metin paylaşımı tamamlandı.
+`flutter analyze` temiz (0 issue), `flutter test` 141/141 yeşil.
+Detay: [PROGRESS_FAZ12.md](PROGRESS_FAZ12.md).
 
 ## FAZ 11 — Fiziksel-Dijital İkiz ve Ödünç Takipçisi
 

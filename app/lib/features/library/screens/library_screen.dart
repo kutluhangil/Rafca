@@ -14,6 +14,8 @@ import '../../../design/tokens/colors.dart';
 import '../../../design/tokens/spacing.dart';
 import '../../../design/tokens/typography.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../analytics/screens/archivist_wrapped_screen.dart';
+import '../../analytics/services/collection_analytics_service.dart';
 import '../../share/models/share_models.dart';
 import '../../share/widgets/share_bottom_sheet.dart';
 import '../data/library_repository.dart';
@@ -293,6 +295,18 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                                 .map((b) => b.spineColor ?? '#C9963F')
                                 .toList(),
                           ),
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.auto_stories_outlined),
+                      tooltip: l10n?.archivistWrappedTitle ?? 'Arşiv Özeti (Wrapped)',
+                      color: semantic.brass,
+                      onPressed: () {
+                        final analytics = ref.read(collectionAnalyticsServiceProvider).analyze(books);
+                        ArchivistWrappedBottomSheet.show(
+                          context,
+                          analytics: analytics,
                         );
                       },
                     ),
