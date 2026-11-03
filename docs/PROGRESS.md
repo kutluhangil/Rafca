@@ -19,7 +19,19 @@ işaretlenir.
 
 | Yerel doğrulama veritabanı | Düz PostgreSQL 17 + pgTAP (Docker diski dolu); `supabase start` kanonik yol olarak kalır | 2026-08-27 |
 
-Faz detayları: [PROGRESS_FAZ1.md](PROGRESS_FAZ1.md) · [PROGRESS_FAZ2.md](PROGRESS_FAZ2.md) · [PROGRESS_FAZ3.md](PROGRESS_FAZ3.md) · [PROGRESS_FAZ6.md](PROGRESS_FAZ6.md) · [PROGRESS_FAZ7.md](PROGRESS_FAZ7.md) · [PROGRESS_FAZ8.md](PROGRESS_FAZ8.md) · [PROGRESS_FAZ9.md](PROGRESS_FAZ9.md) · [PROGRESS_FAZ10.md](PROGRESS_FAZ10.md) · [PROGRESS_FAZ11.md](PROGRESS_FAZ11.md) · [PROGRESS_FAZ12.md](PROGRESS_FAZ12.md) · [PROGRESS_FAZ13.md](PROGRESS_FAZ13.md).
+Faz detayları: [PROGRESS_FAZ1.md](PROGRESS_FAZ1.md) · [PROGRESS_FAZ2.md](PROGRESS_FAZ2.md) · [PROGRESS_FAZ3.md](PROGRESS_FAZ3.md) · [PROGRESS_FAZ6.md](PROGRESS_FAZ6.md) · [PROGRESS_FAZ7.md](PROGRESS_FAZ7.md) · [PROGRESS_FAZ8.md](PROGRESS_FAZ8.md) · [PROGRESS_FAZ9.md](PROGRESS_FAZ9.md) · [PROGRESS_FAZ10.md](PROGRESS_FAZ10.md) · [PROGRESS_FAZ11.md](PROGRESS_FAZ11.md) · [PROGRESS_FAZ12.md](PROGRESS_FAZ12.md) · [PROGRESS_FAZ13.md](PROGRESS_FAZ13.md) · [PROGRESS_FAZ14.md](PROGRESS_FAZ14.md).
+
+## FAZ 14 — AR Canlı Raf Lensi & Kitapçı Keşif Modu (Live AR HUD)
+
+**Durum: KAPALI.**
+
+`ArMatchingEngine` bellek içi mikrosaniye seviyesinde trigram eşleme motoru (okundu/okunacak/yok ayrımı),
+`ArLensController` 450ms throttling ve kare atlama koruması ile tepe CPU <%15 ve pil tasarruflu akış işleyicisi,
+`ArOverlayWidget` ve `_ArHudPainter` ile Nocturnal Archivist temalı canlı sınırlayıcı kutular ve durum rozetleri,
+Kütüphanede olmayan kitaplar için tek tıkla istek listesine ekleme (`_onTapArItem`),
+`CameraScreen` üzerinde "RAF SIRTI" / "BARKOD (ISBN)" / "CANLI AR" üçlü mod seçici geçişi ve TR/EN ARB yerelleştirmeleri tamamlandı.
+`flutter analyze` temiz (0 issue), `flutter test` 167/167 yeşil (%100 başarı).
+Detay: [PROGRESS_FAZ14.md](PROGRESS_FAZ14.md).
 
 ## FAZ 13 — Yıpranmış Sırtlar İçin Barkod Fallback (ISBN Scanner)
 

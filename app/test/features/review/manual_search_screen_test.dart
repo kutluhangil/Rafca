@@ -8,7 +8,6 @@ import 'package:go_router/go_router.dart';
 import 'package:rafca/core/database/app_database.dart';
 import 'package:rafca/design/components/primary_button.dart';
 import 'package:rafca/design/theme/spine_theme.dart';
-import 'package:rafca/features/capture/barcode/barcode_lookup_service.dart';
 import 'package:rafca/features/review/models/review_models.dart';
 import 'package:rafca/features/review/screens/manual_search_screen.dart';
 import 'package:rafca/l10n/app_localizations.dart';

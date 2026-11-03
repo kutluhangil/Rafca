@@ -234,5 +234,12 @@
   "invalidIsbn": "Geçersiz ISBN numarası.",
   "barcodeScanHint": "Arka kapaktaki ISBN barkodunu çerçeveye ortalayın",
   "bookFoundFromBarcode": "Barkod ile kitap bulundu",
-  "addToLibrary": "Kütüphaneye Ekle"
+  "addToLibrary": "Kütüphaneye Ekle",
+  "arLensMode": "CANLI AR",
+  "arLensTitle": "CANLI RAF LENSİ",
+  "arStatusOwnedRead": "Kütüphanede Var (Okundu)",
+  "arStatusOwnedUnread": "Okuma Listenizde",
+  "arStatusNotOwned": "Kütüphanede Yok",
+  "arAddToWishlist": "İstek Listesine Ekle",
+  "arBookAddedToWishlist": "kitap okuma listenize eklendi"
 }

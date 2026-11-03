@@ -63,11 +63,12 @@ GoRouter appRouter(Ref ref) {
         name: 'capture',
         builder: (context, state) {
           final mode = state.uri.queryParameters['mode'];
-          return CameraScreen(
-            initialMode: mode == 'barcode'
-                ? CameraCaptureMode.barcode
-                : CameraCaptureMode.spine,
-          );
+          final initialMode = switch (mode) {
+            'barcode' => CameraCaptureMode.barcode,
+            'ar' || 'arLens' => CameraCaptureMode.arLens,
+            _ => CameraCaptureMode.spine,
+          };
+          return CameraScreen(initialMode: initialMode);
         },
       ),
       GoRoute(

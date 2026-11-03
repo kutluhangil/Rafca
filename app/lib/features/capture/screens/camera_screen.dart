@@ -15,6 +15,9 @@ import '../../../design/tokens/colors.dart';
 import '../../../design/tokens/spacing.dart';
 import '../../../design/tokens/typography.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../ar_lens/models/ar_lens_models.dart';
+import '../../ar_lens/state/ar_lens_controller.dart';
+import '../../ar_lens/widgets/ar_overlay_widget.dart';
 import '../../library/data/library_repository.dart';
 import '../../review/models/review_models.dart';
 import '../barcode/barcode_engine.dart';
@@ -26,10 +29,11 @@ import '../widgets/level_indicator.dart';
 import '../widgets/shutter_button.dart';
 import 'permission_screen.dart';
 
-/// Camera modes: Shelf spine scanning (default) or ISBN barcode fallback.
+/// Camera modes: Shelf spine scanning (default), ISBN barcode fallback, or Live AR HUD.
 enum CameraCaptureMode {
   spine,
   barcode,
+  arLens,
 }
 
 /// Live camera view with spirit leveling, alignment guidelines, barcode scanner, and capture gating.
@@ -199,6 +203,7 @@ class _CameraScreenState extends ConsumerState<CameraScreen>
     _accelSub?.cancel();
     _barcodeEngine?.dispose();
     _cameraController?.dispose();
+    ref.read(arLensControllerProvider.notifier).stopLens();
     super.dispose();
   }
 
@@ -417,6 +422,116 @@ class _CameraScreenState extends ConsumerState<CameraScreen>
     );
   }
 
+  Future<void> _onTapArItem(ArDetectedItem item) async {
+    final semantic = context.spineColors;
+    final l10n = AppLocalizations.of(context);
+    final title = item.matchedTitle ?? item.rawText.split('\n').first;
+
+    if (item.status == ArBookStatus.notOwned) {
+      await showModalBottomSheet<void>(
+        context: context,
+        backgroundColor: semantic.surfaceRaised,
+        shape: const RoundedRectangleBorder(
+          borderRadius:
+              BorderRadius.vertical(top: Radius.circular(SpineRadius.sheet)),
+        ),
+        builder: (sheetContext) {
+          return Padding(
+            padding: EdgeInsets.only(
+              left: SpineSpacing.lg,
+              right: SpineSpacing.lg,
+              top: SpineSpacing.lg,
+              bottom:
+                  MediaQuery.of(sheetContext).padding.bottom + SpineSpacing.lg,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Center(
+                  child: Container(
+                    width: 36,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: semantic.brass.withValues(alpha: 0.4),
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: SpineSpacing.md),
+                Row(
+                  children: [
+                    Icon(Icons.explore_outlined,
+                        color: semantic.brass, size: 20),
+                    const SizedBox(width: SpineSpacing.xs),
+                    Text(
+                      (l10n?.arLensTitle ?? 'KEŞİF MODU').toUpperCase(),
+                      style: SpineTypography.metadataCaps
+                          .copyWith(color: semantic.brass),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: SpineSpacing.sm),
+                Text(
+                  title,
+                  style: SpineTypography.headlineSmall,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                if (item.matchedAuthor != null) ...[
+                  const SizedBox(height: SpineSpacing.xs),
+                  Text(
+                    item.matchedAuthor!,
+                    style: SpineTypography.bodyMedium.copyWith(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+                const SizedBox(height: SpineSpacing.lg),
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.bookmark_add_outlined),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: semantic.brass,
+                    foregroundColor: Colors.black,
+                  ),
+                  onPressed: () async {
+                    Navigator.of(sheetContext).pop();
+                    await ref.read(libraryRepositoryProvider).addBook(
+                          manualTitle: title,
+                          manualAuthor: item.matchedAuthor,
+                        );
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                              '"$title" ${l10n?.arBookAddedToWishlist ?? "kütüphaneye eklendi."}'),
+                        ),
+                      );
+                      // Refresh index
+                      await ref
+                          .read(arLensControllerProvider.notifier)
+                          .startLens();
+                    }
+                  },
+                  label: Text(l10n?.arAddToWishlist ?? 'Okuma Listesine Ekle'),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    } else {
+      final isRead = item.status == ArBookStatus.ownedRead;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            '"$title" — ${isRead ? (l10n?.arStatusOwnedRead ?? "Kütüphanenizde var (Okundu)") : (l10n?.arStatusOwnedUnread ?? "Okuma listenizde")}',
+          ),
+        ),
+      );
+    }
+  }
+
   Future<void> _toggleFlash() async {
     final controller = _cameraController;
     if (controller == null || !controller.value.isInitialized) return;
@@ -481,6 +596,7 @@ class _CameraScreenState extends ConsumerState<CameraScreen>
     }
 
     final captureState = ref.watch(captureControllerProvider);
+    final arState = ref.watch(arLensControllerProvider);
     final capturing =
         captureState is CaptureCapturing
             ? captureState
@@ -496,8 +612,15 @@ class _CameraScreenState extends ConsumerState<CameraScreen>
           // 1. Camera preview
           CameraPreview(controller),
 
-          // 2. Shelf alignment guideline overlay
-          _buildAlignmentGuide(context, semantic),
+          // 2. Shelf alignment guideline or AR HUD overlay
+          if (_captureMode == CameraCaptureMode.arLens)
+            ArOverlayWidget(
+              items: arState.items,
+              isProcessing: arState.isProcessing,
+              onTapItem: _onTapArItem,
+            )
+          else
+            _buildAlignmentGuide(context, semantic),
 
           // 3. Top bar (Close, Spirit level, Flash toggle)
           SafeArea(
@@ -538,11 +661,18 @@ class _CameraScreenState extends ConsumerState<CameraScreen>
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.qr_code,
-                                size: 14, color: semantic.brass),
+                            Icon(
+                              _captureMode == CameraCaptureMode.arLens
+                                  ? Icons.remove_red_eye_outlined
+                                  : Icons.qr_code,
+                              size: 14,
+                              color: semantic.brass,
+                            ),
                             const SizedBox(width: 4),
                             Text(
-                              'ISBN',
+                              _captureMode == CameraCaptureMode.arLens
+                                  ? 'AR HUD'
+                                  : 'ISBN',
                               style: SpineTypography.metadataCaps.copyWith(
                                 color: semantic.brass,
                                 fontSize: 10,
@@ -651,15 +781,30 @@ class _CameraScreenState extends ConsumerState<CameraScreen>
           _buildModePill(
             label: l10n?.spineMode ?? 'RAF SIRTI',
             isSelected: _captureMode == CameraCaptureMode.spine,
-            onTap: () => setState(() => _captureMode = CameraCaptureMode.spine),
+            onTap: () {
+              ref.read(arLensControllerProvider.notifier).stopLens();
+              setState(() => _captureMode = CameraCaptureMode.spine);
+            },
             semantic: semantic,
           ),
           const SizedBox(width: 4),
           _buildModePill(
             label: l10n?.barcodeMode ?? 'BARKOD (ISBN)',
             isSelected: _captureMode == CameraCaptureMode.barcode,
-            onTap: () =>
-                setState(() => _captureMode = CameraCaptureMode.barcode),
+            onTap: () {
+              ref.read(arLensControllerProvider.notifier).stopLens();
+              setState(() => _captureMode = CameraCaptureMode.barcode);
+            },
+            semantic: semantic,
+          ),
+          const SizedBox(width: 4),
+          _buildModePill(
+            label: l10n?.arLensMode ?? 'CANLI AR',
+            isSelected: _captureMode == CameraCaptureMode.arLens,
+            onTap: () {
+              setState(() => _captureMode = CameraCaptureMode.arLens);
+              ref.read(arLensControllerProvider.notifier).startLens();
+            },
             semantic: semantic,
           ),
         ],

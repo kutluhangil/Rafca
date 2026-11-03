@@ -571,4 +571,25 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get addToLibrary => 'Kütüphaneye Ekle';
+
+  @override
+  String get arLensMode => 'CANLI AR';
+
+  @override
+  String get arLensTitle => 'CANLI RAF LENSİ';
+
+  @override
+  String get arStatusOwnedRead => 'Kütüphanede Var (Okundu)';
+
+  @override
+  String get arStatusOwnedUnread => 'Okuma Listenizde';
+
+  @override
+  String get arStatusNotOwned => 'Kütüphanede Yok';
+
+  @override
+  String get arAddToWishlist => 'İstek Listesine Ekle';
+
+  @override
+  String get arBookAddedToWishlist => 'kitap okuma listenize eklendi';
 }

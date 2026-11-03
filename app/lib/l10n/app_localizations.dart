@@ -1165,6 +1165,48 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Kütüphaneye Ekle'**
   String get addToLibrary;
+
+  /// No description provided for @arLensMode.
+  ///
+  /// In tr, this message translates to:
+  /// **'CANLI AR'**
+  String get arLensMode;
+
+  /// No description provided for @arLensTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'CANLI RAF LENSİ'**
+  String get arLensTitle;
+
+  /// No description provided for @arStatusOwnedRead.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kütüphanede Var (Okundu)'**
+  String get arStatusOwnedRead;
+
+  /// No description provided for @arStatusOwnedUnread.
+  ///
+  /// In tr, this message translates to:
+  /// **'Okuma Listenizde'**
+  String get arStatusOwnedUnread;
+
+  /// No description provided for @arStatusNotOwned.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kütüphanede Yok'**
+  String get arStatusNotOwned;
+
+  /// No description provided for @arAddToWishlist.
+  ///
+  /// In tr, this message translates to:
+  /// **'İstek Listesine Ekle'**
+  String get arAddToWishlist;
+
+  /// No description provided for @arBookAddedToWishlist.
+  ///
+  /// In tr, this message translates to:
+  /// **'kitap okuma listenize eklendi'**
+  String get arBookAddedToWishlist;
 }
 
 class _AppLocalizationsDelegate

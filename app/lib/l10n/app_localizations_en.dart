@@ -567,4 +567,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addToLibrary => 'Add to Library';
+
+  @override
+  String get arLensMode => 'LIVE AR';
+
+  @override
+  String get arLensTitle => 'LIVE SHELF LENS';
+
+  @override
+  String get arStatusOwnedRead => 'In Library (Read)';
+
+  @override
+  String get arStatusOwnedUnread => 'In Reading List';
+
+  @override
+  String get arStatusNotOwned => 'Not in Library';
+
+  @override
+  String get arAddToWishlist => 'Add to Wishlist';
+
+  @override
+  String get arBookAddedToWishlist => 'book added to reading list';
 }
