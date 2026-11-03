@@ -7,6 +7,8 @@ import '../../features/capture/screens/camera_screen.dart';
 import '../../features/capture/screens/crop_screen.dart';
 import '../../features/capture/screens/processing_screen.dart';
 import '../../features/home/home_screen.dart';
+import '../../features/review/models/review_models.dart';
+import '../../features/review/screens/scan_results_screen.dart';
 
 part 'app_router.g.dart';
 
@@ -26,6 +28,9 @@ abstract final class Routes {
   static const capture = '/capture';
   static const captureCrop = '/capture/crop';
   static const captureProcessing = '/capture/processing';
+
+  /// Faz 7 — Review & Correction routes
+  static const reviewResults = '/review/results';
 }
 
 @Riverpod(keepAlive: true)
@@ -62,6 +67,15 @@ GoRouter appRouter(Ref ref) {
         builder: (context, state) {
           final imagePath = state.uri.queryParameters['imagePath'] ?? '';
           return ProcessingScreen(imagePath: imagePath);
+        },
+      ),
+      GoRoute(
+        path: Routes.reviewResults,
+        name: 'reviewResults',
+        builder: (context, state) {
+          final batch = state.extra as ReviewBatch?;
+          if (batch == null) return const HomeScreen();
+          return ScanResultsScreen(initialBatch: batch);
         },
       ),
     ],

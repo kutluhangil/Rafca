@@ -19,7 +19,19 @@ işaretlenir.
 
 | Yerel doğrulama veritabanı | Düz PostgreSQL 17 + pgTAP (Docker diski dolu); `supabase start` kanonik yol olarak kalır | 2026-08-27 |
 
-Faz detayları: [PROGRESS_FAZ1.md](PROGRESS_FAZ1.md) · [PROGRESS_FAZ2.md](PROGRESS_FAZ2.md) · [PROGRESS_FAZ3.md](PROGRESS_FAZ3.md) · [PROGRESS_FAZ6.md](PROGRESS_FAZ6.md).
+Faz detayları: [PROGRESS_FAZ1.md](PROGRESS_FAZ1.md) · [PROGRESS_FAZ2.md](PROGRESS_FAZ2.md) · [PROGRESS_FAZ3.md](PROGRESS_FAZ3.md) · [PROGRESS_FAZ6.md](PROGRESS_FAZ6.md) · [PROGRESS_FAZ7.md](PROGRESS_FAZ7.md).
+
+## FAZ 7 — Sonuç ve Düzeltme (A7)
+
+**Durum: KAPALI.**
+
+Tarama sonuçları ekranı (`ScanResultsScreen`), açılır-kapanır kaynak görsel, mini `ShelfStrip`,
+üç güven grubu (`Matched`, `Needs Review`, `Unrecognized`), baskı düzeltme sheet'i (`ReviewBottomSheet`),
+yerel katalog ve form tabanlı arama ekranı (`ManualSearchScreen`), toplu onay ve Drift SQLite
+(`scans`, `catalogBooks`, `userBooks`) ile `syncQueueDao` transactional yazımı tamamlandı.
+`ProcessingScreen` tarama sonu yönlendirmesi bağlandı.
+`flutter analyze` temiz (0 issue), `flutter test` 81/81 yeşil.
+Detay: [PROGRESS_FAZ7.md](PROGRESS_FAZ7.md).
 
 ## FAZ 6 — Yakalama (A6)
 

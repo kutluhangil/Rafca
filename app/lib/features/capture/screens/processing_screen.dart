@@ -6,11 +6,14 @@ import 'package:go_router/go_router.dart';
 import 'package:image/image.dart' as img;
 import 'package:spine_clustering/spine_clustering.dart';
 
+import '../../../core/database/tables.dart';
+import '../../../core/router/app_router.dart';
 import '../../../design/adaptive/adaptive_scaffold.dart';
 import '../../../design/components/primary_button.dart';
 import '../../../design/tokens/colors.dart';
 import '../../../design/tokens/spacing.dart';
 import '../../../design/tokens/typography.dart';
+import '../../review/models/review_models.dart';
 import '../scan/scan_controller.dart';
 import '../widgets/spine_overlay.dart';
 
@@ -32,6 +35,7 @@ class _ProcessingScreenState extends ConsumerState<ProcessingScreen> {
   double _progress = 0.0;
   final List<String> _logs = ['TARAMA BAŞLATILIYOR...'];
   List<SpineCandidate> _detectedCandidates = const [];
+  ScanResult? _scanResult;
   bool _isDone = false;
   String? _errorMessage;
   Size? _imageSize;
@@ -78,6 +82,7 @@ class _ProcessingScreenState extends ConsumerState<ProcessingScreen> {
         setState(() {
           _progress = 1.0;
           _isDone = true;
+          _scanResult = result;
           _detectedCandidates = result.candidates;
         });
       }
@@ -94,6 +99,75 @@ class _ProcessingScreenState extends ConsumerState<ProcessingScreen> {
   void dispose() {
     _scanController.dispose();
     super.dispose();
+  }
+
+  ReviewBatch _createReviewBatch(ScanResult result) {
+    final scanId = 'scan_${DateTime.now().millisecondsSinceEpoch}';
+    final items = <ReviewItem>[];
+
+    for (final candidate in result.candidates) {
+      final cropPath = result.cropPaths[candidate.id] ?? '';
+      final spineColor = result.dominantColors[candidate.id] ?? '#12100E';
+      final rawText = candidate.rawTextForward.trim();
+      final lines = rawText
+          .split('\n')
+          .map((l) => l.trim())
+          .where((l) => l.isNotEmpty)
+          .toList();
+
+      if (lines.isEmpty) {
+        items.add(
+          ReviewItem(
+            id: candidate.id,
+            cropPath: cropPath,
+            spineColor: spineColor,
+            rawText: '',
+            confidence: MatchConfidence.unknown,
+            confidenceScore: 0.1,
+          ),
+        );
+      } else {
+        final title = lines.first;
+        final author = lines.length > 1 ? lines[1] : 'Bilinmeyen Yazar';
+        double avgConfidence = 0.85;
+        final confs = candidate.elements
+            .map((e) => e.confidence)
+            .whereType<double>()
+            .toList();
+        if (confs.isNotEmpty) {
+          avgConfidence = confs.reduce((a, b) => a + b) / confs.length;
+        }
+        final confidenceScore = avgConfidence.clamp(0.0, 1.0);
+        final isMatched = confidenceScore >= 0.80;
+
+        final book = ReviewCandidateBook(
+          id: candidate.id.hashCode.abs(),
+          title: title,
+          author: author,
+          score: confidenceScore,
+        );
+
+        items.add(
+          ReviewItem(
+            id: candidate.id,
+            cropPath: cropPath,
+            spineColor: spineColor,
+            rawText: rawText,
+            confidence:
+                isMatched ? MatchConfidence.matched : MatchConfidence.review,
+            confidenceScore: confidenceScore,
+            selectedBook: isMatched ? book : null,
+            alternatives: isMatched ? const [] : [book],
+          ),
+        );
+      }
+    }
+
+    return ReviewBatch(
+      scanId: scanId,
+      sourceImagePath: widget.imagePath,
+      items: items,
+    );
   }
 
   @override
@@ -252,15 +326,12 @@ class _ProcessingScreenState extends ConsumerState<ProcessingScreen> {
                   label: 'Sonuçları Görüntüle',
                   variant: SpineButtonVariant.primary,
                   onPressed: () {
-                    // In Faz 6, results flow into Faz 7 review
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          '${_detectedCandidates.length} sırt kırpıldı. Faz 7 (Review) hazır olunca sonuç ekranı açılacak.',
-                        ),
-                      ),
-                    );
-                    context.pop();
+                    if (_scanResult != null) {
+                      final batch = _createReviewBatch(_scanResult!);
+                      context.pushReplacement(Routes.reviewResults, extra: batch);
+                    } else {
+                      context.pop();
+                    }
                   },
                 ),
               ] else if (_errorMessage != null) ...[
