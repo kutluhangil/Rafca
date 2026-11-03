@@ -854,6 +854,8 @@ class _CameraScreenState extends ConsumerState<CameraScreen>
   ) {
     final l10n = AppLocalizations.of(context);
     final isBarcode = _captureMode == CameraCaptureMode.barcode;
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    final defaultWidth = (screenWidth - (SpineSpacing.lg * 2)).clamp(0.0, double.infinity);
 
     return IgnorePointer(
       child: Center(
@@ -862,7 +864,7 @@ class _CameraScreenState extends ConsumerState<CameraScreen>
           curve: Curves.easeOutCubic,
           margin: const EdgeInsets.symmetric(horizontal: SpineSpacing.lg),
           height: isBarcode ? 150 : 220,
-          width: isBarcode ? 270 : double.infinity,
+          width: isBarcode ? 270 : defaultWidth,
           decoration: BoxDecoration(
             border: Border.all(
               color: semantic.brass.withValues(alpha: isBarcode ? 0.7 : 0.4),
