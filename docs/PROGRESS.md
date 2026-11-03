@@ -19,7 +19,18 @@ işaretlenir.
 
 | Yerel doğrulama veritabanı | Düz PostgreSQL 17 + pgTAP (Docker diski dolu); `supabase start` kanonik yol olarak kalır | 2026-08-27 |
 
-Faz detayları: [PROGRESS_FAZ1.md](PROGRESS_FAZ1.md) · [PROGRESS_FAZ2.md](PROGRESS_FAZ2.md) · [PROGRESS_FAZ3.md](PROGRESS_FAZ3.md) · [PROGRESS_FAZ6.md](PROGRESS_FAZ6.md) · [PROGRESS_FAZ7.md](PROGRESS_FAZ7.md) · [PROGRESS_FAZ8.md](PROGRESS_FAZ8.md) · [PROGRESS_FAZ9.md](PROGRESS_FAZ9.md) · [PROGRESS_FAZ10.md](PROGRESS_FAZ10.md).
+Faz detayları: [PROGRESS_FAZ1.md](PROGRESS_FAZ1.md) · [PROGRESS_FAZ2.md](PROGRESS_FAZ2.md) · [PROGRESS_FAZ3.md](PROGRESS_FAZ3.md) · [PROGRESS_FAZ6.md](PROGRESS_FAZ6.md) · [PROGRESS_FAZ7.md](PROGRESS_FAZ7.md) · [PROGRESS_FAZ8.md](PROGRESS_FAZ8.md) · [PROGRESS_FAZ9.md](PROGRESS_FAZ9.md) · [PROGRESS_FAZ10.md](PROGRESS_FAZ10.md) · [PROGRESS_FAZ11.md](PROGRESS_FAZ11.md).
+
+## FAZ 11 — Fiziksel-Dijital İkiz ve Ödünç Takipçisi
+
+**Durum: KAPALI.**
+
+Fiziksel raf konumu (`UserBooks.shelfPosition`, 1-based sol-sağ sırası) ve dijital ikiz sıralaması (`BookSortOption.shelfPositionAsc`),
+Ödünç takipçisi (`BookLoans` Drift SQLite tablosu, v2->v3 migration), ödünç verme ve iade alma işlemleri (`loanBook`, `returnBook`),
+Kütüphane ekranında "Ödünçtekiler" filtresi ve sıralama menüsü, kitap detayında ödünç kartı (`_buildLoanCard`) ve raf rozeti,
+TR/EN ARB yerelleştirme ve `uppercaseForLocale` entegrasyonu tamamlandı.
+`flutter analyze` temiz (0 issue), `flutter test` 134/134 yeşil.
+Detay: [PROGRESS_FAZ11.md](PROGRESS_FAZ11.md).
 
 ## FAZ 10 — Sertleştirme ve Mağaza (A9)
 

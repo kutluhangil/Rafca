@@ -6,10 +6,9 @@ part of 'capture_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$captureControllerHash() =>
-    r'49a8d9a2e38c92b8d4f098c76e5d8b72e12a9f13';
+String _$captureControllerHash() => r'53d822dff0922ef5f0fb2e943cda0eae35c47263';
 
-/// Copied from [CaptureController].
+/// See also [CaptureController].
 @ProviderFor(CaptureController)
 final captureControllerProvider =
     AutoDisposeNotifierProvider<CaptureController, CaptureState>.internal(

@@ -223,6 +223,18 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
                       spacing: SpineSpacing.sm,
                       runSpacing: SpineSpacing.sm,
                       children: [
+                        if (book.shelfPosition != null)
+                          _MetaChip(
+                            icon: Icons.format_list_numbered,
+                            label: l10n?.shelfPositionBadge(book.shelfPosition!) ??
+                                'RAF #${book.shelfPosition}',
+                          ),
+                        if (book.isOnLoan)
+                          _MetaChip(
+                            icon: Icons.person_outline,
+                            label:
+                                '${uppercaseForLocale(l10n?.filterOnLoan ?? "Ödünçte", Localizations.maybeLocaleOf(context))}: ${uppercaseForLocale(book.activeLoan!.borrowerName, Localizations.maybeLocaleOf(context))}',
+                          ),
                         if (book.publishYear != null)
                           _MetaChip(
                             icon: Icons.calendar_today_outlined,
@@ -341,6 +353,10 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
                         ],
                       ),
                     ),
+                    const SizedBox(height: SpineSpacing.lg),
+
+                    // Faz 11: Lending Tracker Card
+                    _buildLoanCard(context, book, scheme, semantic),
                     const SizedBox(height: SpineSpacing.xl),
 
                     // Actions
@@ -508,6 +524,321 @@ class _BookDetailScreenState extends ConsumerState<BookDetailScreen> {
         ],
       ),
     );
+  }
+
+  void _showLoanDialog(BuildContext context, LibraryBook book) {
+    final l10n = AppLocalizations.of(context);
+    final scheme = Theme.of(context).colorScheme;
+    final semantic = context.spineColors;
+
+    final borrowerNameController = TextEditingController();
+    final borrowerContactController = TextEditingController();
+    final notesController = TextEditingController();
+    DateTime? selectedDueDate;
+
+    showDialog<void>(
+      context: context,
+      builder: (dialogCtx) => StatefulBuilder(
+        builder: (ctx, setDialogState) => AlertDialog(
+          backgroundColor: scheme.surfaceContainerHigh,
+          title: Text(
+            l10n?.loanBook ?? 'Ödünç Ver',
+            style: SpineTypography.headlineSmall,
+          ),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  controller: borrowerNameController,
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    labelText: '${l10n?.borrowerName ?? "Ödünç Alan Kişi"} *',
+                    hintText: l10n?.borrowerNameHint ?? 'Örn: Ahmet Yılmaz',
+                  ),
+                ),
+                const SizedBox(height: SpineSpacing.md),
+                TextField(
+                  controller: borrowerContactController,
+                  decoration: InputDecoration(
+                    labelText: l10n?.borrowerContact ?? 'İletişim (Telefon / E-posta)',
+                    hintText: l10n?.borrowerContactHint ?? 'İsteğe bağlı',
+                  ),
+                ),
+                const SizedBox(height: SpineSpacing.md),
+                Text(
+                  l10n?.loanDueDate ?? 'Beklenen İade Tarihi',
+                  style: SpineTypography.metadataCaps.copyWith(color: scheme.onSurfaceVariant),
+                ),
+                const SizedBox(height: SpineSpacing.xs),
+                InkWell(
+                  onTap: () async {
+                    final picked = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now().add(const Duration(days: 14)),
+                      firstDate: DateTime.now(),
+                      lastDate: DateTime.now().add(const Duration(days: 365)),
+                    );
+                    if (picked != null) {
+                      setDialogState(() => selectedDueDate = picked);
+                    }
+                  },
+                  borderRadius: BorderRadius.circular(SpineRadius.chip),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: SpineSpacing.md,
+                      vertical: SpineSpacing.sm,
+                    ),
+                    decoration: BoxDecoration(
+                      color: scheme.surfaceContainerLow,
+                      borderRadius: BorderRadius.circular(SpineRadius.chip),
+                      border: Border.all(
+                        color: semantic.hairline,
+                        width: SpineBorders.hairline,
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(Icons.event_outlined, size: 18, color: semantic.brass),
+                        const SizedBox(width: SpineSpacing.sm),
+                        Text(
+                          selectedDueDate != null
+                              ? _formatDate(selectedDueDate!)
+                              : (l10n?.borrowerContactHint ?? 'İsteğe bağlı'),
+                          style: SpineTypography.bodyMedium,
+                        ),
+                        const Spacer(),
+                        if (selectedDueDate != null)
+                          IconButton(
+                            icon: const Icon(Icons.clear, size: 16),
+                            padding: EdgeInsets.zero,
+                            constraints: const BoxConstraints(),
+                            onPressed: () => setDialogState(() => selectedDueDate = null),
+                          ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: SpineSpacing.md),
+                TextField(
+                  controller: notesController,
+                  maxLines: 2,
+                  decoration: InputDecoration(
+                    labelText: l10n?.loanNotes ?? 'Notlar',
+                    hintText: l10n?.loanNotesHint ?? 'İsteğe bağlı not...',
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogCtx).pop(),
+              child: Text(l10n?.cancel ?? 'İptal'),
+            ),
+            PrimaryButton(
+              label: l10n?.loanBook ?? 'Ödünç Ver',
+              expand: false,
+              variant: SpineButtonVariant.primary,
+              onPressed: () async {
+                final name = borrowerNameController.text.trim();
+                if (name.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        l10n?.borrowerNameRequired ?? 'Lütfen ödünç alan kişinin adını girin.',
+                      ),
+                      backgroundColor: scheme.error,
+                    ),
+                  );
+                  return;
+                }
+                Navigator.of(dialogCtx).pop();
+                await ref.read(libraryRepositoryProvider).loanBook(
+                      userBookId: book.id,
+                      borrowerName: name,
+                      borrowerContact: borrowerContactController.text.trim().isNotEmpty
+                          ? borrowerContactController.text.trim()
+                          : null,
+                      dueDate: selectedDueDate,
+                      notes: notesController.text.trim().isNotEmpty
+                          ? notesController.text.trim()
+                          : null,
+                    );
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(l10n?.loanSuccess ?? 'Kitap ödünç verildi olarak kaydedildi.'),
+                      backgroundColor: semantic.matched,
+                    ),
+                  );
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLoanCard(
+    BuildContext context,
+    LibraryBook book,
+    ColorScheme scheme,
+    SpineSemanticColors semantic,
+  ) {
+    final l10n = AppLocalizations.of(context);
+    final activeLoan = book.activeLoan;
+
+    return Container(
+      padding: const EdgeInsets.all(SpineSpacing.base),
+      decoration: BoxDecoration(
+        color: scheme.surfaceContainerLow,
+        borderRadius: BorderRadius.circular(SpineRadius.card),
+        border: Border.all(
+          color: activeLoan != null ? semantic.brass.withValues(alpha: 0.5) : semantic.hairline,
+          width: SpineBorders.hairline,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.supervised_user_circle_outlined,
+                size: 16,
+                color: activeLoan != null ? semantic.brass : scheme.onSurfaceVariant,
+              ),
+              const SizedBox(width: SpineSpacing.xs),
+              Text(
+                l10n?.loanSectionTitle ?? 'ÖDÜNÇ TAKİPÇİSİ',
+                style: SpineTypography.metadataCaps.copyWith(
+                  color: activeLoan != null ? semantic.brass : scheme.onSurfaceVariant,
+                ),
+              ),
+              const Spacer(),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: SpineSpacing.sm,
+                  vertical: 2,
+                ),
+                decoration: BoxDecoration(
+                  color: (activeLoan != null ? semantic.brass : semantic.matched)
+                      .withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(SpineRadius.chip),
+                ),
+                child: Text(
+                  uppercaseForLocale(
+                    activeLoan != null
+                        ? (l10n?.loanStatusActive ?? 'Ödünç Verildi')
+                        : (l10n?.loanStatusAvailable ?? 'Kütüphanede Mevcut'),
+                    Localizations.maybeLocaleOf(context),
+                  ),
+                  style: SpineTypography.labelMono.copyWith(
+                    color: activeLoan != null ? semantic.brass : semantic.matched,
+                    fontSize: 10,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: SpineSpacing.md),
+          if (activeLoan != null) ...[
+            Text(
+              activeLoan.borrowerName,
+              style: SpineTypography.headlineSmall.copyWith(
+                color: scheme.onSurface,
+              ),
+            ),
+            if (activeLoan.borrowerContact != null && activeLoan.borrowerContact!.isNotEmpty) ...[
+              const SizedBox(height: SpineSpacing.xs),
+              Row(
+                children: [
+                  Icon(Icons.contact_mail_outlined, size: 14, color: scheme.onSurfaceVariant),
+                  const SizedBox(width: SpineSpacing.xs),
+                  Text(
+                    activeLoan.borrowerContact!,
+                    style: SpineTypography.bodySmall.copyWith(
+                      color: scheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+            const SizedBox(height: SpineSpacing.sm),
+            Row(
+              children: [
+                Icon(Icons.calendar_month_outlined, size: 14, color: scheme.onSurfaceVariant),
+                const SizedBox(width: SpineSpacing.xs),
+                Text(
+                  '${l10n?.loanDate ?? "Veriliş Tarihi"}: ${_formatDate(activeLoan.loanedAt)}',
+                  style: SpineTypography.labelMono.copyWith(
+                    color: scheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
+            ),
+            if (activeLoan.dueDate != null) ...[
+              const SizedBox(height: SpineSpacing.xs),
+              Row(
+                children: [
+                  Icon(Icons.alarm_outlined, size: 14, color: semantic.brass),
+                  const SizedBox(width: SpineSpacing.xs),
+                  Text(
+                    '${l10n?.loanDueDate ?? "Beklenen İade"}: ${_formatDate(activeLoan.dueDate!)}',
+                    style: SpineTypography.labelMono.copyWith(
+                      color: semantic.brass,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+            if (activeLoan.notes != null && activeLoan.notes!.isNotEmpty) ...[
+              const SizedBox(height: SpineSpacing.xs),
+              Text(
+                '“${activeLoan.notes}”',
+                style: SpineTypography.bodySmall.copyWith(
+                  color: scheme.onSurfaceVariant,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ],
+            const SizedBox(height: SpineSpacing.md),
+            PrimaryButton(
+              label: l10n?.returnBook ?? 'İade Al',
+              variant: SpineButtonVariant.secondary,
+              icon: Icons.assignment_return_outlined,
+              expand: true,
+              onPressed: () async {
+                await ref.read(libraryRepositoryProvider).returnBook(activeLoan.id);
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(l10n?.returnSuccess ?? 'Kitap kütüphaneye iade alındı.'),
+                      backgroundColor: semantic.matched,
+                    ),
+                  );
+                }
+              },
+            ),
+          ] else ...[
+            PrimaryButton(
+              label: l10n?.loanBook ?? 'Ödünç Ver',
+              variant: SpineButtonVariant.secondary,
+              icon: Icons.person_add_outlined,
+              expand: true,
+              onPressed: () => _showLoanDialog(context, book),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  String _formatDate(DateTime dt) {
+    return '${dt.year}-${dt.month.toString().padLeft(2, '0')}-${dt.day.toString().padLeft(2, '0')}';
   }
 }
 

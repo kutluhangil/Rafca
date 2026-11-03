@@ -39,6 +39,8 @@ class LibraryScreen extends ConsumerStatefulWidget {
 
 class _LibraryScreenState extends ConsumerState<LibraryScreen> {
   ReadingStatus? _selectedStatus;
+  bool _isOnLoanFilter = false;
+  BookSortOption _sortOption = BookSortOption.addedAtDesc;
   String _searchQuery = '';
   final TextEditingController _searchController = TextEditingController();
 
@@ -58,6 +60,8 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
         (
           shelfId: widget.initialShelfId,
           statusFilter: _selectedStatus,
+          onLoanFilter: _isOnLoanFilter ? true : null,
+          sortOption: _sortOption,
           search: _searchQuery,
         ),
       ),
@@ -70,7 +74,11 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
       loading: () => const SizedBox.shrink(),
       error: (e, st) => Center(child: Text('Hata: $e')),
       data: (books) {
-        if (books.isEmpty && _searchQuery.isEmpty && _selectedStatus == null && widget.initialShelfId == null) {
+        if (books.isEmpty &&
+            _searchQuery.isEmpty &&
+            _selectedStatus == null &&
+            !_isOnLoanFilter &&
+            widget.initialShelfId == null) {
           return _buildEmptyState(context);
         }
 
@@ -245,6 +253,30 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
+                    PopupMenuButton<BookSortOption>(
+                      icon: Icon(Icons.sort, color: semantic.brass),
+                      tooltip: l10n?.sortBy ?? 'Sırala',
+                      initialValue: _sortOption,
+                      onSelected: (option) => setState(() => _sortOption = option),
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          value: BookSortOption.addedAtDesc,
+                          child: Text(l10n?.sortAddedDate ?? 'Eklenme Tarihi (Yeni)'),
+                        ),
+                        PopupMenuItem(
+                          value: BookSortOption.shelfPositionAsc,
+                          child: Text(l10n?.sortShelfPosition ?? 'Fiziksel Raf Sırası'),
+                        ),
+                        PopupMenuItem(
+                          value: BookSortOption.titleAsc,
+                          child: Text(l10n?.sortTitle ?? 'Kitap Başlığı (A-Z)'),
+                        ),
+                        PopupMenuItem(
+                          value: BookSortOption.authorAsc,
+                          child: Text(l10n?.sortAuthor ?? 'Yazar (A-Z)'),
+                        ),
+                      ],
+                    ),
                     IconButton(
                       icon: const Icon(Icons.share_outlined),
                       tooltip: l10n?.shareCollectionTitle ?? 'Paylaş',
@@ -350,6 +382,12 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                         isSelected: _selectedStatus == ReadingStatus.read,
                         onTap: () => setState(() => _selectedStatus = ReadingStatus.read),
                       ),
+                      const SizedBox(width: SpineSpacing.sm),
+                      _FilterChip(
+                        label: l10n?.filterOnLoan ?? 'Ödünçtekiler',
+                        isSelected: _isOnLoanFilter,
+                        onTap: () => setState(() => _isOnLoanFilter = !_isOnLoanFilter),
+                      ),
                     ],
                   ),
                 ),
@@ -378,7 +416,7 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
               : SliverGrid(
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 420,
-                    mainAxisExtent: 190,
+                    mainAxisExtent: 200,
                     crossAxisSpacing: SpineSpacing.base,
                     mainAxisSpacing: SpineSpacing.base,
                   ),
@@ -395,17 +433,33 @@ class _LibraryScreenState extends ConsumerState<LibraryScreen> {
                         },
                         levelLabel: book.confidence.name.toUpperCase(),
                         crop: _buildCropWidget(book, scheme),
-                        footer: book.publishYear != null
-                            ? '${book.publishYear} BASKISI'
-                            : (book.publisher ?? 'ARŞİV KAYDI'),
-                        trailingFooter: Icon(
-                          switch (book.status) {
-                            ReadingStatus.read => Icons.bookmark,
-                            ReadingStatus.reading => Icons.bookmark_added,
-                            ReadingStatus.unread => Icons.bookmark_border,
-                          },
-                          size: 18,
-                          color: scheme.onSurfaceVariant,
+                        footer: [
+                          if (book.shelfPosition != null) '#${book.shelfPosition} · ',
+                          book.publishYear != null
+                              ? '${book.publishYear} BASKISI'
+                              : (book.publisher ?? 'ARŞİV KAYDI'),
+                        ].join(),
+                        trailingFooter: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            if (book.isOnLoan) ...[
+                              Icon(
+                                Icons.person_outline,
+                                size: 16,
+                                color: semantic.brass,
+                              ),
+                              const SizedBox(width: 4),
+                            ],
+                            Icon(
+                              switch (book.status) {
+                                ReadingStatus.read => Icons.bookmark,
+                                ReadingStatus.reading => Icons.bookmark_added,
+                                ReadingStatus.unread => Icons.bookmark_border,
+                              },
+                              size: 18,
+                              color: scheme.onSurfaceVariant,
+                            ),
+                          ],
                         ),
                         onTap: () => _openBookDetail(context, book.id),
                         onMore: () => _openBookDetail(context, book.id),

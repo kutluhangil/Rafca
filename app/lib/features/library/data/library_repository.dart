@@ -10,11 +10,13 @@ class LibraryRepository {
 
   final AppDatabase _db;
 
-  /// Watch all books in the library. By default, orders by `addedAt` descending.
+  /// Watch all books in the library. Supports filtering and sorting.
   Stream<List<LibraryBook>> watchLibraryBooks({
     String? shelfId,
     ReadingStatus? statusFilter,
     MatchConfidence? confidenceFilter,
+    bool? onLoanFilter,
+    BookSortOption sortOption = BookSortOption.addedAtDesc,
     String? searchQuery,
   }) {
     final query = _db.select(_db.userBooks).join([
@@ -25,6 +27,11 @@ class LibraryRepository {
       leftOuterJoin(
         _db.shelves,
         _db.shelves.id.equalsExp(_db.userBooks.shelfId),
+      ),
+      leftOuterJoin(
+        _db.bookLoans,
+        _db.bookLoans.userBookId.equalsExp(_db.userBooks.id) &
+            _db.bookLoans.returnedAt.isNull(),
       ),
     ]);
 
@@ -44,7 +51,28 @@ class LibraryRepository {
       query.where(_db.userBooks.status.equalsValue(statusFilter));
     }
 
-    query.orderBy([OrderingTerm.desc(_db.userBooks.addedAt)]);
+    if (onLoanFilter == true) {
+      query.where(_db.bookLoans.id.isNotNull() & _db.bookLoans.returnedAt.isNull());
+    }
+
+    switch (sortOption) {
+      case BookSortOption.addedAtDesc:
+        query.orderBy([OrderingTerm.desc(_db.userBooks.addedAt)]);
+      case BookSortOption.titleAsc:
+        query.orderBy([
+          OrderingTerm.asc(_db.catalogBooks.title),
+          OrderingTerm.asc(_db.userBooks.manualTitle),
+        ]);
+      case BookSortOption.authorAsc:
+        query.orderBy([
+          OrderingTerm.asc(_db.userBooks.manualAuthor),
+        ]);
+      case BookSortOption.shelfPositionAsc:
+        query.orderBy([
+          OrderingTerm.asc(_db.userBooks.shelfPosition),
+          OrderingTerm.asc(_db.userBooks.addedAt),
+        ]);
+    }
 
     return query.watch().map((rows) => _mapRows(rows, searchQuery));
   }
@@ -56,6 +84,7 @@ class LibraryRepository {
       final userBook = row.readTable(_db.userBooks);
       final catalogBook = row.readTableOrNull(_db.catalogBooks);
       final shelf = row.readTableOrNull(_db.shelves);
+      final loan = row.readTableOrNull(_db.bookLoans);
 
       final title = catalogBook?.title ?? userBook.manualTitle ?? 'Bilinmeyen Eser';
       final author = (catalogBook?.authors.isNotEmpty ?? false)
@@ -72,6 +101,18 @@ class LibraryRepository {
         }
       }
 
+      BookLoanInfo? loanInfo;
+      if (loan != null && loan.returnedAt == null) {
+        loanInfo = BookLoanInfo(
+          id: loan.id,
+          borrowerName: loan.borrowerName,
+          borrowerContact: loan.borrowerContact,
+          loanedAt: loan.loanedAt,
+          dueDate: loan.dueDate,
+          notes: loan.notes,
+        );
+      }
+
       list.add(
         LibraryBook(
           id: userBook.id,
@@ -85,6 +126,8 @@ class LibraryRepository {
           confidence: userBook.confidence,
           spineColor: userBook.spineColor,
           capturePath: userBook.capturePath,
+          shelfPosition: userBook.shelfPosition,
+          activeLoan: loanInfo,
           shelfId: userBook.shelfId,
           shelfName: shelf?.name,
           addedAt: userBook.addedAt,
@@ -151,6 +194,11 @@ class LibraryRepository {
         _db.shelves,
         _db.shelves.id.equalsExp(_db.userBooks.shelfId),
       ),
+      leftOuterJoin(
+        _db.bookLoans,
+        _db.bookLoans.userBookId.equalsExp(_db.userBooks.id) &
+            _db.bookLoans.returnedAt.isNull(),
+      ),
     ])..where(_db.userBooks.id.equals(userBookId));
 
     return query.watchSingleOrNull().map((row) {
@@ -158,6 +206,18 @@ class LibraryRepository {
       final userBook = row.readTable(_db.userBooks);
       final catalogBook = row.readTableOrNull(_db.catalogBooks);
       final shelf = row.readTableOrNull(_db.shelves);
+      final loan = row.readTableOrNull(_db.bookLoans);
+
+      final loanInfo = loan != null
+          ? BookLoanInfo(
+              id: loan.id,
+              borrowerName: loan.borrowerName,
+              borrowerContact: loan.borrowerContact,
+              loanedAt: loan.loanedAt,
+              dueDate: loan.dueDate,
+              notes: loan.notes,
+            )
+          : null;
 
       return LibraryBook(
         id: userBook.id,
@@ -173,6 +233,8 @@ class LibraryRepository {
         confidence: userBook.confidence,
         spineColor: userBook.spineColor,
         capturePath: userBook.capturePath,
+        shelfPosition: userBook.shelfPosition,
+        activeLoan: loanInfo,
         shelfId: userBook.shelfId,
         shelfName: shelf?.name,
         addedAt: userBook.addedAt,
@@ -313,9 +375,70 @@ class LibraryRepository {
     return _mapRows(rows);
   }
 
-  /// Completely wipes local library data (userBooks, shelves, scans, syncQueue).
+  /// Records a book loan (Faz 11 — Ödünç Ver).
+  Future<String> loanBook({
+    required String userBookId,
+    required String borrowerName,
+    String? borrowerContact,
+    DateTime? dueDate,
+    String? notes,
+  }) async {
+    final loanId = 'loan_${DateTime.now().millisecondsSinceEpoch}';
+    final now = DateTime.now();
+
+    await _db.into(_db.bookLoans).insert(
+          BookLoansCompanion(
+            id: Value(loanId),
+            userBookId: Value(userBookId),
+            borrowerName: Value(borrowerName),
+            borrowerContact: Value(borrowerContact),
+            loanedAt: Value(now),
+            dueDate: Value(dueDate),
+            notes: Value(notes),
+            pendingSync: const Value(true),
+          ),
+        );
+
+    await _db.syncQueueDao.enqueue(
+      entity: SyncEntity.loan,
+      rowId: loanId,
+      operation: SyncOperation.upsert,
+    );
+
+    return loanId;
+  }
+
+  /// Marks an active loan as returned (Faz 11 — İade Al).
+  Future<void> returnBook(String loanId) async {
+    final now = DateTime.now();
+    await (_db.update(_db.bookLoans)..where((l) => l.id.equals(loanId))).write(
+      BookLoansCompanion(
+        returnedAt: Value(now),
+        pendingSync: const Value(true),
+      ),
+    );
+
+    await _db.syncQueueDao.enqueue(
+      entity: SyncEntity.loan,
+      rowId: loanId,
+      operation: SyncOperation.upsert,
+    );
+  }
+
+  /// Watches all active loans or full history.
+  Stream<List<BookLoan>> watchLoans({bool activeOnly = true}) {
+    final query = _db.select(_db.bookLoans);
+    if (activeOnly) {
+      query.where((l) => l.returnedAt.isNull());
+    }
+    query.orderBy([(l) => OrderingTerm.desc(l.loanedAt)]);
+    return query.watch();
+  }
+
+  /// Completely wipes local library data (userBooks, shelves, scans, syncQueue, bookLoans).
   Future<void> clearAllData() async {
     await _db.transaction(() async {
+      await _db.delete(_db.bookLoans).go();
       await _db.delete(_db.userBooks).go();
       await _db.delete(_db.shelves).go();
       await _db.delete(_db.scans).go();
@@ -329,12 +452,22 @@ final libraryRepositoryProvider = Provider<LibraryRepository>((ref) {
   return LibraryRepository(db);
 });
 
-final libraryBooksProvider = StreamProvider.autoDispose.family<List<LibraryBook>, ({String? shelfId, ReadingStatus? statusFilter, String? search})>(
+typedef LibraryFilterParams = ({
+  String? shelfId,
+  ReadingStatus? statusFilter,
+  bool? onLoanFilter,
+  BookSortOption? sortOption,
+  String? search,
+});
+
+final libraryBooksProvider = StreamProvider.autoDispose.family<List<LibraryBook>, LibraryFilterParams>(
   (ref, params) {
     final repo = ref.watch(libraryRepositoryProvider);
     return repo.watchLibraryBooks(
       shelfId: params.shelfId,
       statusFilter: params.statusFilter,
+      onLoanFilter: params.onLoanFilter,
+      sortOption: params.sortOption ?? BookSortOption.addedAtDesc,
       searchQuery: params.search,
     );
   },

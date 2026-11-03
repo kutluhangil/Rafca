@@ -1,6 +1,34 @@
 import 'package:flutter/foundation.dart';
 import '../../../core/database/tables.dart';
 
+/// Sorting options for the library book list.
+enum BookSortOption {
+  addedAtDesc,
+  titleAsc,
+  authorAsc,
+  shelfPositionAsc,
+}
+
+/// Active loan information for a book (Faz 11 — Ödünç Takipçisi).
+@immutable
+class BookLoanInfo {
+  const BookLoanInfo({
+    required this.id,
+    required this.borrowerName,
+    this.borrowerContact,
+    required this.loanedAt,
+    this.dueDate,
+    this.notes,
+  });
+
+  final String id;
+  final String borrowerName;
+  final String? borrowerContact;
+  final DateTime loanedAt;
+  final DateTime? dueDate;
+  final String? notes;
+}
+
 /// A unified view of a book in the user's library, joining `UserBooks`, `CatalogBooks`
 /// and optionally `Shelves`.
 @immutable
@@ -17,6 +45,8 @@ class LibraryBook {
     this.confidence = MatchConfidence.matched,
     this.spineColor,
     this.capturePath,
+    this.shelfPosition,
+    this.activeLoan,
     this.shelfId,
     this.shelfName,
     required this.addedAt,
@@ -46,6 +76,15 @@ class LibraryBook {
   /// Local path to the cropped spine image under `spine/captures/`.
   final String? capturePath;
 
+  /// 1-based physical order of this book along the scanned shelf.
+  final int? shelfPosition;
+
+  /// Active loan if currently borrowed.
+  final BookLoanInfo? activeLoan;
+
+  /// True if book is currently on loan to someone.
+  bool get isOnLoan => activeLoan != null;
+
   /// Assigned shelf ID, if any.
   final String? shelfId;
 
@@ -66,6 +105,8 @@ class LibraryBook {
     MatchConfidence? confidence,
     String? spineColor,
     String? capturePath,
+    int? shelfPosition,
+    BookLoanInfo? activeLoan,
     String? shelfId,
     String? shelfName,
     DateTime? addedAt,
@@ -82,6 +123,8 @@ class LibraryBook {
       confidence: confidence ?? this.confidence,
       spineColor: spineColor ?? this.spineColor,
       capturePath: capturePath ?? this.capturePath,
+      shelfPosition: shelfPosition ?? this.shelfPosition,
+      activeLoan: activeLoan ?? this.activeLoan,
       shelfId: shelfId ?? this.shelfId,
       shelfName: shelfName ?? this.shelfName,
       addedAt: addedAt ?? this.addedAt,

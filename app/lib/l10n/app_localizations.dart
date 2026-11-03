@@ -871,6 +871,144 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Nocturnal Archivist Tasarım Sistemi'**
   String get nocturnalArchivist;
+
+  /// No description provided for @filterOnLoan.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödünçtekiler'**
+  String get filterOnLoan;
+
+  /// No description provided for @sortBy.
+  ///
+  /// In tr, this message translates to:
+  /// **'Sırala'**
+  String get sortBy;
+
+  /// No description provided for @sortShelfPosition.
+  ///
+  /// In tr, this message translates to:
+  /// **'Fiziksel Raf Sırası'**
+  String get sortShelfPosition;
+
+  /// No description provided for @sortAddedDate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Eklenme Tarihi (Yeni)'**
+  String get sortAddedDate;
+
+  /// No description provided for @sortTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kitap Başlığı (A-Z)'**
+  String get sortTitle;
+
+  /// No description provided for @sortAuthor.
+  ///
+  /// In tr, this message translates to:
+  /// **'Yazar (A-Z)'**
+  String get sortAuthor;
+
+  /// No description provided for @shelfPositionBadge.
+  ///
+  /// In tr, this message translates to:
+  /// **'Raf Sırası #{position}'**
+  String shelfPositionBadge(int position);
+
+  /// No description provided for @loanSectionTitle.
+  ///
+  /// In tr, this message translates to:
+  /// **'ÖDÜNÇ TAKİPÇİSİ'**
+  String get loanSectionTitle;
+
+  /// No description provided for @loanBook.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödünç Ver'**
+  String get loanBook;
+
+  /// No description provided for @returnBook.
+  ///
+  /// In tr, this message translates to:
+  /// **'İade Al'**
+  String get returnBook;
+
+  /// No description provided for @loanStatusActive.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödünç Verildi'**
+  String get loanStatusActive;
+
+  /// No description provided for @loanStatusAvailable.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kütüphanede Mevcut'**
+  String get loanStatusAvailable;
+
+  /// No description provided for @borrowerName.
+  ///
+  /// In tr, this message translates to:
+  /// **'Ödünç Alan Kişi'**
+  String get borrowerName;
+
+  /// No description provided for @borrowerNameHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Örn: Ahmet Yılmaz'**
+  String get borrowerNameHint;
+
+  /// No description provided for @borrowerContact.
+  ///
+  /// In tr, this message translates to:
+  /// **'İletişim (Telefon / E-posta)'**
+  String get borrowerContact;
+
+  /// No description provided for @borrowerContactHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'İsteğe bağlı'**
+  String get borrowerContactHint;
+
+  /// No description provided for @loanDueDate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Beklenen İade Tarihi'**
+  String get loanDueDate;
+
+  /// No description provided for @loanNotes.
+  ///
+  /// In tr, this message translates to:
+  /// **'Notlar'**
+  String get loanNotes;
+
+  /// No description provided for @loanNotesHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'İsteğe bağlı not...'**
+  String get loanNotesHint;
+
+  /// No description provided for @loanSuccess.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kitap ödünç verildi olarak kaydedildi.'**
+  String get loanSuccess;
+
+  /// No description provided for @returnSuccess.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kitap kütüphaneye iade alındı.'**
+  String get returnSuccess;
+
+  /// No description provided for @loanDate.
+  ///
+  /// In tr, this message translates to:
+  /// **'Veriliş Tarihi'**
+  String get loanDate;
+
+  /// No description provided for @borrowerNameRequired.
+  ///
+  /// In tr, this message translates to:
+  /// **'Lütfen ödünç alan kişinin adını girin.'**
+  String get borrowerNameRequired;
 }
 
 class _AppLocalizationsDelegate

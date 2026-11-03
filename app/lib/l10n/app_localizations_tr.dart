@@ -419,4 +419,75 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get nocturnalArchivist => 'Nocturnal Archivist Tasarım Sistemi';
+
+  @override
+  String get filterOnLoan => 'Ödünçtekiler';
+
+  @override
+  String get sortBy => 'Sırala';
+
+  @override
+  String get sortShelfPosition => 'Fiziksel Raf Sırası';
+
+  @override
+  String get sortAddedDate => 'Eklenme Tarihi (Yeni)';
+
+  @override
+  String get sortTitle => 'Kitap Başlığı (A-Z)';
+
+  @override
+  String get sortAuthor => 'Yazar (A-Z)';
+
+  @override
+  String shelfPositionBadge(int position) {
+    return 'Raf Sırası #$position';
+  }
+
+  @override
+  String get loanSectionTitle => 'ÖDÜNÇ TAKİPÇİSİ';
+
+  @override
+  String get loanBook => 'Ödünç Ver';
+
+  @override
+  String get returnBook => 'İade Al';
+
+  @override
+  String get loanStatusActive => 'Ödünç Verildi';
+
+  @override
+  String get loanStatusAvailable => 'Kütüphanede Mevcut';
+
+  @override
+  String get borrowerName => 'Ödünç Alan Kişi';
+
+  @override
+  String get borrowerNameHint => 'Örn: Ahmet Yılmaz';
+
+  @override
+  String get borrowerContact => 'İletişim (Telefon / E-posta)';
+
+  @override
+  String get borrowerContactHint => 'İsteğe bağlı';
+
+  @override
+  String get loanDueDate => 'Beklenen İade Tarihi';
+
+  @override
+  String get loanNotes => 'Notlar';
+
+  @override
+  String get loanNotesHint => 'İsteğe bağlı not...';
+
+  @override
+  String get loanSuccess => 'Kitap ödünç verildi olarak kaydedildi.';
+
+  @override
+  String get returnSuccess => 'Kitap kütüphaneye iade alındı.';
+
+  @override
+  String get loanDate => 'Veriliş Tarihi';
+
+  @override
+  String get borrowerNameRequired => 'Lütfen ödünç alan kişinin adını girin.';
 }

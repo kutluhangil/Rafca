@@ -182,49 +182,51 @@ class _Details extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: ConfidenceBadge(
-                      level: card.level,
-                      label: card.levelLabel,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: ConfidenceBadge(
+                        level: card.level,
+                        label: card.levelLabel,
+                      ),
                     ),
-                  ),
-                  if (card.onMore != null)
-                    _MoreButton(
-                      onPressed: card.onMore!,
-                      tooltip: card.moreTooltip!,
-                    ),
-                ],
-              ),
-              const SizedBox(height: SpineSpacing.xs),
-              Text(
-                card.title,
-                style: titleStyle,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-              ),
-              if (card.author != null) ...[
+                    if (card.onMore != null)
+                      _MoreButton(
+                        onPressed: card.onMore!,
+                        tooltip: card.moreTooltip!,
+                      ),
+                  ],
+                ),
                 const SizedBox(height: SpineSpacing.xs),
                 Text(
-                  card.author!,
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: scheme.onSurfaceVariant,
-                  ),
-                  maxLines: 1,
+                  card.title,
+                  style: titleStyle,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
+                if (card.author != null) ...[
+                  const SizedBox(height: SpineSpacing.xs),
+                  Text(
+                    card.author!,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: scheme.onSurfaceVariant,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
           if (card.footer != null || card.trailingFooter != null) ...[
-            const SizedBox(height: SpineSpacing.md),
+            const SizedBox(height: SpineSpacing.xs),
             Container(
-              margin: const EdgeInsets.only(bottom: SpineSpacing.md),
+              margin: const EdgeInsets.only(bottom: SpineSpacing.xs),
               height: SpineBorders.hairline,
               color: colors.hairline,
             ),

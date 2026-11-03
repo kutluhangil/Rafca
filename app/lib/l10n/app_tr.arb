@@ -175,5 +175,33 @@
   "appVersion": "Sürüm",
   "privacyStatement": "Gizlilik Sözleşmesi",
   "privacyContent": "Fotoğraflar ve sırt kırpımları yalnızca cihazınızda saklanır. Sunucuya yalnızca OCR ile okunan düz metin gönderilir — o da yalnızca eşleştirme için.",
-  "nocturnalArchivist": "Nocturnal Archivist Tasarım Sistemi"
+  "nocturnalArchivist": "Nocturnal Archivist Tasarım Sistemi",
+  "filterOnLoan": "Ödünçtekiler",
+  "sortBy": "Sırala",
+  "sortShelfPosition": "Fiziksel Raf Sırası",
+  "sortAddedDate": "Eklenme Tarihi (Yeni)",
+  "sortTitle": "Kitap Başlığı (A-Z)",
+  "sortAuthor": "Yazar (A-Z)",
+  "shelfPositionBadge": "Raf Sırası #{position}",
+  "@shelfPositionBadge": {
+    "placeholders": {
+      "position": { "type": "int" }
+    }
+  },
+  "loanSectionTitle": "ÖDÜNÇ TAKİPÇİSİ",
+  "loanBook": "Ödünç Ver",
+  "returnBook": "İade Al",
+  "loanStatusActive": "Ödünç Verildi",
+  "loanStatusAvailable": "Kütüphanede Mevcut",
+  "borrowerName": "Ödünç Alan Kişi",
+  "borrowerNameHint": "Örn: Ahmet Yılmaz",
+  "borrowerContact": "İletişim (Telefon / E-posta)",
+  "borrowerContactHint": "İsteğe bağlı",
+  "loanDueDate": "Beklenen İade Tarihi",
+  "loanNotes": "Notlar",
+  "loanNotesHint": "İsteğe bağlı not...",
+  "loanSuccess": "Kitap ödünç verildi olarak kaydedildi.",
+  "returnSuccess": "Kitap kütüphaneye iade alındı.",
+  "loanDate": "Veriliş Tarihi",
+  "borrowerNameRequired": "Lütfen ödünç alan kişinin adını girin."
 }

@@ -415,4 +415,75 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nocturnalArchivist => 'Nocturnal Archivist Design System';
+
+  @override
+  String get filterOnLoan => 'On Loan';
+
+  @override
+  String get sortBy => 'Sort by';
+
+  @override
+  String get sortShelfPosition => 'Physical Shelf Position';
+
+  @override
+  String get sortAddedDate => 'Date Added (Newest)';
+
+  @override
+  String get sortTitle => 'Title (A-Z)';
+
+  @override
+  String get sortAuthor => 'Author (A-Z)';
+
+  @override
+  String shelfPositionBadge(int position) {
+    return 'Shelf Position #$position';
+  }
+
+  @override
+  String get loanSectionTitle => 'LENDING TRACKER';
+
+  @override
+  String get loanBook => 'Loan Book';
+
+  @override
+  String get returnBook => 'Mark as Returned';
+
+  @override
+  String get loanStatusActive => 'Currently On Loan';
+
+  @override
+  String get loanStatusAvailable => 'Available in Library';
+
+  @override
+  String get borrowerName => 'Borrower Name';
+
+  @override
+  String get borrowerNameHint => 'e.g. John Doe';
+
+  @override
+  String get borrowerContact => 'Contact (Phone / Email)';
+
+  @override
+  String get borrowerContactHint => 'Optional';
+
+  @override
+  String get loanDueDate => 'Due Date';
+
+  @override
+  String get loanNotes => 'Notes';
+
+  @override
+  String get loanNotesHint => 'Optional note...';
+
+  @override
+  String get loanSuccess => 'Book marked as loaned.';
+
+  @override
+  String get returnSuccess => 'Book marked as returned.';
+
+  @override
+  String get loanDate => 'Loan Date';
+
+  @override
+  String get borrowerNameRequired => 'Please enter borrower name.';
 }

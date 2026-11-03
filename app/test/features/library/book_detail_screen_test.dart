@@ -165,5 +165,75 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await tester.pumpAndSettle();
     });
+
+    testWidgets('renders lending card and supports loaning and returning book', (tester) async {
+      final now = DateTime.now();
+
+      await db.into(db.userBooks).insert(
+            UserBooksCompanion.insert(
+              id: 'bd_loan_widget',
+              manualTitle: const Value('Fahrenheit 451'),
+              manualAuthor: const Value('Ray Bradbury'),
+              confidence: MatchConfidence.matched,
+              shelfPosition: const Value(5),
+              addedAt: now,
+            ),
+          );
+
+      tester.view.physicalSize = const Size(800, 1400);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(() => tester.view.resetPhysicalSize());
+
+      await tester.pumpWidget(wrap(const BookDetailScreen(userBookId: 'bd_loan_widget')));
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
+
+      // Shelf position badge
+      expect(find.text('Raf Sırası #5'), findsOneWidget);
+
+      // Loan card shows available
+      expect(find.text('ÖDÜNÇ TAKİPÇİSİ'), findsOneWidget);
+      expect(find.text('KÜTÜPHANEDE MEVCUT'), findsOneWidget);
+
+      // Tap ÖDÜNÇ VER
+      await tester.tap(find.widgetWithText(PrimaryButton, 'ÖDÜNÇ VER'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Ödünç Ver'), findsWidgets);
+
+      // Enter borrower name into dialog's first textfield
+      await tester.enterText(
+        find.descendant(
+          of: find.byType(AlertDialog),
+          matching: find.byType(TextField),
+        ).first,
+        'Zeynep Kaya',
+      );
+      await tester.pump();
+
+      // Submit dialog
+      await tester.tap(
+        find.descendant(
+          of: find.byType(AlertDialog),
+          matching: find.widgetWithText(PrimaryButton, 'ÖDÜNÇ VER'),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // Verify active loan displayed
+      expect(find.text('ÖDÜNÇ VERİLDİ'), findsWidgets);
+      expect(find.text('Zeynep Kaya'), findsWidgets);
+      expect(find.widgetWithText(PrimaryButton, 'İADE AL'), findsOneWidget);
+
+      // Tap İADE AL
+      await tester.tap(find.widgetWithText(PrimaryButton, 'İADE AL'));
+      await tester.pumpAndSettle();
+
+      // Verify returned to available
+      expect(find.text('KÜTÜPHANEDE MEVCUT'), findsOneWidget);
+
+      await tester.pumpWidget(const SizedBox());
+      await tester.pumpAndSettle();
+    });
   });
 }

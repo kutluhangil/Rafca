@@ -10,4 +10,5 @@ mixin _$SyncQueueDaoMixin on DatabaseAccessor<AppDatabase> {
   $ScansTable get scans => attachedDatabase.scans;
   $SyncQueueEntriesTable get syncQueueEntries =>
       attachedDatabase.syncQueueEntries;
+  $BookLoansTable get bookLoans => attachedDatabase.bookLoans;
 }

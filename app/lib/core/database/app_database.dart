@@ -20,7 +20,7 @@ part 'app_database.g.dart';
 /// phone (SPINE_BLUEPRINT.md 5), and `pending_sync`, because a row exists here
 /// before any server has heard of it.
 @DriftDatabase(
-  tables: [CatalogBooks, Shelves, UserBooks, Scans, SyncQueueEntries],
+  tables: [CatalogBooks, Shelves, UserBooks, Scans, SyncQueueEntries, BookLoans],
   daos: [SyncQueueDao],
 )
 class AppDatabase extends _$AppDatabase {
@@ -30,18 +30,19 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.connection);
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
         onCreate: (migrator) => migrator.createAll(),
-        // Version 1 was Faz 1's empty schema, which shipped to nobody but does
-        // exist on the machines the foundation was verified on. Creating the
-        // missing entities is the whole of the upgrade; there is no v1 data to
-        // carry forward.
         onUpgrade: (migrator, from, to) async {
-          if (from == 1) {
+          if (from < 2) {
             await migrator.createAll();
+          } else {
+            if (from < 3) {
+              await migrator.addColumn(userBooks, userBooks.shelfPosition);
+              await migrator.createTable(bookLoans);
+            }
           }
         },
         beforeOpen: (details) async {

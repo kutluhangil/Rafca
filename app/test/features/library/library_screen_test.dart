@@ -180,5 +180,65 @@ void main() {
       await tester.pumpWidget(const SizedBox());
       await tester.pumpAndSettle();
     });
+
+    testWidgets('filters by on-loan chip and renders sort menu', (tester) async {
+      final now = DateTime.now();
+
+      await db.into(db.userBooks).insert(
+            UserBooksCompanion.insert(
+              id: 'loaned_1',
+              manualTitle: const Value('Ödünç Verilen Kitap'),
+              manualAuthor: const Value('Yazar 1'),
+              confidence: MatchConfidence.matched,
+              shelfPosition: const Value(2),
+              addedAt: now,
+            ),
+          );
+
+      await db.into(db.userBooks).insert(
+            UserBooksCompanion.insert(
+              id: 'free_1',
+              manualTitle: const Value('Raftaki Kitap'),
+              manualAuthor: const Value('Yazar 2'),
+              confidence: MatchConfidence.matched,
+              shelfPosition: const Value(1),
+              addedAt: now.add(const Duration(seconds: 1)),
+            ),
+          );
+
+      // Create loan for loaned_1
+      await db.into(db.bookLoans).insert(
+            BookLoansCompanion.insert(
+              id: 'loan_sample_1',
+              userBookId: 'loaned_1',
+              borrowerName: 'Deniz Kaya',
+              loanedAt: now,
+            ),
+          );
+
+      addTearDown(() => tester.view.resetPhysicalSize());
+      await tester.pumpWidget(wrap(const LibraryScreen(), tester));
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
+
+      // Both books initially visible
+      expect(find.text('Ödünç Verilen Kitap'), findsOneWidget);
+      expect(find.text('Raftaki Kitap'), findsOneWidget);
+
+      // Verify Sort menu icon is present
+      expect(find.byIcon(Icons.sort), findsOneWidget);
+
+      // Tap Ödünçtekiler filter chip
+      await tester.tap(find.text('Ödünçtekiler'));
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
+
+      // Only loaned book visible
+      expect(find.text('Ödünç Verilen Kitap'), findsOneWidget);
+      expect(find.text('Raftaki Kitap'), findsNothing);
+
+      await tester.pumpWidget(const SizedBox());
+      await tester.pumpAndSettle();
+    });
   });
 }

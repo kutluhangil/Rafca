@@ -15,7 +15,7 @@ enum MatchConfidence { matched, review, unknown }
 enum ReadingStatus { unread, reading, read }
 
 /// Which mirrored table a queued sync operation belongs to.
-enum SyncEntity { shelf, userBook, scan }
+enum SyncEntity { shelf, userBook, scan, loan }
 
 /// What the server has to be told about a row.
 ///
@@ -116,6 +116,10 @@ class UserBooks extends Table {
   /// crop for one request and stores nothing.
   TextColumn get capturePath => text().nullable()();
 
+  /// Left-to-right position of this book along the physical shelf (1-based index).
+  /// Derived from `SpineCandidate.bbox.left` during scan review.
+  IntColumn get shelfPosition => integer().nullable()();
+
   DateTimeColumn get addedAt => dateTime()();
   BoolColumn get pendingSync => boolean().withDefault(const Constant(true))();
 
@@ -135,6 +139,24 @@ class Scans extends Table {
   TextColumn get capturePath => text().nullable()();
 
   DateTimeColumn get createdAt => dateTime()();
+  BoolColumn get pendingSync => boolean().withDefault(const Constant(true))();
+
+  @override
+  Set<Column<Object>> get primaryKey => {id};
+}
+
+/// Book loan tracking record (Faz 11 — Ödünç Takipçisi).
+/// Stores borrower name, contact, loan date, due date, return date, and notes.
+@DataClassName('BookLoan')
+class BookLoans extends Table {
+  TextColumn get id => text()();
+  TextColumn get userBookId => text().references(UserBooks, #id)();
+  TextColumn get borrowerName => text()();
+  TextColumn get borrowerContact => text().nullable()();
+  DateTimeColumn get loanedAt => dateTime()();
+  DateTimeColumn get dueDate => dateTime().nullable()();
+  DateTimeColumn get returnedAt => dateTime().nullable()();
+  TextColumn get notes => text().nullable()();
   BoolColumn get pendingSync => boolean().withDefault(const Constant(true))();
 
   @override

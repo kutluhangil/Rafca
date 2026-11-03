@@ -13,7 +13,7 @@ part 'sync_queue_dao.g.dart';
 /// keep at once: a queue entry and its row's `pending_sync` flag are always
 /// written in the same transaction, so a screen showing "not synced" and the
 /// drainer's work list can never disagree.
-@DriftAccessor(tables: [Shelves, UserBooks, Scans, SyncQueueEntries])
+@DriftAccessor(tables: [Shelves, UserBooks, Scans, SyncQueueEntries, BookLoans])
 class SyncQueueDao extends DatabaseAccessor<AppDatabase>
     with _$SyncQueueDaoMixin {
   SyncQueueDao(super.attachedDatabase);
@@ -126,6 +126,9 @@ class SyncQueueDao extends DatabaseAccessor<AppDatabase>
       case SyncEntity.scan:
         await (update(scans)..where((row) => row.id.equals(rowId)))
             .write(ScansCompanion(pendingSync: flag));
+      case SyncEntity.loan:
+        await (update(bookLoans)..where((row) => row.id.equals(rowId)))
+            .write(BookLoansCompanion(pendingSync: flag));
     }
   }
 }

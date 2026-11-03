@@ -83,7 +83,9 @@ class ReviewStateNotifier extends StateNotifier<ReviewBatch> {
       );
 
       // 2. Insert catalog entries and user books
-      for (final item in toSave) {
+      for (var i = 0; i < toSave.length; i++) {
+        final item = toSave[i];
+        final shelfPosition = i + 1; // 1-based physical order along the shelf (left to right)
         int? catalogBookId;
 
         if (item.selectedBook != null) {
@@ -115,6 +117,7 @@ class ReviewStateNotifier extends StateNotifier<ReviewBatch> {
                 confidence: const Value(MatchConfidence.matched),
                 spineColor: Value(item.spineColor),
                 capturePath: Value(item.cropPath),
+                shelfPosition: Value(shelfPosition),
                 addedAt: Value(now),
                 pendingSync: const Value(true),
               ),

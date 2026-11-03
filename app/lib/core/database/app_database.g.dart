@@ -1080,6 +1080,17 @@ class $UserBooksTable extends UserBooks
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _shelfPositionMeta = const VerificationMeta(
+    'shelfPosition',
+  );
+  @override
+  late final GeneratedColumn<int> shelfPosition = GeneratedColumn<int>(
+    'shelf_position',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
   static const VerificationMeta _addedAtMeta = const VerificationMeta(
     'addedAt',
   );
@@ -1117,6 +1128,7 @@ class $UserBooksTable extends UserBooks
     confidence,
     spineColor,
     capturePath,
+    shelfPosition,
     addedAt,
     pendingSync,
   ];
@@ -1179,6 +1191,15 @@ class $UserBooksTable extends UserBooks
         capturePath.isAcceptableOrUnknown(
           data['capture_path']!,
           _capturePathMeta,
+        ),
+      );
+    }
+    if (data.containsKey('shelf_position')) {
+      context.handle(
+        _shelfPositionMeta,
+        shelfPosition.isAcceptableOrUnknown(
+          data['shelf_position']!,
+          _shelfPositionMeta,
         ),
       );
     }
@@ -1248,6 +1269,10 @@ class $UserBooksTable extends UserBooks
         DriftSqlType.string,
         data['${effectivePrefix}capture_path'],
       ),
+      shelfPosition: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}shelf_position'],
+      ),
       addedAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}added_at'],
@@ -1292,6 +1317,10 @@ class UserBook extends DataClass implements Insertable<UserBook> {
   /// (SPINE_BLUEPRINT.md 5). The one exception, "Enhance", uploads a single
   /// crop for one request and stores nothing.
   final String? capturePath;
+
+  /// Left-to-right position of this book along the physical shelf (1-based index).
+  /// Derived from `SpineCandidate.bbox.left` during scan review.
+  final int? shelfPosition;
   final DateTime addedAt;
   final bool pendingSync;
   const UserBook({
@@ -1304,6 +1333,7 @@ class UserBook extends DataClass implements Insertable<UserBook> {
     required this.confidence,
     this.spineColor,
     this.capturePath,
+    this.shelfPosition,
     required this.addedAt,
     required this.pendingSync,
   });
@@ -1339,6 +1369,9 @@ class UserBook extends DataClass implements Insertable<UserBook> {
     if (!nullToAbsent || capturePath != null) {
       map['capture_path'] = Variable<String>(capturePath);
     }
+    if (!nullToAbsent || shelfPosition != null) {
+      map['shelf_position'] = Variable<int>(shelfPosition);
+    }
     map['added_at'] = Variable<DateTime>(addedAt);
     map['pending_sync'] = Variable<bool>(pendingSync);
     return map;
@@ -1367,6 +1400,9 @@ class UserBook extends DataClass implements Insertable<UserBook> {
       capturePath: capturePath == null && nullToAbsent
           ? const Value.absent()
           : Value(capturePath),
+      shelfPosition: shelfPosition == null && nullToAbsent
+          ? const Value.absent()
+          : Value(shelfPosition),
       addedAt: Value(addedAt),
       pendingSync: Value(pendingSync),
     );
@@ -1391,6 +1427,7 @@ class UserBook extends DataClass implements Insertable<UserBook> {
       ),
       spineColor: serializer.fromJson<String?>(json['spineColor']),
       capturePath: serializer.fromJson<String?>(json['capturePath']),
+      shelfPosition: serializer.fromJson<int?>(json['shelfPosition']),
       addedAt: serializer.fromJson<DateTime>(json['addedAt']),
       pendingSync: serializer.fromJson<bool>(json['pendingSync']),
     );
@@ -1412,6 +1449,7 @@ class UserBook extends DataClass implements Insertable<UserBook> {
       ),
       'spineColor': serializer.toJson<String?>(spineColor),
       'capturePath': serializer.toJson<String?>(capturePath),
+      'shelfPosition': serializer.toJson<int?>(shelfPosition),
       'addedAt': serializer.toJson<DateTime>(addedAt),
       'pendingSync': serializer.toJson<bool>(pendingSync),
     };
@@ -1427,6 +1465,7 @@ class UserBook extends DataClass implements Insertable<UserBook> {
     MatchConfidence? confidence,
     Value<String?> spineColor = const Value.absent(),
     Value<String?> capturePath = const Value.absent(),
+    Value<int?> shelfPosition = const Value.absent(),
     DateTime? addedAt,
     bool? pendingSync,
   }) => UserBook(
@@ -1439,6 +1478,9 @@ class UserBook extends DataClass implements Insertable<UserBook> {
     confidence: confidence ?? this.confidence,
     spineColor: spineColor.present ? spineColor.value : this.spineColor,
     capturePath: capturePath.present ? capturePath.value : this.capturePath,
+    shelfPosition: shelfPosition.present
+        ? shelfPosition.value
+        : this.shelfPosition,
     addedAt: addedAt ?? this.addedAt,
     pendingSync: pendingSync ?? this.pendingSync,
   );
@@ -1463,6 +1505,9 @@ class UserBook extends DataClass implements Insertable<UserBook> {
       capturePath: data.capturePath.present
           ? data.capturePath.value
           : this.capturePath,
+      shelfPosition: data.shelfPosition.present
+          ? data.shelfPosition.value
+          : this.shelfPosition,
       addedAt: data.addedAt.present ? data.addedAt.value : this.addedAt,
       pendingSync: data.pendingSync.present
           ? data.pendingSync.value
@@ -1482,6 +1527,7 @@ class UserBook extends DataClass implements Insertable<UserBook> {
           ..write('confidence: $confidence, ')
           ..write('spineColor: $spineColor, ')
           ..write('capturePath: $capturePath, ')
+          ..write('shelfPosition: $shelfPosition, ')
           ..write('addedAt: $addedAt, ')
           ..write('pendingSync: $pendingSync')
           ..write(')'))
@@ -1499,6 +1545,7 @@ class UserBook extends DataClass implements Insertable<UserBook> {
     confidence,
     spineColor,
     capturePath,
+    shelfPosition,
     addedAt,
     pendingSync,
   );
@@ -1515,6 +1562,7 @@ class UserBook extends DataClass implements Insertable<UserBook> {
           other.confidence == this.confidence &&
           other.spineColor == this.spineColor &&
           other.capturePath == this.capturePath &&
+          other.shelfPosition == this.shelfPosition &&
           other.addedAt == this.addedAt &&
           other.pendingSync == this.pendingSync);
 }
@@ -1529,6 +1577,7 @@ class UserBooksCompanion extends UpdateCompanion<UserBook> {
   final Value<MatchConfidence> confidence;
   final Value<String?> spineColor;
   final Value<String?> capturePath;
+  final Value<int?> shelfPosition;
   final Value<DateTime> addedAt;
   final Value<bool> pendingSync;
   final Value<int> rowid;
@@ -1542,6 +1591,7 @@ class UserBooksCompanion extends UpdateCompanion<UserBook> {
     this.confidence = const Value.absent(),
     this.spineColor = const Value.absent(),
     this.capturePath = const Value.absent(),
+    this.shelfPosition = const Value.absent(),
     this.addedAt = const Value.absent(),
     this.pendingSync = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -1556,6 +1606,7 @@ class UserBooksCompanion extends UpdateCompanion<UserBook> {
     required MatchConfidence confidence,
     this.spineColor = const Value.absent(),
     this.capturePath = const Value.absent(),
+    this.shelfPosition = const Value.absent(),
     required DateTime addedAt,
     this.pendingSync = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -1572,6 +1623,7 @@ class UserBooksCompanion extends UpdateCompanion<UserBook> {
     Expression<String>? confidence,
     Expression<String>? spineColor,
     Expression<String>? capturePath,
+    Expression<int>? shelfPosition,
     Expression<DateTime>? addedAt,
     Expression<bool>? pendingSync,
     Expression<int>? rowid,
@@ -1586,6 +1638,7 @@ class UserBooksCompanion extends UpdateCompanion<UserBook> {
       if (confidence != null) 'confidence': confidence,
       if (spineColor != null) 'spine_color': spineColor,
       if (capturePath != null) 'capture_path': capturePath,
+      if (shelfPosition != null) 'shelf_position': shelfPosition,
       if (addedAt != null) 'added_at': addedAt,
       if (pendingSync != null) 'pending_sync': pendingSync,
       if (rowid != null) 'rowid': rowid,
@@ -1602,6 +1655,7 @@ class UserBooksCompanion extends UpdateCompanion<UserBook> {
     Value<MatchConfidence>? confidence,
     Value<String?>? spineColor,
     Value<String?>? capturePath,
+    Value<int?>? shelfPosition,
     Value<DateTime>? addedAt,
     Value<bool>? pendingSync,
     Value<int>? rowid,
@@ -1616,6 +1670,7 @@ class UserBooksCompanion extends UpdateCompanion<UserBook> {
       confidence: confidence ?? this.confidence,
       spineColor: spineColor ?? this.spineColor,
       capturePath: capturePath ?? this.capturePath,
+      shelfPosition: shelfPosition ?? this.shelfPosition,
       addedAt: addedAt ?? this.addedAt,
       pendingSync: pendingSync ?? this.pendingSync,
       rowid: rowid ?? this.rowid,
@@ -1656,6 +1711,9 @@ class UserBooksCompanion extends UpdateCompanion<UserBook> {
     if (capturePath.present) {
       map['capture_path'] = Variable<String>(capturePath.value);
     }
+    if (shelfPosition.present) {
+      map['shelf_position'] = Variable<int>(shelfPosition.value);
+    }
     if (addedAt.present) {
       map['added_at'] = Variable<DateTime>(addedAt.value);
     }
@@ -1680,6 +1738,7 @@ class UserBooksCompanion extends UpdateCompanion<UserBook> {
           ..write('confidence: $confidence, ')
           ..write('spineColor: $spineColor, ')
           ..write('capturePath: $capturePath, ')
+          ..write('shelfPosition: $shelfPosition, ')
           ..write('addedAt: $addedAt, ')
           ..write('pendingSync: $pendingSync, ')
           ..write('rowid: $rowid')
@@ -2606,6 +2665,596 @@ class SyncQueueEntriesCompanion extends UpdateCompanion<SyncQueueEntry> {
   }
 }
 
+class $BookLoansTable extends BookLoans
+    with TableInfo<$BookLoansTable, BookLoan> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $BookLoansTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _userBookIdMeta = const VerificationMeta(
+    'userBookId',
+  );
+  @override
+  late final GeneratedColumn<String> userBookId = GeneratedColumn<String>(
+    'user_book_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES user_books (id)',
+    ),
+  );
+  static const VerificationMeta _borrowerNameMeta = const VerificationMeta(
+    'borrowerName',
+  );
+  @override
+  late final GeneratedColumn<String> borrowerName = GeneratedColumn<String>(
+    'borrower_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _borrowerContactMeta = const VerificationMeta(
+    'borrowerContact',
+  );
+  @override
+  late final GeneratedColumn<String> borrowerContact = GeneratedColumn<String>(
+    'borrower_contact',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _loanedAtMeta = const VerificationMeta(
+    'loanedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> loanedAt = GeneratedColumn<DateTime>(
+    'loaned_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dueDateMeta = const VerificationMeta(
+    'dueDate',
+  );
+  @override
+  late final GeneratedColumn<DateTime> dueDate = GeneratedColumn<DateTime>(
+    'due_date',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _returnedAtMeta = const VerificationMeta(
+    'returnedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> returnedAt = GeneratedColumn<DateTime>(
+    'returned_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
+  @override
+  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
+    'notes',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _pendingSyncMeta = const VerificationMeta(
+    'pendingSync',
+  );
+  @override
+  late final GeneratedColumn<bool> pendingSync = GeneratedColumn<bool>(
+    'pending_sync',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("pending_sync" IN (0, 1))',
+    ),
+    defaultValue: const Constant(true),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    userBookId,
+    borrowerName,
+    borrowerContact,
+    loanedAt,
+    dueDate,
+    returnedAt,
+    notes,
+    pendingSync,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'book_loans';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<BookLoan> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('user_book_id')) {
+      context.handle(
+        _userBookIdMeta,
+        userBookId.isAcceptableOrUnknown(
+          data['user_book_id']!,
+          _userBookIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_userBookIdMeta);
+    }
+    if (data.containsKey('borrower_name')) {
+      context.handle(
+        _borrowerNameMeta,
+        borrowerName.isAcceptableOrUnknown(
+          data['borrower_name']!,
+          _borrowerNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_borrowerNameMeta);
+    }
+    if (data.containsKey('borrower_contact')) {
+      context.handle(
+        _borrowerContactMeta,
+        borrowerContact.isAcceptableOrUnknown(
+          data['borrower_contact']!,
+          _borrowerContactMeta,
+        ),
+      );
+    }
+    if (data.containsKey('loaned_at')) {
+      context.handle(
+        _loanedAtMeta,
+        loanedAt.isAcceptableOrUnknown(data['loaned_at']!, _loanedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_loanedAtMeta);
+    }
+    if (data.containsKey('due_date')) {
+      context.handle(
+        _dueDateMeta,
+        dueDate.isAcceptableOrUnknown(data['due_date']!, _dueDateMeta),
+      );
+    }
+    if (data.containsKey('returned_at')) {
+      context.handle(
+        _returnedAtMeta,
+        returnedAt.isAcceptableOrUnknown(data['returned_at']!, _returnedAtMeta),
+      );
+    }
+    if (data.containsKey('notes')) {
+      context.handle(
+        _notesMeta,
+        notes.isAcceptableOrUnknown(data['notes']!, _notesMeta),
+      );
+    }
+    if (data.containsKey('pending_sync')) {
+      context.handle(
+        _pendingSyncMeta,
+        pendingSync.isAcceptableOrUnknown(
+          data['pending_sync']!,
+          _pendingSyncMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  BookLoan map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return BookLoan(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      userBookId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}user_book_id'],
+      )!,
+      borrowerName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}borrower_name'],
+      )!,
+      borrowerContact: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}borrower_contact'],
+      ),
+      loanedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}loaned_at'],
+      )!,
+      dueDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}due_date'],
+      ),
+      returnedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}returned_at'],
+      ),
+      notes: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}notes'],
+      ),
+      pendingSync: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}pending_sync'],
+      )!,
+    );
+  }
+
+  @override
+  $BookLoansTable createAlias(String alias) {
+    return $BookLoansTable(attachedDatabase, alias);
+  }
+}
+
+class BookLoan extends DataClass implements Insertable<BookLoan> {
+  final String id;
+  final String userBookId;
+  final String borrowerName;
+  final String? borrowerContact;
+  final DateTime loanedAt;
+  final DateTime? dueDate;
+  final DateTime? returnedAt;
+  final String? notes;
+  final bool pendingSync;
+  const BookLoan({
+    required this.id,
+    required this.userBookId,
+    required this.borrowerName,
+    this.borrowerContact,
+    required this.loanedAt,
+    this.dueDate,
+    this.returnedAt,
+    this.notes,
+    required this.pendingSync,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['user_book_id'] = Variable<String>(userBookId);
+    map['borrower_name'] = Variable<String>(borrowerName);
+    if (!nullToAbsent || borrowerContact != null) {
+      map['borrower_contact'] = Variable<String>(borrowerContact);
+    }
+    map['loaned_at'] = Variable<DateTime>(loanedAt);
+    if (!nullToAbsent || dueDate != null) {
+      map['due_date'] = Variable<DateTime>(dueDate);
+    }
+    if (!nullToAbsent || returnedAt != null) {
+      map['returned_at'] = Variable<DateTime>(returnedAt);
+    }
+    if (!nullToAbsent || notes != null) {
+      map['notes'] = Variable<String>(notes);
+    }
+    map['pending_sync'] = Variable<bool>(pendingSync);
+    return map;
+  }
+
+  BookLoansCompanion toCompanion(bool nullToAbsent) {
+    return BookLoansCompanion(
+      id: Value(id),
+      userBookId: Value(userBookId),
+      borrowerName: Value(borrowerName),
+      borrowerContact: borrowerContact == null && nullToAbsent
+          ? const Value.absent()
+          : Value(borrowerContact),
+      loanedAt: Value(loanedAt),
+      dueDate: dueDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dueDate),
+      returnedAt: returnedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(returnedAt),
+      notes: notes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(notes),
+      pendingSync: Value(pendingSync),
+    );
+  }
+
+  factory BookLoan.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return BookLoan(
+      id: serializer.fromJson<String>(json['id']),
+      userBookId: serializer.fromJson<String>(json['userBookId']),
+      borrowerName: serializer.fromJson<String>(json['borrowerName']),
+      borrowerContact: serializer.fromJson<String?>(json['borrowerContact']),
+      loanedAt: serializer.fromJson<DateTime>(json['loanedAt']),
+      dueDate: serializer.fromJson<DateTime?>(json['dueDate']),
+      returnedAt: serializer.fromJson<DateTime?>(json['returnedAt']),
+      notes: serializer.fromJson<String?>(json['notes']),
+      pendingSync: serializer.fromJson<bool>(json['pendingSync']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'userBookId': serializer.toJson<String>(userBookId),
+      'borrowerName': serializer.toJson<String>(borrowerName),
+      'borrowerContact': serializer.toJson<String?>(borrowerContact),
+      'loanedAt': serializer.toJson<DateTime>(loanedAt),
+      'dueDate': serializer.toJson<DateTime?>(dueDate),
+      'returnedAt': serializer.toJson<DateTime?>(returnedAt),
+      'notes': serializer.toJson<String?>(notes),
+      'pendingSync': serializer.toJson<bool>(pendingSync),
+    };
+  }
+
+  BookLoan copyWith({
+    String? id,
+    String? userBookId,
+    String? borrowerName,
+    Value<String?> borrowerContact = const Value.absent(),
+    DateTime? loanedAt,
+    Value<DateTime?> dueDate = const Value.absent(),
+    Value<DateTime?> returnedAt = const Value.absent(),
+    Value<String?> notes = const Value.absent(),
+    bool? pendingSync,
+  }) => BookLoan(
+    id: id ?? this.id,
+    userBookId: userBookId ?? this.userBookId,
+    borrowerName: borrowerName ?? this.borrowerName,
+    borrowerContact: borrowerContact.present
+        ? borrowerContact.value
+        : this.borrowerContact,
+    loanedAt: loanedAt ?? this.loanedAt,
+    dueDate: dueDate.present ? dueDate.value : this.dueDate,
+    returnedAt: returnedAt.present ? returnedAt.value : this.returnedAt,
+    notes: notes.present ? notes.value : this.notes,
+    pendingSync: pendingSync ?? this.pendingSync,
+  );
+  BookLoan copyWithCompanion(BookLoansCompanion data) {
+    return BookLoan(
+      id: data.id.present ? data.id.value : this.id,
+      userBookId: data.userBookId.present
+          ? data.userBookId.value
+          : this.userBookId,
+      borrowerName: data.borrowerName.present
+          ? data.borrowerName.value
+          : this.borrowerName,
+      borrowerContact: data.borrowerContact.present
+          ? data.borrowerContact.value
+          : this.borrowerContact,
+      loanedAt: data.loanedAt.present ? data.loanedAt.value : this.loanedAt,
+      dueDate: data.dueDate.present ? data.dueDate.value : this.dueDate,
+      returnedAt: data.returnedAt.present
+          ? data.returnedAt.value
+          : this.returnedAt,
+      notes: data.notes.present ? data.notes.value : this.notes,
+      pendingSync: data.pendingSync.present
+          ? data.pendingSync.value
+          : this.pendingSync,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BookLoan(')
+          ..write('id: $id, ')
+          ..write('userBookId: $userBookId, ')
+          ..write('borrowerName: $borrowerName, ')
+          ..write('borrowerContact: $borrowerContact, ')
+          ..write('loanedAt: $loanedAt, ')
+          ..write('dueDate: $dueDate, ')
+          ..write('returnedAt: $returnedAt, ')
+          ..write('notes: $notes, ')
+          ..write('pendingSync: $pendingSync')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    userBookId,
+    borrowerName,
+    borrowerContact,
+    loanedAt,
+    dueDate,
+    returnedAt,
+    notes,
+    pendingSync,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is BookLoan &&
+          other.id == this.id &&
+          other.userBookId == this.userBookId &&
+          other.borrowerName == this.borrowerName &&
+          other.borrowerContact == this.borrowerContact &&
+          other.loanedAt == this.loanedAt &&
+          other.dueDate == this.dueDate &&
+          other.returnedAt == this.returnedAt &&
+          other.notes == this.notes &&
+          other.pendingSync == this.pendingSync);
+}
+
+class BookLoansCompanion extends UpdateCompanion<BookLoan> {
+  final Value<String> id;
+  final Value<String> userBookId;
+  final Value<String> borrowerName;
+  final Value<String?> borrowerContact;
+  final Value<DateTime> loanedAt;
+  final Value<DateTime?> dueDate;
+  final Value<DateTime?> returnedAt;
+  final Value<String?> notes;
+  final Value<bool> pendingSync;
+  final Value<int> rowid;
+  const BookLoansCompanion({
+    this.id = const Value.absent(),
+    this.userBookId = const Value.absent(),
+    this.borrowerName = const Value.absent(),
+    this.borrowerContact = const Value.absent(),
+    this.loanedAt = const Value.absent(),
+    this.dueDate = const Value.absent(),
+    this.returnedAt = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.pendingSync = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  BookLoansCompanion.insert({
+    required String id,
+    required String userBookId,
+    required String borrowerName,
+    this.borrowerContact = const Value.absent(),
+    required DateTime loanedAt,
+    this.dueDate = const Value.absent(),
+    this.returnedAt = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.pendingSync = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       userBookId = Value(userBookId),
+       borrowerName = Value(borrowerName),
+       loanedAt = Value(loanedAt);
+  static Insertable<BookLoan> custom({
+    Expression<String>? id,
+    Expression<String>? userBookId,
+    Expression<String>? borrowerName,
+    Expression<String>? borrowerContact,
+    Expression<DateTime>? loanedAt,
+    Expression<DateTime>? dueDate,
+    Expression<DateTime>? returnedAt,
+    Expression<String>? notes,
+    Expression<bool>? pendingSync,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (userBookId != null) 'user_book_id': userBookId,
+      if (borrowerName != null) 'borrower_name': borrowerName,
+      if (borrowerContact != null) 'borrower_contact': borrowerContact,
+      if (loanedAt != null) 'loaned_at': loanedAt,
+      if (dueDate != null) 'due_date': dueDate,
+      if (returnedAt != null) 'returned_at': returnedAt,
+      if (notes != null) 'notes': notes,
+      if (pendingSync != null) 'pending_sync': pendingSync,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  BookLoansCompanion copyWith({
+    Value<String>? id,
+    Value<String>? userBookId,
+    Value<String>? borrowerName,
+    Value<String?>? borrowerContact,
+    Value<DateTime>? loanedAt,
+    Value<DateTime?>? dueDate,
+    Value<DateTime?>? returnedAt,
+    Value<String?>? notes,
+    Value<bool>? pendingSync,
+    Value<int>? rowid,
+  }) {
+    return BookLoansCompanion(
+      id: id ?? this.id,
+      userBookId: userBookId ?? this.userBookId,
+      borrowerName: borrowerName ?? this.borrowerName,
+      borrowerContact: borrowerContact ?? this.borrowerContact,
+      loanedAt: loanedAt ?? this.loanedAt,
+      dueDate: dueDate ?? this.dueDate,
+      returnedAt: returnedAt ?? this.returnedAt,
+      notes: notes ?? this.notes,
+      pendingSync: pendingSync ?? this.pendingSync,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (userBookId.present) {
+      map['user_book_id'] = Variable<String>(userBookId.value);
+    }
+    if (borrowerName.present) {
+      map['borrower_name'] = Variable<String>(borrowerName.value);
+    }
+    if (borrowerContact.present) {
+      map['borrower_contact'] = Variable<String>(borrowerContact.value);
+    }
+    if (loanedAt.present) {
+      map['loaned_at'] = Variable<DateTime>(loanedAt.value);
+    }
+    if (dueDate.present) {
+      map['due_date'] = Variable<DateTime>(dueDate.value);
+    }
+    if (returnedAt.present) {
+      map['returned_at'] = Variable<DateTime>(returnedAt.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (pendingSync.present) {
+      map['pending_sync'] = Variable<bool>(pendingSync.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BookLoansCompanion(')
+          ..write('id: $id, ')
+          ..write('userBookId: $userBookId, ')
+          ..write('borrowerName: $borrowerName, ')
+          ..write('borrowerContact: $borrowerContact, ')
+          ..write('loanedAt: $loanedAt, ')
+          ..write('dueDate: $dueDate, ')
+          ..write('returnedAt: $returnedAt, ')
+          ..write('notes: $notes, ')
+          ..write('pendingSync: $pendingSync, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -2616,6 +3265,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $SyncQueueEntriesTable syncQueueEntries = $SyncQueueEntriesTable(
     this,
   );
+  late final $BookLoansTable bookLoans = $BookLoansTable(this);
   late final SyncQueueDao syncQueueDao = SyncQueueDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
@@ -2627,6 +3277,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     userBooks,
     scans,
     syncQueueEntries,
+    bookLoans,
   ];
 }
 
@@ -3329,6 +3980,7 @@ typedef $$UserBooksTableCreateCompanionBuilder =
       required MatchConfidence confidence,
       Value<String?> spineColor,
       Value<String?> capturePath,
+      Value<int?> shelfPosition,
       required DateTime addedAt,
       Value<bool> pendingSync,
       Value<int> rowid,
@@ -3344,6 +3996,7 @@ typedef $$UserBooksTableUpdateCompanionBuilder =
       Value<MatchConfidence> confidence,
       Value<String?> spineColor,
       Value<String?> capturePath,
+      Value<int?> shelfPosition,
       Value<DateTime> addedAt,
       Value<bool> pendingSync,
       Value<int> rowid,
@@ -3386,6 +4039,24 @@ final class $$UserBooksTableReferences
     if (item == null) return manager;
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$BookLoansTable, List<BookLoan>>
+  _bookLoansRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.bookLoans,
+    aliasName: $_aliasNameGenerator(db.userBooks.id, db.bookLoans.userBookId),
+  );
+
+  $$BookLoansTableProcessedTableManager get bookLoansRefs {
+    final manager = $$BookLoansTableTableManager(
+      $_db,
+      $_db.bookLoans,
+    ).filter((f) => f.userBookId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_bookLoansRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
     );
   }
 }
@@ -3433,6 +4104,11 @@ class $$UserBooksTableFilterComposer
 
   ColumnFilters<String> get capturePath => $composableBuilder(
     column: $table.capturePath,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get shelfPosition => $composableBuilder(
+    column: $table.shelfPosition,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -3491,6 +4167,31 @@ class $$UserBooksTableFilterComposer
     );
     return composer;
   }
+
+  Expression<bool> bookLoansRefs(
+    Expression<bool> Function($$BookLoansTableFilterComposer f) f,
+  ) {
+    final $$BookLoansTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.bookLoans,
+      getReferencedColumn: (t) => t.userBookId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BookLoansTableFilterComposer(
+            $db: $db,
+            $table: $db.bookLoans,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$UserBooksTableOrderingComposer
@@ -3534,6 +4235,11 @@ class $$UserBooksTableOrderingComposer
 
   ColumnOrderings<String> get capturePath => $composableBuilder(
     column: $table.capturePath,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get shelfPosition => $composableBuilder(
+    column: $table.shelfPosition,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -3635,6 +4341,11 @@ class $$UserBooksTableAnnotationComposer
     builder: (column) => column,
   );
 
+  GeneratedColumn<int> get shelfPosition => $composableBuilder(
+    column: $table.shelfPosition,
+    builder: (column) => column,
+  );
+
   GeneratedColumn<DateTime> get addedAt =>
       $composableBuilder(column: $table.addedAt, builder: (column) => column);
 
@@ -3688,6 +4399,31 @@ class $$UserBooksTableAnnotationComposer
     );
     return composer;
   }
+
+  Expression<T> bookLoansRefs<T extends Object>(
+    Expression<T> Function($$BookLoansTableAnnotationComposer a) f,
+  ) {
+    final $$BookLoansTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.bookLoans,
+      getReferencedColumn: (t) => t.userBookId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$BookLoansTableAnnotationComposer(
+            $db: $db,
+            $table: $db.bookLoans,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$UserBooksTableTableManager
@@ -3703,7 +4439,11 @@ class $$UserBooksTableTableManager
           $$UserBooksTableUpdateCompanionBuilder,
           (UserBook, $$UserBooksTableReferences),
           UserBook,
-          PrefetchHooks Function({bool bookId, bool shelfId})
+          PrefetchHooks Function({
+            bool bookId,
+            bool shelfId,
+            bool bookLoansRefs,
+          })
         > {
   $$UserBooksTableTableManager(_$AppDatabase db, $UserBooksTable table)
     : super(
@@ -3727,6 +4467,7 @@ class $$UserBooksTableTableManager
                 Value<MatchConfidence> confidence = const Value.absent(),
                 Value<String?> spineColor = const Value.absent(),
                 Value<String?> capturePath = const Value.absent(),
+                Value<int?> shelfPosition = const Value.absent(),
                 Value<DateTime> addedAt = const Value.absent(),
                 Value<bool> pendingSync = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -3740,6 +4481,7 @@ class $$UserBooksTableTableManager
                 confidence: confidence,
                 spineColor: spineColor,
                 capturePath: capturePath,
+                shelfPosition: shelfPosition,
                 addedAt: addedAt,
                 pendingSync: pendingSync,
                 rowid: rowid,
@@ -3755,6 +4497,7 @@ class $$UserBooksTableTableManager
                 required MatchConfidence confidence,
                 Value<String?> spineColor = const Value.absent(),
                 Value<String?> capturePath = const Value.absent(),
+                Value<int?> shelfPosition = const Value.absent(),
                 required DateTime addedAt,
                 Value<bool> pendingSync = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
@@ -3768,6 +4511,7 @@ class $$UserBooksTableTableManager
                 confidence: confidence,
                 spineColor: spineColor,
                 capturePath: capturePath,
+                shelfPosition: shelfPosition,
                 addedAt: addedAt,
                 pendingSync: pendingSync,
                 rowid: rowid,
@@ -3780,60 +4524,83 @@ class $$UserBooksTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({bookId = false, shelfId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (bookId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.bookId,
-                                referencedTable: $$UserBooksTableReferences
-                                    ._bookIdTable(db),
-                                referencedColumn: $$UserBooksTableReferences
-                                    ._bookIdTable(db)
-                                    .id,
-                              )
-                              as T;
-                    }
-                    if (shelfId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.shelfId,
-                                referencedTable: $$UserBooksTableReferences
-                                    ._shelfIdTable(db),
-                                referencedColumn: $$UserBooksTableReferences
-                                    ._shelfIdTable(db)
-                                    .id,
-                              )
-                              as T;
-                    }
+          prefetchHooksCallback:
+              ({bookId = false, shelfId = false, bookLoansRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [if (bookLoansRefs) db.bookLoans],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (bookId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.bookId,
+                                    referencedTable: $$UserBooksTableReferences
+                                        ._bookIdTable(db),
+                                    referencedColumn: $$UserBooksTableReferences
+                                        ._bookIdTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
+                        if (shelfId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.shelfId,
+                                    referencedTable: $$UserBooksTableReferences
+                                        ._shelfIdTable(db),
+                                    referencedColumn: $$UserBooksTableReferences
+                                        ._shelfIdTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
 
-                    return state;
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (bookLoansRefs)
+                        await $_getPrefetchedData<
+                          UserBook,
+                          $UserBooksTable,
+                          BookLoan
+                        >(
+                          currentTable: table,
+                          referencedTable: $$UserBooksTableReferences
+                              ._bookLoansRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$UserBooksTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).bookLoansRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.userBookId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
                   },
-              getPrefetchedDataCallback: (items) async {
-                return [];
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -3850,7 +4617,7 @@ typedef $$UserBooksTableProcessedTableManager =
       $$UserBooksTableUpdateCompanionBuilder,
       (UserBook, $$UserBooksTableReferences),
       UserBook,
-      PrefetchHooks Function({bool bookId, bool shelfId})
+      PrefetchHooks Function({bool bookId, bool shelfId, bool bookLoansRefs})
     >;
 typedef $$ScansTableCreateCompanionBuilder =
     ScansCompanion Function({
@@ -4314,6 +5081,409 @@ typedef $$SyncQueueEntriesTableProcessedTableManager =
       SyncQueueEntry,
       PrefetchHooks Function()
     >;
+typedef $$BookLoansTableCreateCompanionBuilder =
+    BookLoansCompanion Function({
+      required String id,
+      required String userBookId,
+      required String borrowerName,
+      Value<String?> borrowerContact,
+      required DateTime loanedAt,
+      Value<DateTime?> dueDate,
+      Value<DateTime?> returnedAt,
+      Value<String?> notes,
+      Value<bool> pendingSync,
+      Value<int> rowid,
+    });
+typedef $$BookLoansTableUpdateCompanionBuilder =
+    BookLoansCompanion Function({
+      Value<String> id,
+      Value<String> userBookId,
+      Value<String> borrowerName,
+      Value<String?> borrowerContact,
+      Value<DateTime> loanedAt,
+      Value<DateTime?> dueDate,
+      Value<DateTime?> returnedAt,
+      Value<String?> notes,
+      Value<bool> pendingSync,
+      Value<int> rowid,
+    });
+
+final class $$BookLoansTableReferences
+    extends BaseReferences<_$AppDatabase, $BookLoansTable, BookLoan> {
+  $$BookLoansTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $UserBooksTable _userBookIdTable(_$AppDatabase db) =>
+      db.userBooks.createAlias(
+        $_aliasNameGenerator(db.bookLoans.userBookId, db.userBooks.id),
+      );
+
+  $$UserBooksTableProcessedTableManager get userBookId {
+    final $_column = $_itemColumn<String>('user_book_id')!;
+
+    final manager = $$UserBooksTableTableManager(
+      $_db,
+      $_db.userBooks,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_userBookIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$BookLoansTableFilterComposer
+    extends Composer<_$AppDatabase, $BookLoansTable> {
+  $$BookLoansTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get borrowerName => $composableBuilder(
+    column: $table.borrowerName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get borrowerContact => $composableBuilder(
+    column: $table.borrowerContact,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get loanedAt => $composableBuilder(
+    column: $table.loanedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get dueDate => $composableBuilder(
+    column: $table.dueDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get returnedAt => $composableBuilder(
+    column: $table.returnedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get pendingSync => $composableBuilder(
+    column: $table.pendingSync,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$UserBooksTableFilterComposer get userBookId {
+    final $$UserBooksTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userBookId,
+      referencedTable: $db.userBooks,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UserBooksTableFilterComposer(
+            $db: $db,
+            $table: $db.userBooks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$BookLoansTableOrderingComposer
+    extends Composer<_$AppDatabase, $BookLoansTable> {
+  $$BookLoansTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get borrowerName => $composableBuilder(
+    column: $table.borrowerName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get borrowerContact => $composableBuilder(
+    column: $table.borrowerContact,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get loanedAt => $composableBuilder(
+    column: $table.loanedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get dueDate => $composableBuilder(
+    column: $table.dueDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get returnedAt => $composableBuilder(
+    column: $table.returnedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get pendingSync => $composableBuilder(
+    column: $table.pendingSync,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$UserBooksTableOrderingComposer get userBookId {
+    final $$UserBooksTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userBookId,
+      referencedTable: $db.userBooks,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UserBooksTableOrderingComposer(
+            $db: $db,
+            $table: $db.userBooks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$BookLoansTableAnnotationComposer
+    extends Composer<_$AppDatabase, $BookLoansTable> {
+  $$BookLoansTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get borrowerName => $composableBuilder(
+    column: $table.borrowerName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get borrowerContact => $composableBuilder(
+    column: $table.borrowerContact,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get loanedAt =>
+      $composableBuilder(column: $table.loanedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dueDate =>
+      $composableBuilder(column: $table.dueDate, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get returnedAt => $composableBuilder(
+    column: $table.returnedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get notes =>
+      $composableBuilder(column: $table.notes, builder: (column) => column);
+
+  GeneratedColumn<bool> get pendingSync => $composableBuilder(
+    column: $table.pendingSync,
+    builder: (column) => column,
+  );
+
+  $$UserBooksTableAnnotationComposer get userBookId {
+    final $$UserBooksTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.userBookId,
+      referencedTable: $db.userBooks,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$UserBooksTableAnnotationComposer(
+            $db: $db,
+            $table: $db.userBooks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$BookLoansTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $BookLoansTable,
+          BookLoan,
+          $$BookLoansTableFilterComposer,
+          $$BookLoansTableOrderingComposer,
+          $$BookLoansTableAnnotationComposer,
+          $$BookLoansTableCreateCompanionBuilder,
+          $$BookLoansTableUpdateCompanionBuilder,
+          (BookLoan, $$BookLoansTableReferences),
+          BookLoan,
+          PrefetchHooks Function({bool userBookId})
+        > {
+  $$BookLoansTableTableManager(_$AppDatabase db, $BookLoansTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$BookLoansTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$BookLoansTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$BookLoansTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> userBookId = const Value.absent(),
+                Value<String> borrowerName = const Value.absent(),
+                Value<String?> borrowerContact = const Value.absent(),
+                Value<DateTime> loanedAt = const Value.absent(),
+                Value<DateTime?> dueDate = const Value.absent(),
+                Value<DateTime?> returnedAt = const Value.absent(),
+                Value<String?> notes = const Value.absent(),
+                Value<bool> pendingSync = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => BookLoansCompanion(
+                id: id,
+                userBookId: userBookId,
+                borrowerName: borrowerName,
+                borrowerContact: borrowerContact,
+                loanedAt: loanedAt,
+                dueDate: dueDate,
+                returnedAt: returnedAt,
+                notes: notes,
+                pendingSync: pendingSync,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String userBookId,
+                required String borrowerName,
+                Value<String?> borrowerContact = const Value.absent(),
+                required DateTime loanedAt,
+                Value<DateTime?> dueDate = const Value.absent(),
+                Value<DateTime?> returnedAt = const Value.absent(),
+                Value<String?> notes = const Value.absent(),
+                Value<bool> pendingSync = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => BookLoansCompanion.insert(
+                id: id,
+                userBookId: userBookId,
+                borrowerName: borrowerName,
+                borrowerContact: borrowerContact,
+                loanedAt: loanedAt,
+                dueDate: dueDate,
+                returnedAt: returnedAt,
+                notes: notes,
+                pendingSync: pendingSync,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$BookLoansTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({userBookId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (userBookId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.userBookId,
+                                referencedTable: $$BookLoansTableReferences
+                                    ._userBookIdTable(db),
+                                referencedColumn: $$BookLoansTableReferences
+                                    ._userBookIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$BookLoansTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $BookLoansTable,
+      BookLoan,
+      $$BookLoansTableFilterComposer,
+      $$BookLoansTableOrderingComposer,
+      $$BookLoansTableAnnotationComposer,
+      $$BookLoansTableCreateCompanionBuilder,
+      $$BookLoansTableUpdateCompanionBuilder,
+      (BookLoan, $$BookLoansTableReferences),
+      BookLoan,
+      PrefetchHooks Function({bool userBookId})
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -4328,6 +5498,8 @@ class $AppDatabaseManager {
       $$ScansTableTableManager(_db, _db.scans);
   $$SyncQueueEntriesTableTableManager get syncQueueEntries =>
       $$SyncQueueEntriesTableTableManager(_db, _db.syncQueueEntries);
+  $$BookLoansTableTableManager get bookLoans =>
+      $$BookLoansTableTableManager(_db, _db.bookLoans);
 }
 
 // **************************************************************************
