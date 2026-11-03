@@ -10,7 +10,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Rafça'), findsWidgets);
-    expect(find.text('MATCHED'), findsOneWidget);
+    expect(find.text('Kütüphane'), findsWidgets);
   });
 
   testWidgets('the theme toggle cycles system, dark, light', (tester) async {

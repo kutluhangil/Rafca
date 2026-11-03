@@ -7,6 +7,8 @@ import '../../features/capture/screens/camera_screen.dart';
 import '../../features/capture/screens/crop_screen.dart';
 import '../../features/capture/screens/processing_screen.dart';
 import '../../features/home/home_screen.dart';
+import '../../features/library/screens/book_detail_screen.dart';
+import '../../features/library/screens/shelves_screen.dart';
 import '../../features/review/models/review_models.dart';
 import '../../features/review/screens/scan_results_screen.dart';
 
@@ -31,6 +33,10 @@ abstract final class Routes {
 
   /// Faz 7 — Review & Correction routes
   static const reviewResults = '/review/results';
+
+  /// Faz 8 — Library & Shelves routes
+  static const bookDetail = '/book';
+  static const shelves = '/shelves';
 }
 
 @Riverpod(keepAlive: true)
@@ -77,6 +83,19 @@ GoRouter appRouter(Ref ref) {
           if (batch == null) return const HomeScreen();
           return ScanResultsScreen(initialBatch: batch);
         },
+      ),
+      GoRoute(
+        path: Routes.bookDetail,
+        name: 'bookDetail',
+        builder: (context, state) {
+          final id = state.uri.queryParameters['id'] ?? '';
+          return BookDetailScreen(userBookId: id);
+        },
+      ),
+      GoRoute(
+        path: Routes.shelves,
+        name: 'shelves',
+        builder: (context, state) => const ShelvesScreen(),
       ),
     ],
   );

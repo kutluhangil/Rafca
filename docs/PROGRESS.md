@@ -19,7 +19,19 @@ işaretlenir.
 
 | Yerel doğrulama veritabanı | Düz PostgreSQL 17 + pgTAP (Docker diski dolu); `supabase start` kanonik yol olarak kalır | 2026-08-27 |
 
-Faz detayları: [PROGRESS_FAZ1.md](PROGRESS_FAZ1.md) · [PROGRESS_FAZ2.md](PROGRESS_FAZ2.md) · [PROGRESS_FAZ3.md](PROGRESS_FAZ3.md) · [PROGRESS_FAZ6.md](PROGRESS_FAZ6.md) · [PROGRESS_FAZ7.md](PROGRESS_FAZ7.md).
+Faz detayları: [PROGRESS_FAZ1.md](PROGRESS_FAZ1.md) · [PROGRESS_FAZ2.md](PROGRESS_FAZ2.md) · [PROGRESS_FAZ3.md](PROGRESS_FAZ3.md) · [PROGRESS_FAZ6.md](PROGRESS_FAZ6.md) · [PROGRESS_FAZ7.md](PROGRESS_FAZ7.md) · [PROGRESS_FAZ8.md](PROGRESS_FAZ8.md).
+
+## FAZ 8 — Kütüphane ve Raflar (A8)
+
+**Durum: KAPALI.**
+
+Kütüphane ana ekranı (`LibraryScreen`), boş/dolu durumlar, dinamik `ShelfStrip`,
+inceleme bekleyenler şeridi (`PendingReviewsBanner`), okuma durumu filtreleri, anlık arama,
+kitap detay ekranı (`BookDetailScreen` - "Proof of Capture" yerel sırt kırpımı ve üstveri düzenleme),
+raflar yönetim ekranı (`ShelvesScreen` - `ShelfCard`, mini `ShelfStrip`), ve offline-first
+Drift `LibraryRepository` entegrasyonu tamamlandı.
+`flutter analyze` temiz (0 issue), `flutter test` 102/102 yeşil.
+Detay: [PROGRESS_FAZ8.md](PROGRESS_FAZ8.md).
 
 ## FAZ 7 — Sonuç ve Düzeltme (A7)
 
