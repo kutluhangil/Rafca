@@ -543,4 +543,32 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get exporting => 'Dışa Aktarılıyor...';
+
+  @override
+  String get scanBarcode => 'Barkod / ISBN Tara';
+
+  @override
+  String get barcodeMode => 'BARKOD (ISBN)';
+
+  @override
+  String get spineMode => 'RAF SIRTI';
+
+  @override
+  String get isbnNotFound => 'ISBN ile eşleşen kitap bulunamadı.';
+
+  @override
+  String get searchingIsbn => 'ISBN sorgulanıyor...';
+
+  @override
+  String get invalidIsbn => 'Geçersiz ISBN numarası.';
+
+  @override
+  String get barcodeScanHint =>
+      'Arka kapaktaki ISBN barkodunu çerçeveye ortalayın';
+
+  @override
+  String get bookFoundFromBarcode => 'Barkod ile kitap bulundu';
+
+  @override
+  String get addToLibrary => 'Kütüphaneye Ekle';
 }

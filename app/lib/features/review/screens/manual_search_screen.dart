@@ -4,12 +4,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/database/app_database.dart';
+import '../../../core/router/app_router.dart';
 import '../../../design/adaptive/adaptive_scaffold.dart';
 import '../../../design/components/primary_button.dart';
 import '../../../design/tokens/colors.dart';
 import '../../../design/tokens/spacing.dart';
 import '../../../design/tokens/typography.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../capture/barcode/barcode_lookup_service.dart';
+import '../../capture/barcode/isbn_validator.dart';
 import '../models/review_models.dart';
 
 /// Screen for searching catalog or entering custom book details manually.
@@ -66,11 +69,28 @@ class _ManualSearchScreenState extends ConsumerState<ManualSearchScreen> {
     setState(() => _isSearching = true);
 
     try {
+      // Direct ISBN lookup if query matches ISBN-10/13 checksum or format
+      if (IsbnValidator.isValid(trimmed)) {
+        final isbnBook =
+            await ref.read(barcodeLookupServiceProvider).lookupIsbn(trimmed);
+        if (isbnBook != null) {
+          if (mounted) {
+            setState(() {
+              _results = [isbnBook];
+              _isSearching = false;
+            });
+          }
+          return;
+        }
+      }
+
       final db = ref.read(appDatabaseProvider);
-      // Search local catalog
+      // Search local catalog by title, author, or exact isbn13
       final rows = await (db.select(db.catalogBooks)
             ..where((tbl) =>
-                tbl.title.like('%$trimmed%') | tbl.authors.like('%$trimmed%'))
+                tbl.title.like('%$trimmed%') |
+                tbl.authors.like('%$trimmed%') |
+                tbl.isbn13.equals(trimmed))
             ..limit(15))
           .get();
 
@@ -94,6 +114,16 @@ class _ManualSearchScreenState extends ConsumerState<ManualSearchScreen> {
       }
     } catch (_) {
       if (mounted) setState(() => _isSearching = false);
+    }
+  }
+
+  Future<void> _scanBarcode() async {
+    final candidate = await context.push<ReviewCandidateBook?>(
+      '${Routes.capture}?mode=barcode',
+    );
+    if (candidate != null && mounted) {
+      widget.onBookSelected(candidate, null, null);
+      context.pop();
     }
   }
 
@@ -130,15 +160,24 @@ class _ManualSearchScreenState extends ConsumerState<ManualSearchScreen> {
                 color: scheme.onSurfaceVariant.withValues(alpha: 0.6),
               ),
               prefixIcon: Icon(Icons.search, color: semantic.brass),
-              suffixIcon: _searchController.text.isNotEmpty
-                  ? IconButton(
+              suffixIcon: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (_searchController.text.isNotEmpty)
+                    IconButton(
                       icon: const Icon(Icons.clear),
                       onPressed: () {
                         _searchController.clear();
                         _performSearch('');
                       },
-                    )
-                  : null,
+                    ),
+                  IconButton(
+                    icon: const Icon(Icons.qr_code_scanner),
+                    tooltip: l10n?.scanBarcode ?? 'Barkod / ISBN Tara',
+                    onPressed: _scanBarcode,
+                  ),
+                ],
+              ),
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: semantic.hairline),
               ),
@@ -151,13 +190,15 @@ class _ManualSearchScreenState extends ConsumerState<ManualSearchScreen> {
           const SizedBox(height: SpineSpacing.lg),
 
           // 2. Results List or Custom Entry Form
-          Expanded(
-            child: _isSearching
-                ? const Center(child: CircularProgressIndicator())
-                : _showCustomEntry
-                    ? _buildCustomEntryForm(semantic, scheme, l10n)
-                    : _buildSearchResults(semantic, scheme),
-          ),
+          if (_isSearching)
+            const Padding(
+              padding: EdgeInsets.all(SpineSpacing.xl),
+              child: Center(child: CircularProgressIndicator()),
+            )
+          else if (_showCustomEntry)
+            _buildCustomEntryForm(semantic, scheme, l10n)
+          else
+            _buildSearchResults(semantic, scheme),
 
           // 3. Toggle Custom Book Form
           if (!_showCustomEntry)
@@ -206,6 +247,8 @@ class _ManualSearchScreenState extends ConsumerState<ManualSearchScreen> {
     }
 
     return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       itemCount: _results.length,
       itemBuilder: (context, index) {
         final book = _results[index];

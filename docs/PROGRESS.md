@@ -19,7 +19,20 @@ işaretlenir.
 
 | Yerel doğrulama veritabanı | Düz PostgreSQL 17 + pgTAP (Docker diski dolu); `supabase start` kanonik yol olarak kalır | 2026-08-27 |
 
-Faz detayları: [PROGRESS_FAZ1.md](PROGRESS_FAZ1.md) · [PROGRESS_FAZ2.md](PROGRESS_FAZ2.md) · [PROGRESS_FAZ3.md](PROGRESS_FAZ3.md) · [PROGRESS_FAZ6.md](PROGRESS_FAZ6.md) · [PROGRESS_FAZ7.md](PROGRESS_FAZ7.md) · [PROGRESS_FAZ8.md](PROGRESS_FAZ8.md) · [PROGRESS_FAZ9.md](PROGRESS_FAZ9.md) · [PROGRESS_FAZ10.md](PROGRESS_FAZ10.md) · [PROGRESS_FAZ11.md](PROGRESS_FAZ11.md) · [PROGRESS_FAZ12.md](PROGRESS_FAZ12.md).
+Faz detayları: [PROGRESS_FAZ1.md](PROGRESS_FAZ1.md) · [PROGRESS_FAZ2.md](PROGRESS_FAZ2.md) · [PROGRESS_FAZ3.md](PROGRESS_FAZ3.md) · [PROGRESS_FAZ6.md](PROGRESS_FAZ6.md) · [PROGRESS_FAZ7.md](PROGRESS_FAZ7.md) · [PROGRESS_FAZ8.md](PROGRESS_FAZ8.md) · [PROGRESS_FAZ9.md](PROGRESS_FAZ9.md) · [PROGRESS_FAZ10.md](PROGRESS_FAZ10.md) · [PROGRESS_FAZ11.md](PROGRESS_FAZ11.md) · [PROGRESS_FAZ12.md](PROGRESS_FAZ12.md) · [PROGRESS_FAZ13.md](PROGRESS_FAZ13.md).
+
+## FAZ 13 — Yıpranmış Sırtlar İçin Barkod Fallback (ISBN Scanner)
+
+**Durum: KAPALI.**
+
+`IsbnValidator` ile ISBN-10 (mod 11) & ISBN-13 (mod 10) temizleme, doğrulama, formatlama ve dönüşüm motoru,
+`BarcodeEngine` ile koşullu native/stub `google_mlkit_barcode_scanning` EAN-13/EAN-8 okuyucu altyapısı,
+`BarcodeLookupService` ile 3 kademeli yerel öncelikli çözümleme (Drift SQLite `CatalogBooks` -> Open Library `jscmd=data` -> Google Books API -> yerel önbelleğe alma),
+`ManualSearchScreen` arama alanında barkod butonu ve otomatik ISBN algılama,
+`CameraScreen` üzerinde "RAF SIRTI" / "BARKOD (ISBN)" mod geçişi, özel 270x150 kadraj rehberi ve bulunan kitap detay alt sayfası (`_showBarcodeBookSheet`),
+`LibraryRepository.addBook` tekil kitap ekleme metodu ve TR/EN ARB yerelleştirmeleri tamamlandı.
+`flutter analyze` temiz (0 issue), `flutter test` 155/155 yeşil (%100 başarı).
+Detay: [PROGRESS_FAZ13.md](PROGRESS_FAZ13.md).
 
 ## FAZ 12 — Archivist Wrapped (Kütüphane Özeti & İnfografik Paylaşım Kartları)
 

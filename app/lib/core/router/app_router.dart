@@ -61,7 +61,14 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: Routes.capture,
         name: 'capture',
-        builder: (context, state) => const CameraScreen(),
+        builder: (context, state) {
+          final mode = state.uri.queryParameters['mode'];
+          return CameraScreen(
+            initialMode: mode == 'barcode'
+                ? CameraCaptureMode.barcode
+                : CameraCaptureMode.spine,
+          );
+        },
       ),
       GoRoute(
         path: Routes.captureCrop,

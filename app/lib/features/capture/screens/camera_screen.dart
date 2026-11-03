@@ -15,17 +15,33 @@ import '../../../design/tokens/colors.dart';
 import '../../../design/tokens/spacing.dart';
 import '../../../design/tokens/typography.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../library/data/library_repository.dart';
+import '../../review/models/review_models.dart';
+import '../barcode/barcode_engine.dart';
+import '../barcode/barcode_lookup_service.dart';
+import '../barcode/isbn_validator.dart';
 import '../state/capture_notifier.dart';
 import '../state/capture_state.dart';
 import '../widgets/level_indicator.dart';
 import '../widgets/shutter_button.dart';
 import 'permission_screen.dart';
 
-/// Live camera view with spirit leveling, alignment guidelines and capture gating.
+/// Camera modes: Shelf spine scanning (default) or ISBN barcode fallback.
+enum CameraCaptureMode {
+  spine,
+  barcode,
+}
+
+/// Live camera view with spirit leveling, alignment guidelines, barcode scanner, and capture gating.
 ///
-/// Implements SPINE_BLUEPRINT.md 7.1 and FAZ 6.
+/// Implements SPINE_BLUEPRINT.md 7.1 and FAZ 6 & FAZ 13.
 class CameraScreen extends ConsumerStatefulWidget {
-  const CameraScreen({super.key});
+  const CameraScreen({
+    super.key,
+    this.initialMode = CameraCaptureMode.spine,
+  });
+
+  final CameraCaptureMode initialMode;
 
   @override
   ConsumerState<CameraScreen> createState() => _CameraScreenState();
@@ -35,9 +51,12 @@ class _CameraScreenState extends ConsumerState<CameraScreen>
     with WidgetsBindingObserver {
   CameraController? _cameraController;
   StreamSubscription<AccelerometerEvent>? _accelSub;
+  BarcodeEngine? _barcodeEngine;
+  late CameraCaptureMode _captureMode;
   bool _isInit = false;
   bool _isPermissionChecked = false;
   bool _hasPermission = false;
+  bool _isProcessingBarcode = false;
   String? _initError;
 
   // Stability tracker over 300ms window
@@ -46,6 +65,7 @@ class _CameraScreenState extends ConsumerState<CameraScreen>
   @override
   void initState() {
     super.initState();
+    _captureMode = widget.initialMode;
     WidgetsBinding.instance.addObserver(this);
     _checkPermissionAndInit();
   }
@@ -177,6 +197,7 @@ class _CameraScreenState extends ConsumerState<CameraScreen>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _accelSub?.cancel();
+    _barcodeEngine?.dispose();
     _cameraController?.dispose();
     super.dispose();
   }
@@ -204,6 +225,196 @@ class _CameraScreenState extends ConsumerState<CameraScreen>
         );
       }
     }
+  }
+
+  Future<void> _takeBarcodePhoto() async {
+    final controller = _cameraController;
+    if (controller == null ||
+        !controller.value.isInitialized ||
+        _isProcessingBarcode) {
+      return;
+    }
+
+    setState(() => _isProcessingBarcode = true);
+
+    try {
+      final xFile = await controller.takePicture();
+      if (!mounted) return;
+
+      _barcodeEngine ??= BarcodeEngine();
+      final isbns = await _barcodeEngine!.scanFile(xFile.path);
+
+      if (isbns.isEmpty) {
+        if (mounted) {
+          final l10n = AppLocalizations.of(context);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                l10n?.invalidIsbn ??
+                    'Barkod okunamadı. Lütfen çerçeveye ortalayın.',
+              ),
+            ),
+          );
+        }
+        return;
+      }
+
+      final isbn = isbns.first;
+      final book =
+          await ref.read(barcodeLookupServiceProvider).lookupIsbn(isbn);
+
+      if (!mounted) return;
+
+      if (book == null) {
+        final l10n = AppLocalizations.of(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              l10n?.isbnNotFound ?? 'ISBN ($isbn) ile kitap bulunamadı.',
+            ),
+          ),
+        );
+        return;
+      }
+
+      await _showBarcodeBookSheet(book, isbn);
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Barkod okuma hatası: $e')),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isProcessingBarcode = false);
+      }
+    }
+  }
+
+  Future<void> _showBarcodeBookSheet(
+      ReviewCandidateBook book, String isbn) async {
+    final semantic = context.spineColors;
+    final l10n = AppLocalizations.of(context);
+
+    await showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: semantic.surfaceRaised,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius:
+            BorderRadius.vertical(top: Radius.circular(SpineRadius.sheet)),
+      ),
+      builder: (bottomSheetContext) {
+        return Padding(
+          padding: EdgeInsets.only(
+            left: SpineSpacing.lg,
+            right: SpineSpacing.lg,
+            top: SpineSpacing.lg,
+            bottom: MediaQuery.of(bottomSheetContext).padding.bottom +
+                SpineSpacing.lg,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Brass handle
+              Center(
+                child: Container(
+                  width: 36,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: semantic.brass.withValues(alpha: 0.4),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
+              const SizedBox(height: SpineSpacing.md),
+              Row(
+                children: [
+                  Icon(Icons.qr_code_2, color: semantic.brass, size: 22),
+                  const SizedBox(width: SpineSpacing.xs),
+                  Text(
+                    (l10n?.bookFoundFromBarcode ?? 'BARKOD İLE KİTAP BULUNDU')
+                        .toUpperCase(),
+                    style: SpineTypography.metadataCaps
+                        .copyWith(color: semantic.brass),
+                  ),
+                ],
+              ),
+              const SizedBox(height: SpineSpacing.md),
+              Text(
+                book.title,
+                style: SpineTypography.headlineSmall,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: SpineSpacing.xs),
+              Text(
+                book.author,
+                style: SpineTypography.bodyLarge.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+              ),
+              if (book.publisher != null || book.publishYear != null) ...[
+                const SizedBox(height: SpineSpacing.xs),
+                Text(
+                  [
+                    if (book.publisher != null) book.publisher!,
+                    if (book.publishYear != null) book.publishYear!.toString(),
+                    IsbnValidator.format(isbn),
+                  ].join(' • '),
+                  style: SpineTypography.bodySmall.copyWith(
+                    color: Theme.of(context).colorScheme.outline,
+                  ),
+                ),
+              ],
+              const SizedBox(height: SpineSpacing.xl),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () => Navigator.of(bottomSheetContext).pop(),
+                      child: Text(
+                          MaterialLocalizations.of(context).cancelButtonLabel),
+                    ),
+                  ),
+                  const SizedBox(width: SpineSpacing.md),
+                  Expanded(
+                    flex: 2,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: semantic.brass,
+                        foregroundColor: Colors.black,
+                      ),
+                      onPressed: () async {
+                        Navigator.of(bottomSheetContext).pop();
+                        await ref.read(libraryRepositoryProvider).addBook(
+                              candidateBook: book,
+                            );
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content:
+                                  Text('"${book.title}" kütüphaneye eklendi.'),
+                            ),
+                          );
+                          // Pop back with result if requested by push caller
+                          context.pop(book);
+                        }
+                      },
+                      child: Text(
+                        l10n?.addToLibrary ?? 'Kütüphaneye Ekle',
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   Future<void> _toggleFlash() async {
@@ -304,10 +515,42 @@ class _CameraScreenState extends ConsumerState<CameraScreen>
                       icon: const Icon(Icons.close, color: Colors.white),
                       onPressed: () => context.pop(),
                     ),
-                    LevelIndicator(
-                      roll: capturing.roll,
-                      pitch: capturing.pitch,
-                    ),
+                    if (_captureMode == CameraCaptureMode.spine)
+                      LevelIndicator(
+                        roll: capturing.roll,
+                        pitch: capturing.pitch,
+                      )
+                    else
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: SpineSpacing.sm,
+                          vertical: SpineSpacing.xs,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.black54,
+                          borderRadius:
+                              BorderRadius.circular(SpineRadius.chip),
+                          border: Border.all(
+                            color: semantic.brass.withValues(alpha: 0.5),
+                            width: SpineBorders.hairline,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.qr_code,
+                                size: 14, color: semantic.brass),
+                            const SizedBox(width: 4),
+                            Text(
+                              'ISBN',
+                              style: SpineTypography.metadataCaps.copyWith(
+                                color: semantic.brass,
+                                fontSize: 10,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     IconButton(
                       icon: Icon(
                         capturing.flashOn
@@ -325,36 +568,59 @@ class _CameraScreenState extends ConsumerState<CameraScreen>
             ),
           ),
 
-          // 4. Bottom action area (Shutter button & Thumbnail)
+          // 4. Bottom action area (Mode selector, Shutter button & Thumbnail)
           SafeArea(
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: const EdgeInsets.only(bottom: SpineSpacing.xl),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    const SizedBox(width: 48), // Balance spacer
-                    ShutterButton(
-                      canShoot: capturing.canShoot,
-                      onPressed: _takePhoto,
+                    _buildModeSelector(semantic, l10n),
+                    const SizedBox(height: SpineSpacing.lg),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const SizedBox(width: 48), // Balance spacer
+                        if (_isProcessingBarcode)
+                          const SizedBox(
+                            width: 64,
+                            height: 64,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
+                            ),
+                          )
+                        else
+                          ShutterButton(
+                            canShoot: _captureMode == CameraCaptureMode.barcode
+                                ? true
+                                : capturing.canShoot,
+                            onPressed:
+                                _captureMode == CameraCaptureMode.barcode
+                                    ? _takeBarcodePhoto
+                                    : _takePhoto,
+                          ),
+                        const SizedBox(width: SpineSpacing.base),
+                        // Recent thumbnail placeholder
+                        if (capturing.lastPhotoPath != null)
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(
+                              SpineRadius.thumbnail,
+                            ),
+                            child: Image.file(
+                              File(capturing.lastPhotoPath!),
+                              width: 44,
+                              height: 44,
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        else
+                          const SizedBox(width: 44),
+                      ],
                     ),
-                    const SizedBox(width: SpineSpacing.base),
-                    // Recent thumbnail placeholder
-                    if (capturing.lastPhotoPath != null)
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(
-                          SpineRadius.thumbnail,
-                        ),
-                        child: Image.file(
-                          File(capturing.lastPhotoPath!),
-                          width: 44,
-                          height: 44,
-                          fit: BoxFit.cover,
-                        ),
-                      )
-                    else
-                      const SizedBox(width: 44),
                   ],
                 ),
               ),
@@ -365,29 +631,134 @@ class _CameraScreenState extends ConsumerState<CameraScreen>
     );
   }
 
-  Widget _buildAlignmentGuide(BuildContext context, SpineSemanticColors semantic) {
+  Widget _buildModeSelector(
+    SpineSemanticColors semantic,
+    AppLocalizations? l10n,
+  ) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+      decoration: BoxDecoration(
+        color: Colors.black.withValues(alpha: 0.6),
+        borderRadius: BorderRadius.circular(SpineRadius.chip),
+        border: Border.all(
+          color: semantic.hairline,
+          width: SpineBorders.hairline,
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _buildModePill(
+            label: l10n?.spineMode ?? 'RAF SIRTI',
+            isSelected: _captureMode == CameraCaptureMode.spine,
+            onTap: () => setState(() => _captureMode = CameraCaptureMode.spine),
+            semantic: semantic,
+          ),
+          const SizedBox(width: 4),
+          _buildModePill(
+            label: l10n?.barcodeMode ?? 'BARKOD (ISBN)',
+            isSelected: _captureMode == CameraCaptureMode.barcode,
+            onTap: () =>
+                setState(() => _captureMode = CameraCaptureMode.barcode),
+            semantic: semantic,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildModePill({
+    required String label,
+    required bool isSelected,
+    required VoidCallback onTap,
+    required SpineSemanticColors semantic,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(
+          horizontal: SpineSpacing.md,
+          vertical: SpineSpacing.xs,
+        ),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? semantic.brass.withValues(alpha: 0.25)
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(SpineRadius.chip),
+          border: Border.all(
+            color: isSelected ? semantic.brass : Colors.transparent,
+            width: SpineBorders.hairline,
+          ),
+        ),
+        child: Text(
+          label.toUpperCase(),
+          style: SpineTypography.metadataCaps.copyWith(
+            color: isSelected ? semantic.brass : Colors.white70,
+            fontSize: 11,
+            letterSpacing: 1.0,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAlignmentGuide(
+    BuildContext context,
+    SpineSemanticColors semantic,
+  ) {
     final l10n = AppLocalizations.of(context);
+    final isBarcode = _captureMode == CameraCaptureMode.barcode;
+
     return IgnorePointer(
       child: Center(
-        child: Container(
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeOutCubic,
           margin: const EdgeInsets.symmetric(horizontal: SpineSpacing.lg),
-          height: 220,
+          height: isBarcode ? 150 : 220,
+          width: isBarcode ? 270 : double.infinity,
           decoration: BoxDecoration(
             border: Border.all(
-              color: semantic.brass.withValues(alpha: 0.4),
-              width: SpineBorders.hairline,
+              color: semantic.brass.withValues(alpha: isBarcode ? 0.7 : 0.4),
+              width: isBarcode ? 2.0 : SpineBorders.hairline,
             ),
             borderRadius: BorderRadius.circular(SpineRadius.card),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Icon(
+                isBarcode ? Icons.qr_code_scanner : Icons.menu_book_outlined,
+                color: semantic.brass.withValues(alpha: 0.8),
+                size: isBarcode ? 32 : 28,
+              ),
+              const SizedBox(height: SpineSpacing.xs),
               Text(
-                (l10n?.cameraTitle ?? 'RAF KILAVUZU').toUpperCase(),
+                (isBarcode
+                        ? (l10n?.barcodeMode ?? 'BARKOD (ISBN)')
+                        : (l10n?.cameraTitle ?? 'RAF KILAVUZU'))
+                    .toUpperCase(),
                 style: SpineTypography.metadataCaps.copyWith(
-                  color: semantic.brass.withValues(alpha: 0.7),
+                  color: semantic.brass.withValues(alpha: 0.8),
                 ),
               ),
+              if (isBarcode) ...[
+                const SizedBox(height: SpineSpacing.xs),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: SpineSpacing.sm),
+                  child: Text(
+                    l10n?.barcodeScanHint ??
+                        'Arka kapaktaki ISBN barkodunu çerçeveye ortalayın',
+                    style: SpineTypography.bodySmall.copyWith(
+                      color: Colors.white70,
+                      fontSize: 11,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
             ],
           ),
         ),

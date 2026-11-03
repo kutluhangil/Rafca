@@ -1111,6 +1111,60 @@ abstract class AppLocalizations {
   /// In tr, this message translates to:
   /// **'Dışa Aktarılıyor...'**
   String get exporting;
+
+  /// No description provided for @scanBarcode.
+  ///
+  /// In tr, this message translates to:
+  /// **'Barkod / ISBN Tara'**
+  String get scanBarcode;
+
+  /// No description provided for @barcodeMode.
+  ///
+  /// In tr, this message translates to:
+  /// **'BARKOD (ISBN)'**
+  String get barcodeMode;
+
+  /// No description provided for @spineMode.
+  ///
+  /// In tr, this message translates to:
+  /// **'RAF SIRTI'**
+  String get spineMode;
+
+  /// No description provided for @isbnNotFound.
+  ///
+  /// In tr, this message translates to:
+  /// **'ISBN ile eşleşen kitap bulunamadı.'**
+  String get isbnNotFound;
+
+  /// No description provided for @searchingIsbn.
+  ///
+  /// In tr, this message translates to:
+  /// **'ISBN sorgulanıyor...'**
+  String get searchingIsbn;
+
+  /// No description provided for @invalidIsbn.
+  ///
+  /// In tr, this message translates to:
+  /// **'Geçersiz ISBN numarası.'**
+  String get invalidIsbn;
+
+  /// No description provided for @barcodeScanHint.
+  ///
+  /// In tr, this message translates to:
+  /// **'Arka kapaktaki ISBN barkodunu çerçeveye ortalayın'**
+  String get barcodeScanHint;
+
+  /// No description provided for @bookFoundFromBarcode.
+  ///
+  /// In tr, this message translates to:
+  /// **'Barkod ile kitap bulundu'**
+  String get bookFoundFromBarcode;
+
+  /// No description provided for @addToLibrary.
+  ///
+  /// In tr, this message translates to:
+  /// **'Kütüphaneye Ekle'**
+  String get addToLibrary;
 }
 
 class _AppLocalizationsDelegate

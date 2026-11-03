@@ -41,6 +41,7 @@ dependencies:
   # Faz 6 — Capture
   camera: ^0.11.0
   google_mlkit_text_recognition: ^0.14.0
+  google_mlkit_barcode_scanning: ^0.13.0
   sensors_plus: ^6.1.1
   image: ^4.3.0
   permission_handler: ^11.3.1
@@ -53,6 +54,7 @@ dependencies:
   # Crash reporting — Sentry. DSN injected at build time via --dart-define=SENTRY_DSN=...
   # If DSN is absent the SDK is a no-op; local-first offline queue still works.
   sentry_flutter: ^8.14.2
+  http: ^1.6.0
 
 dev_dependencies:
   flutter_test:

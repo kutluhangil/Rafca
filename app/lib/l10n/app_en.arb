@@ -177,5 +177,14 @@
   "shareImage": "Share Image",
   "shareText": "Share Text",
   "copyText": "Copy Text",
-  "exporting": "Exporting..."
+  "exporting": "Exporting...",
+  "scanBarcode": "Scan Barcode / ISBN",
+  "barcodeMode": "BARCODE (ISBN)",
+  "spineMode": "SHELF SPINE",
+  "isbnNotFound": "No book found for this ISBN.",
+  "searchingIsbn": "Looking up ISBN...",
+  "invalidIsbn": "Invalid ISBN number.",
+  "barcodeScanHint": "Center the ISBN barcode on the back cover inside the frame",
+  "bookFoundFromBarcode": "Book found via barcode",
+  "addToLibrary": "Add to Library"
 }

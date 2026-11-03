@@ -225,5 +225,14 @@
   "shareImage": "Görseli Paylaş",
   "shareText": "Metin Paylaş",
   "copyText": "Metni Kopyala",
-  "exporting": "Dışa Aktarılıyor..."
+  "exporting": "Dışa Aktarılıyor...",
+  "scanBarcode": "Barkod / ISBN Tara",
+  "barcodeMode": "BARKOD (ISBN)",
+  "spineMode": "RAF SIRTI",
+  "isbnNotFound": "ISBN ile eşleşen kitap bulunamadı.",
+  "searchingIsbn": "ISBN sorgulanıyor...",
+  "invalidIsbn": "Geçersiz ISBN numarası.",
+  "barcodeScanHint": "Arka kapaktaki ISBN barkodunu çerçeveye ortalayın",
+  "bookFoundFromBarcode": "Barkod ile kitap bulundu",
+  "addToLibrary": "Kütüphaneye Ekle"
 }

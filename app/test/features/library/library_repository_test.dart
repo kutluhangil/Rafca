@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:rafca/core/database/app_database.dart';
 import 'package:rafca/core/database/tables.dart';
 import 'package:rafca/features/library/data/library_repository.dart';
+import 'package:rafca/features/review/models/review_models.dart';
 
 void main() {
   group('LibraryRepository', () {
@@ -221,6 +222,32 @@ void main() {
       // Verify book unlinked
       b2 = await repo.watchBook('ub_2').first;
       expect(b2!.shelfId, isNull);
+    });
+
+    test('addBook inserts candidate and user book into local database and enqueues sync', () async {
+      const candidate = ReviewCandidateBook(
+        id: 999,
+        title: 'Saatleri Ayarlama Enstitüsü',
+        author: 'Ahmet Hamdi Tanpınar',
+        publisher: 'Dergâh Yayınları',
+        publishYear: 1961,
+      );
+
+      final userBookId = await repo.addBook(candidateBook: candidate);
+      expect(userBookId, isNotEmpty);
+
+      final book = await repo.watchBook(userBookId).first;
+      expect(book, isNotNull);
+      expect(book!.title, equals('Saatleri Ayarlama Enstitüsü'));
+      expect(book.author, equals('Ahmet Hamdi Tanpınar'));
+      expect(book.publisher, equals('Dergâh Yayınları'));
+      expect(book.publishYear, equals(1961));
+
+      final queue = await db.syncQueueDao.pending();
+      expect(
+        queue.any((q) => q.rowId == userBookId && q.operation == SyncOperation.upsert),
+        isTrue,
+      );
     });
   });
 }

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/database/tables.dart';
+import '../../review/models/review_models.dart';
 import '../models/library_models.dart';
 
 class LibraryRepository {
@@ -296,6 +297,58 @@ class LibraryRepository {
         operation: SyncOperation.upsert,
       );
     });
+  }
+
+  /// Adds a single matched or manual book directly to the user's library and enqueues sync.
+  Future<String> addBook({
+    ReviewCandidateBook? candidateBook,
+    String? manualTitle,
+    String? manualAuthor,
+    String? spineColor,
+  }) async {
+    final userBookId = 'book_${DateTime.now().millisecondsSinceEpoch}';
+    final now = DateTime.now();
+
+    await _db.transaction(() async {
+      int? catalogBookId;
+      if (candidateBook != null) {
+        catalogBookId = candidateBook.id;
+        await _db.into(_db.catalogBooks).insert(
+              CatalogBooksCompanion(
+                id: Value(candidateBook.id),
+                title: Value(candidateBook.title),
+                authors: Value([candidateBook.author]),
+                publisher: Value(candidateBook.publisher),
+                publishYear: Value(candidateBook.publishYear),
+                coverUrl: Value(candidateBook.coverUrl),
+              ),
+              mode: InsertMode.insertOrReplace,
+            );
+      }
+
+      await _db.into(_db.userBooks).insert(
+            UserBooksCompanion(
+              id: Value(userBookId),
+              bookId: Value(catalogBookId),
+              manualTitle: Value(manualTitle),
+              manualAuthor: Value(manualAuthor),
+              status: const Value(ReadingStatus.unread),
+              confidence: const Value(MatchConfidence.matched),
+              spineColor: Value(spineColor ?? '#C9963F'),
+              addedAt: Value(now),
+              pendingSync: const Value(true),
+            ),
+            mode: InsertMode.insertOrReplace,
+          );
+
+      await _db.syncQueueDao.enqueue(
+        entity: SyncEntity.userBook,
+        rowId: userBookId,
+        operation: SyncOperation.upsert,
+      );
+    });
+
+    return userBookId;
   }
 
   /// Deletes a book from the user's library and enqueues sync delete.

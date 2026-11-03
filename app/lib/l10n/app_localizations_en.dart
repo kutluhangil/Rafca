@@ -539,4 +539,32 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get exporting => 'Exporting...';
+
+  @override
+  String get scanBarcode => 'Scan Barcode / ISBN';
+
+  @override
+  String get barcodeMode => 'BARCODE (ISBN)';
+
+  @override
+  String get spineMode => 'SHELF SPINE';
+
+  @override
+  String get isbnNotFound => 'No book found for this ISBN.';
+
+  @override
+  String get searchingIsbn => 'Looking up ISBN...';
+
+  @override
+  String get invalidIsbn => 'Invalid ISBN number.';
+
+  @override
+  String get barcodeScanHint =>
+      'Center the ISBN barcode on the back cover inside the frame';
+
+  @override
+  String get bookFoundFromBarcode => 'Book found via barcode';
+
+  @override
+  String get addToLibrary => 'Add to Library';
 }
