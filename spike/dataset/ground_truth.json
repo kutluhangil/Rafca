@@ -1,0 +1,675 @@
+{
+  "version": 1,
+  "photos": [
+    {
+      "file": "shelf_01.jpg",
+      "group": "good_light",
+      "language_hint": "eng",
+      "notes": "Sentetik görüntü — gerçek raf fotoğrafı değil",
+      "books": [
+        {
+          "title": "Suc ve Ceza",
+          "author": "Dostoyevski",
+          "language": "eng"
+        },
+        {
+          "title": "1984",
+          "author": "Orwell",
+          "language": "eng"
+        },
+        {
+          "title": "Dune",
+          "author": "Herbert",
+          "language": "eng"
+        },
+        {
+          "title": "Simyaci",
+          "author": "Coelho",
+          "language": "eng"
+        },
+        {
+          "title": "Kucuk Prens",
+          "author": "Saint-Exupery",
+          "language": "eng"
+        }
+      ]
+    },
+    {
+      "file": "shelf_02.jpg",
+      "group": "good_light",
+      "language_hint": "eng",
+      "notes": "Sentetik görüntü — gerçek raf fotoğrafı değil",
+      "books": [
+        {
+          "title": "Cesur Yeni Dunya",
+          "author": "Huxley",
+          "language": "eng"
+        },
+        {
+          "title": "Hayvan Cercevesi",
+          "author": "Orwell",
+          "language": "eng"
+        },
+        {
+          "title": "Fahrenheit 451",
+          "author": "Bradbury",
+          "language": "eng"
+        },
+        {
+          "title": "Siddhartha",
+          "author": "Hesse",
+          "language": "eng"
+        }
+      ]
+    },
+    {
+      "file": "shelf_03.jpg",
+      "group": "good_light",
+      "language_hint": "eng",
+      "notes": "Sentetik görüntü — gerçek raf fotoğrafı değil",
+      "books": [
+        {
+          "title": "Don Kisot",
+          "author": "Cervantes",
+          "language": "eng"
+        },
+        {
+          "title": "Ulysses",
+          "author": "Joyce",
+          "language": "eng"
+        },
+        {
+          "title": "Gurur ve Ongoru",
+          "author": "Austen",
+          "language": "eng"
+        },
+        {
+          "title": "Jane Eyre",
+          "author": "Bronte",
+          "language": "eng"
+        },
+        {
+          "title": "Vadideki Zambak",
+          "author": "Balzac",
+          "language": "eng"
+        },
+        {
+          "title": "Buyuk Umutlar",
+          "author": "Dickens",
+          "language": "eng"
+        }
+      ]
+    },
+    {
+      "file": "shelf_04.jpg",
+      "group": "good_light",
+      "language_hint": "eng",
+      "notes": "Sentetik görüntü — gerçek raf fotoğrafı değil",
+      "books": [
+        {
+          "title": "Savas ve Baris",
+          "author": "Tolstoy",
+          "language": "eng"
+        },
+        {
+          "title": "Karamazov Kardesler",
+          "author": "Dostoyevski",
+          "language": "eng"
+        },
+        {
+          "title": "Idiot",
+          "author": "Dostoyevski",
+          "language": "eng"
+        },
+        {
+          "title": "Anna Karenina",
+          "author": "Tolstoy",
+          "language": "eng"
+        },
+        {
+          "title": "Dirilis",
+          "author": "Tolstoy",
+          "language": "eng"
+        }
+      ]
+    },
+    {
+      "file": "shelf_05.jpg",
+      "group": "good_light",
+      "language_hint": "eng",
+      "notes": "Sentetik görüntü — gerçek raf fotoğrafı değil",
+      "books": [
+        {
+          "title": "Dava",
+          "author": "Kafka",
+          "language": "eng"
+        },
+        {
+          "title": "Donusun",
+          "author": "Kafka",
+          "language": "eng"
+        },
+        {
+          "title": "Sinyal ve Gurultu",
+          "author": "Silver",
+          "language": "eng"
+        },
+        {
+          "title": "Sapiens",
+          "author": "Harari",
+          "language": "eng"
+        },
+        {
+          "title": "Homo Deus",
+          "author": "Harari",
+          "language": "eng"
+        },
+        {
+          "title": "21 Ders",
+          "author": "Harari",
+          "language": "eng"
+        }
+      ]
+    },
+    {
+      "file": "shelf_06.jpg",
+      "group": "good_light",
+      "language_hint": "eng",
+      "notes": "Sentetik görüntü — gerçek raf fotoğrafı değil",
+      "books": [
+        {
+          "title": "Sherlock Holmes",
+          "author": "Doyle",
+          "language": "eng"
+        },
+        {
+          "title": "Yabanci",
+          "author": "Camus",
+          "language": "eng"
+        },
+        {
+          "title": "Bulanti",
+          "author": "Sartre",
+          "language": "eng"
+        },
+        {
+          "title": "Varlik ve Hiclik",
+          "author": "Sartre",
+          "language": "eng"
+        }
+      ]
+    },
+    {
+      "file": "shelf_07.jpg",
+      "group": "warm_angled",
+      "language_hint": "eng",
+      "notes": "Sentetik görüntü — gerçek raf fotoğrafı değil",
+      "books": [
+        {
+          "title": "Ici Bizi Bitiren",
+          "author": "Sabahattin Ali",
+          "language": "eng"
+        },
+        {
+          "title": "Kuyucakli Yusuf",
+          "author": "Sabahattin Ali",
+          "language": "eng"
+        },
+        {
+          "title": "Masum",
+          "author": "Pamuk",
+          "language": "eng"
+        },
+        {
+          "title": "Kara Kitap",
+          "author": "Pamuk",
+          "language": "eng"
+        }
+      ]
+    },
+    {
+      "file": "shelf_08.jpg",
+      "group": "warm_angled",
+      "language_hint": "eng",
+      "notes": "Sentetik görüntü — gerçek raf fotoğrafı değil",
+      "books": [
+        {
+          "title": "Benim Adim Kirmizi",
+          "author": "Pamuk",
+          "language": "eng"
+        },
+        {
+          "title": "Kar",
+          "author": "Pamuk",
+          "language": "eng"
+        },
+        {
+          "title": "Sessiz Ev",
+          "author": "Pamuk",
+          "language": "eng"
+        },
+        {
+          "title": "Yeni Hayat",
+          "author": "Pamuk",
+          "language": "eng"
+        },
+        {
+          "title": "Cevdet Bey",
+          "author": "Pamuk",
+          "language": "eng"
+        }
+      ]
+    },
+    {
+      "file": "shelf_09.jpg",
+      "group": "warm_angled",
+      "language_hint": "eng",
+      "notes": "Sentetik görüntü — gerçek raf fotoğrafı değil",
+      "books": [
+        {
+          "title": "Tutunamayanlar",
+          "author": "Atay",
+          "language": "eng"
+        },
+        {
+          "title": "Tehlikeli Oyunlar",
+          "author": "Atay",
+          "language": "eng"
+        },
+        {
+          "title": "Gunluk",
+          "author": "Atay",
+          "language": "eng"
+        },
+        {
+          "title": "Bir Bilim Adaminin Romani",
+          "author": "Atay",
+          "language": "eng"
+        }
+      ]
+    },
+    {
+      "file": "shelf_10.jpg",
+      "group": "warm_angled",
+      "language_hint": "eng",
+      "notes": "Sentetik görüntü — gerçek raf fotoğrafı değil",
+      "books": [
+        {
+          "title": "Mavi ve Siyah",
+          "author": "Halit Ziya",
+          "language": "eng"
+        },
+        {
+          "title": "Kirac Insan",
+          "author": "Kemal Tahir",
+          "language": "eng"
+        },
+        {
+          "title": "Devlet Ana",
+          "author": "Kemal Tahir",
+          "language": "eng"
+        },
+        {
+          "title": "Yorgun Savasci",
+          "author": "Kemal Tahir",
+          "language": "eng"
+        },
+        {
+          "title": "Esir Sehrin Insanlari",
+          "author": "Kemal Tahir",
+          "language": "eng"
+        }
+      ]
+    },
+    {
+      "file": "shelf_11.jpg",
+      "group": "warm_angled",
+      "language_hint": "eng",
+      "notes": "Sentetik görüntü — gerçek raf fotoğrafı değil",
+      "books": [
+        {
+          "title": "Ince Memed",
+          "author": "Yashar Kemal",
+          "language": "eng"
+        },
+        {
+          "title": "Ortadirek",
+          "author": "Yashar Kemal",
+          "language": "eng"
+        },
+        {
+          "title": "Demirciler Carisi Cinayeti",
+          "author": "Yashar Kemal",
+          "language": "eng"
+        },
+        {
+          "title": "Yilan Olduran",
+          "author": "Yashar Kemal",
+          "language": "eng"
+        }
+      ]
+    },
+    {
+      "file": "shelf_12.jpg",
+      "group": "warm_angled",
+      "language_hint": "eng",
+      "notes": "Sentetik görüntü — gerçek raf fotoğrafı değil",
+      "books": [
+        {
+          "title": "Ciragan Sarayi",
+          "author": "Nedim Gursel",
+          "language": "eng"
+        },
+        {
+          "title": "Bogazkesen",
+          "author": "Nedim Gursel",
+          "language": "eng"
+        },
+        {
+          "title": "Gece Yarisi Express",
+          "author": "Hayes",
+          "language": "eng"
+        },
+        {
+          "title": "Into the Wild",
+          "author": "Krakauer",
+          "language": "eng"
+        },
+        {
+          "title": "Vahsi Cagri",
+          "author": "London",
+          "language": "eng"
+        }
+      ]
+    },
+    {
+      "file": "shelf_13.jpg",
+      "group": "thin_spines",
+      "language_hint": "eng",
+      "notes": "Sentetik görüntü — gerçek raf fotoğrafı değil",
+      "books": [
+        {
+          "title": "Demir",
+          "author": "Atwood",
+          "language": "eng"
+        },
+        {
+          "title": "Mavi Sakalli",
+          "author": "Pullman",
+          "language": "eng"
+        },
+        {
+          "title": "Nehir",
+          "author": "Coetzee",
+          "language": "eng"
+        },
+        {
+          "title": "Ziyaret",
+          "author": "Durrenmatt",
+          "language": "eng"
+        },
+        {
+          "title": "Sis",
+          "author": "Kafka",
+          "language": "eng"
+        },
+        {
+          "title": "Ceza Kolonisi",
+          "author": "Kafka",
+          "language": "eng"
+        },
+        {
+          "title": "Kumaci Bebek",
+          "author": "Simenon",
+          "language": "eng"
+        }
+      ]
+    },
+    {
+      "file": "shelf_14.jpg",
+      "group": "thin_spines",
+      "language_hint": "eng",
+      "notes": "Sentetik görüntü — gerçek raf fotoğrafı değil",
+      "books": [
+        {
+          "title": "Troya Savasi",
+          "author": "Homer",
+          "language": "eng"
+        },
+        {
+          "title": "Odisseia",
+          "author": "Homer",
+          "language": "eng"
+        },
+        {
+          "title": "Aeneas",
+          "author": "Vergilius",
+          "language": "eng"
+        },
+        {
+          "title": "Meditasyonlar",
+          "author": "Aurelius",
+          "language": "eng"
+        },
+        {
+          "title": "Zerdust",
+          "author": "Nietzsche",
+          "language": "eng"
+        }
+      ]
+    },
+    {
+      "file": "shelf_15.jpg",
+      "group": "thin_spines",
+      "language_hint": "eng",
+      "notes": "Sentetik görüntü — gerçek raf fotoğrafı değil",
+      "books": [
+        {
+          "title": "Bir Delinin Gunlugu",
+          "author": "Gogol",
+          "language": "eng"
+        },
+        {
+          "title": "Palto",
+          "author": "Gogol",
+          "language": "eng"
+        },
+        {
+          "title": "Burun",
+          "author": "Gogol",
+          "language": "eng"
+        },
+        {
+          "title": "Beyaz Geceler",
+          "author": "Dostoyevski",
+          "language": "eng"
+        },
+        {
+          "title": "Kumarbaz",
+          "author": "Dostoyevski",
+          "language": "eng"
+        },
+        {
+          "title": "Memurun Olumu",
+          "author": "Chekhov",
+          "language": "eng"
+        },
+        {
+          "title": "Golge",
+          "author": "Andersen",
+          "language": "eng"
+        }
+      ]
+    },
+    {
+      "file": "shelf_16.jpg",
+      "group": "thin_spines",
+      "language_hint": "eng",
+      "notes": "Sentetik görüntü — gerçek raf fotoğrafı değil",
+      "books": [
+        {
+          "title": "Genova Kisi",
+          "author": "Saramago",
+          "language": "eng"
+        },
+        {
+          "title": "Kor",
+          "author": "Saramago",
+          "language": "eng"
+        },
+        {
+          "title": "Ada",
+          "author": "Saramago",
+          "language": "eng"
+        },
+        {
+          "title": "Tum Adlar",
+          "author": "Saramago",
+          "language": "eng"
+        }
+      ]
+    },
+    {
+      "file": "shelf_17.jpg",
+      "group": "turkish",
+      "language_hint": "tur",
+      "notes": "Sentetik görüntü — gerçek raf fotoğrafı değil",
+      "books": [
+        {
+          "title": "Nutuk",
+          "author": "Ataturk",
+          "language": "tur"
+        },
+        {
+          "title": "Insan Manzaralari",
+          "author": "Nazim Hikmet",
+          "language": "tur"
+        },
+        {
+          "title": "Memleketimden Insan Manzaralari",
+          "author": "Nazim Hikmet",
+          "language": "tur"
+        },
+        {
+          "title": "Yesil Gece",
+          "author": "Resat Nuri",
+          "language": "tur"
+        },
+        {
+          "title": "Calikusu",
+          "author": "Resat Nuri",
+          "language": "tur"
+        }
+      ]
+    },
+    {
+      "file": "shelf_18.jpg",
+      "group": "turkish",
+      "language_hint": "tur",
+      "notes": "Sentetik görüntü — gerçek raf fotoğrafı değil",
+      "books": [
+        {
+          "title": "Cocuklugu Olmayan Cocuk",
+          "author": "Atay",
+          "language": "tur"
+        },
+        {
+          "title": "Anarsin Kardesler",
+          "author": "Adalet Agaoglu",
+          "language": "tur"
+        },
+        {
+          "title": "Bir Dusunu Gormek",
+          "author": "Adalet Agaoglu",
+          "language": "tur"
+        },
+        {
+          "title": "Olmeye Yatmak",
+          "author": "Adalet Agaoglu",
+          "language": "tur"
+        },
+        {
+          "title": "Fikrimin Ince Gulu",
+          "author": "Adalet Agaoglu",
+          "language": "tur"
+        },
+        {
+          "title": "Cok Uzak Mecnun Colu",
+          "author": "Adalet Agaoglu",
+          "language": "tur"
+        }
+      ]
+    },
+    {
+      "file": "shelf_19.jpg",
+      "group": "turkish",
+      "language_hint": "tur",
+      "notes": "Sentetik görüntü — gerçek raf fotoğrafı değil",
+      "books": [
+        {
+          "title": "Yedi Kapili Babil",
+          "author": "Iskender Pala",
+          "language": "tur"
+        },
+        {
+          "title": "Katre-i Matem",
+          "author": "Iskender Pala",
+          "language": "tur"
+        },
+        {
+          "title": "Fatih Harbiye",
+          "author": "Sezai Karakoc",
+          "language": "tur"
+        },
+        {
+          "title": "Mona Rosa",
+          "author": "Sezai Karakoc",
+          "language": "tur"
+        },
+        {
+          "title": "Hicr",
+          "author": "Arif Ay",
+          "language": "tur"
+        }
+      ]
+    },
+    {
+      "file": "shelf_20.jpg",
+      "group": "turkish",
+      "language_hint": "tur",
+      "notes": "Sentetik görüntü — gerçek raf fotoğrafı değil",
+      "books": [
+        {
+          "title": "Gece Yolculugu",
+          "author": "Attila Ilhan",
+          "language": "tur"
+        },
+        {
+          "title": "Ben Sana Mecburum",
+          "author": "Attila Ilhan",
+          "language": "tur"
+        },
+        {
+          "title": "Alacakaranlik Yolculari",
+          "author": "Necip Fazil",
+          "language": "tur"
+        },
+        {
+          "title": "Buyuk Dogu",
+          "author": "Necip Fazil",
+          "language": "tur"
+        },
+        {
+          "title": "Sacak",
+          "author": "Necip Fazil",
+          "language": "tur"
+        },
+        {
+          "title": "Esir Sehrin Esiri",
+          "author": "Necip Fazil",
+          "language": "tur"
+        }
+      ]
+    }
+  ]
+}

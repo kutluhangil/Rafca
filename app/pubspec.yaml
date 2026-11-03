@@ -38,6 +38,16 @@ dependencies:
   # packages/cupertino_icons/CupertinoIcons could not be found.
   cupertino_icons: ^1.0.8
 
+  # Faz 6 — Capture
+  camera: ^0.11.0
+  google_mlkit_text_recognition: ^0.14.0
+  sensors_plus: ^6.1.1
+  image: ^4.3.0
+  permission_handler: ^11.3.1
+  palette_generator: ^0.3.3+4
+  spine_clustering:
+    path: ../packages/spine_clustering
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

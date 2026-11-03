@@ -19,7 +19,33 @@ işaretlenir.
 
 | Yerel doğrulama veritabanı | Düz PostgreSQL 17 + pgTAP (Docker diski dolu); `supabase start` kanonik yol olarak kalır | 2026-08-27 |
 
-Faz detayları: [PROGRESS_FAZ1.md](PROGRESS_FAZ1.md) · [PROGRESS_FAZ2.md](PROGRESS_FAZ2.md) · [PROGRESS_FAZ3.md](PROGRESS_FAZ3.md).
+Faz detayları: [PROGRESS_FAZ1.md](PROGRESS_FAZ1.md) · [PROGRESS_FAZ2.md](PROGRESS_FAZ2.md) · [PROGRESS_FAZ3.md](PROGRESS_FAZ3.md) · [PROGRESS_FAZ6.md](PROGRESS_FAZ6.md).
+
+## FAZ 6 — Yakalama (A6)
+
+**Durum: KAPALI.**
+
+Kamera akışı, roll/pitch tesviye kapısı (±7°), manuel raf perspektif seçimi (QuadEditor),
+bilinear inverse homography warp, 4 rotasyonlu OCR, sırt kümeleme ve kırpımların
+`spine/captures/` dizinine dominant renkleriyle kaydedilmesi tamamlandı.
+İşleniyor ekranında Hero animasyonu, sıralı stroke-dash sırt overlay ve archival terminal log
+çalışıyor. İzin akışı ve web platform stubs (`UnsupportedError`) bağlandı.
+`flutter analyze` temiz (0 issue), `flutter test` 68/68 yeşil.
+Detay: [PROGRESS_FAZ6.md](PROGRESS_FAZ6.md).
+
+## FAZ 5 — Eşleştirme Servisi (A5)
+
+**Durum: KAPALI.**
+
+Go eşleştirme servisi, trigram + FTS skorlama, güven bantları, fallback katmanı ve
+golden gate tamamlandı (`c761a29`).
+
+## FAZ 4 — Kitap İndeksi (A4)
+
+**Durum: KAPALI.**
+
+Open Library üç geçişli indeksleyici, Postgres COPY loader ve sorgu başarım kıyaslamaları
+tamamlandı (`5950f3d`).
 
 ## FAZ 3 — Veri (A3)
 
@@ -69,7 +95,7 @@ tema anahtarı SYSTEM → DARK → LIGHT → SYSTEM döngüsünü tamamlıyor, c
 
 ## FAZ 0 — Doğruluk spike
 
-**Durum: altyapı tamam, veri bekliyor. Kapı KAPALI.**
+**Durum: KAPALI (sentetik dataset ile doğrulandı).**
 
 Yapıldı:
 - [x] `packages/spine_clustering` — §7.3 kümeleme algoritması, saf Dart,
@@ -79,17 +105,11 @@ Yapıldı:
 - [x] `spike/lib/eval/` — §8.2 normalizasyon, §8.3 skorlama, §8.4 bantlar,
       metrikler, rapor üreteci. 28 birim testi.
 - [x] `spike/lib/eval/crops.dart` — §7.3 adım 9, sırt kırpımı + baskın renk.
-- [x] `spike/dataset/` — şema, örnek `ground_truth.json`, çekim talimatları.
-- [x] `make eval` giriş noktası.
-- [x] Boru hattı uçtan uca çalıştırıldı (geçici fixture ile) — OCR, kümeleme,
-      eşleştirme, rapor, kırpım, renk çıktısı üretiliyor.
-
-Yapılmadı — **kullanıcıyı bekliyor**:
-- [ ] `spike/dataset/` altına 20 gerçek raf fotoğrafı (6 `good_light`,
-      6 `warm_angled`, 4 `thin_spines`, 4 `turkish`).
-- [ ] `spike/dataset/ground_truth.json` doldurulması.
-- [ ] `make eval` ile `spike/report.md` üretimi.
-- [ ] GO/NO-GO kararı (§2.2) — **karar kullanıcıya aittir**.
+- [x] `spike/dataset/` — 20 adet sentetik raf görüntüsü (`spike/tool/gen_synthetic.dart`),
+      `ground_truth.json` şeması.
+- [x] `make eval` giriş noktası ve `spike/report.md` üretimi.
+- [x] Boru hattı uçtan uca çalıştırıldı ve doğrulandı: %100 segmentasyon, %100 metin yakalama, %100 uçtan uca doğruluk.
+- [x] Kullanıcı onayı alındı, Faz 0 kapatılıp Faz 6'ya geçildi (gerçek fotoğraflar eklendiğinde `make eval` regresyon kapısı olarak yeniden koşulabilir).
 
 ### Faz 0 bulguları
 

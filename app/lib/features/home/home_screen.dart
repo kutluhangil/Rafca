@@ -65,14 +65,32 @@ class HomeScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: SpineSpacing.lg),
-          PrimaryButton(
-            label: 'Design gallery',
-            variant: SpineButtonVariant.secondary,
-            expand: false,
-            onPressed: () => context.push(Routes.gallery),
+          Row(
+            children: [
+              PrimaryButton(
+                label: 'Raf Tara',
+                variant: SpineButtonVariant.primary,
+                expand: false,
+                onPressed: () => context.push(Routes.capture),
+              ),
+              const SizedBox(width: SpineSpacing.md),
+              PrimaryButton(
+                label: 'Design gallery',
+                variant: SpineButtonVariant.secondary,
+                expand: false,
+                onPressed: () => context.push(Routes.gallery),
+              ),
+            ],
           ),
           const SizedBox(height: SpineSpacing.xxl),
         ],
+      ),
+      floatingAction: FloatingActionButton(
+        onPressed: () => context.push(Routes.capture),
+        backgroundColor: semantic.brass,
+        foregroundColor: semantic.onBrass,
+        tooltip: 'Raf Tara',
+        child: const Icon(Icons.camera_alt_outlined),
       ),
     );
   }

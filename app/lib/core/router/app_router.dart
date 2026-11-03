@@ -3,6 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../design/gallery.dart';
+import '../../features/capture/screens/camera_screen.dart';
+import '../../features/capture/screens/crop_screen.dart';
+import '../../features/capture/screens/processing_screen.dart';
 import '../../features/home/home_screen.dart';
 
 part 'app_router.g.dart';
@@ -18,6 +21,11 @@ abstract final class Routes {
   /// stays reachable so that a component regression is one tap away rather
   /// than a rebuild away.
   static const gallery = '/gallery';
+
+  /// Faz 6 — Capture routes
+  static const capture = '/capture';
+  static const captureCrop = '/capture/crop';
+  static const captureProcessing = '/capture/processing';
 }
 
 @Riverpod(keepAlive: true)
@@ -34,6 +42,27 @@ GoRouter appRouter(Ref ref) {
         path: Routes.gallery,
         name: 'gallery',
         builder: (context, state) => const DesignGalleryScreen(),
+      ),
+      GoRoute(
+        path: Routes.capture,
+        name: 'capture',
+        builder: (context, state) => const CameraScreen(),
+      ),
+      GoRoute(
+        path: Routes.captureCrop,
+        name: 'captureCrop',
+        builder: (context, state) {
+          final imagePath = state.uri.queryParameters['imagePath'] ?? '';
+          return CropScreen(imagePath: imagePath);
+        },
+      ),
+      GoRoute(
+        path: Routes.captureProcessing,
+        name: 'captureProcessing',
+        builder: (context, state) {
+          final imagePath = state.uri.queryParameters['imagePath'] ?? '';
+          return ProcessingScreen(imagePath: imagePath);
+        },
       ),
     ],
   );
