@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rafça — Fiziksel Kütüphanenizi Tek Fotoğrafla Dijitalleştirin</title>
+  <meta name="description" content="Nocturnal Archivist estetiğinde, yerel öncelikli kitaplık tarama ve arşivleme mobil uygulaması.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #12100E;
+      --bg-card: #1C1916;
+      --border-brass: #C9963F;
+      --border-subtle: rgba(201, 150, 63, 0.2);
+      --text-main: #ECE6DE;
+      --text-muted: #A39E96;
+      --accent-brass: #E5C178;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      padding: 60px 20px;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .hero {
+      text-align: center;
+      padding: 40px 0;
+    }
+    .badge {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--border-brass);
+      padding: 6px 14px;
+      border: 1px solid var(--border-brass);
+      border-radius: 4px;
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-family: 'Literata', serif;
+      font-size: 44px;
+      font-weight: 600;
+      color: var(--accent-brass);
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 36px;
+    }
+    .cta-group {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 60px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background-color: var(--border-brass);
+      color: #12100E;
+      font-weight: 600;
+      border: 1px solid var(--border-brass);
+    }
+    .btn-primary:hover {
+      background-color: var(--accent-brass);
+    }
+    .btn-secondary {
+      background: none;
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+    }
+    .btn-secondary:hover {
+      border-color: var(--border-brass);
+      color: var(--accent-brass);
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 60px;
+    }
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 24px;
+    }
+    .feature-card h3 {
+      font-family: 'Literata', serif;
+      font-size: 18px;
+      color: var(--accent-brass);
+      margin-bottom: 8px;
+    }
+    .feature-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    footer {
+      text-align: center;
+      padding-top: 32px;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    footer a {
+      color: var(--border-brass);
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div class="badge">Nocturnal Archivist &bull; v1.0.0</div>
+      <h1>Rafça</h1>
+      <p class="subtitle">Fiziksel kitaplığınızı tek bir raf fotoğrafıyla dijitalleştirin. Gece yarısı kütüphanesi zarafetinde, %100 yerel öncelikli arşivleme.</p>
+      
+      <div class="cta-group">
+        <a href="#features" class="btn btn-primary">Özellikleri Keşfet</a>
+        <a href="privacy/" class="btn btn-secondary">Gizlilik Politikası</a>
+      </div>
+    </div>
+
+    <div class="features-grid" id="features">
+      <div class="feature-card">
+        <h3>Milimetrik Tesviye & Tarama</h3>
+        <p>Sensör destekli roll/pitch tesviyesi ve kılavuz çizgileriyle raftaki kitap sırtlarını tek deklanşörle kusursuz yakalayın.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Perspektif Düzeltme</h3>
+        <p>4 noktalı homografi motoru ile açı eğriliğini milimetrik olarak düzleştirin, sırtları tek tek ayrıştırın.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Proof of Capture</h3>
+        <p>Her kitabın rafınızdaki gerçek fiziksel sırt kesiti ve dominant renk paleti dijital kimliğine kalıcı olarak işlenir.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Sıfır Gözetim, Tam Yerel</h3>
+        <p>Ham görselleriniz cihaz dışına asla çıkmaz. Kütüphaneniz SQLite Drift ile tamamen cebinizde saklanır.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Sanatsal Paylaşım Kartları</h3>
+        <p>Nocturnal Archivist estetiğinde, Literata tipografisi ve mini raf şeridi ile koleksiyonunuzu hikayelerde paylaşın.</p>
+      </div>
+      <div class="feature-card">
+        <h3>RFC 4180 CSV & JSON</h3>
+        <p>Verinizi dilediğiniz zaman tek tıkla standart formatlarda dışa aktarın veya cihazdan tamamen silin.</p>
+      </div>
+    </div>
+
+    <footer>
+      <p>Rafça &copy; 2026. Kutluhan Gül.</p>
+      <p>
+        <a href="privacy/">Gizlilik Politikası / Privacy</a> &bull;
+        <a href="mailto:support@rafca.app">support@rafca.app</a> &bull;
+        <a href="https://github.com/kutluhangil/Rafca" target="_blank" rel="noopener">GitHub</a>
+      </p>
+    </footer>
+  </div>
+</body>
+</html>

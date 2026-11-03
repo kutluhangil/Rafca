@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 500" width="1024" height="500">
+  <defs>
+    <radialGradient id="fgBg" cx="40%" cy="50%" r="75%">
+      <stop offset="0%" stop-color="#241E18"/>
+      <stop offset="60%" stop-color="#14110E"/>
+      <stop offset="100%" stop-color="#080706"/>
+    </radialGradient>
+    <linearGradient id="brassG" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F3DCA2"/>
+      <stop offset="50%" stop-color="#C9963F"/>
+      <stop offset="100%" stop-color="#8F6218"/>
+    </linearGradient>
+    <filter id="fGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+      <feComposite in="SourceGraphic" in2="b" operator="over"/>
+    </filter>
+  </defs>
+
+  <rect width="1024" height="500" fill="url(#fgBg)"/>
+
+  <!-- Archival Gilded Borders -->
+  <rect x="24" y="24" width="976" height="452" rx="16" fill="none" stroke="#C9963F" stroke-width="1.5" stroke-opacity="0.3"/>
+  <rect x="36" y="36" width="952" height="428" rx="12" fill="none" stroke="#C9963F" stroke-width="1" stroke-opacity="0.15" stroke-dasharray="6,4"/>
+
+  <!-- Left: Logo &amp; Branding -->
+  <g transform="translate(80, 140)">
+    <!-- Star icon -->
+    <path d="M 0 -14 L 3 -3 L 14 0 L 3 3 L 0 14 L -3 3 L -14 0 L -3 -3 Z" fill="#F3DCA2"/>
+    <text x="30" y="6" font-family="IBM Plex Mono" font-size="16" letter-spacing="3" fill="#C9963F">NOCTURNAL ARCHIVIST • YEREL ÖNCELİKLİ</text>
+    <text x="0" y="80" font-family="Literata" font-size="72" font-weight="600" fill="#F3DCA2" filter="url(#fGlow)">Rafça</text>
+    <text x="0" y="140" font-family="Inter" font-size="22" fill="#ECE6DE">Fiziksel kitaplığınızı tek fotoğrafla dijitalleştirin.</text>
+    <text x="0" y="185" font-family="IBM Plex Mono" font-size="16" fill="#A39E96">OFFLINE-FIRST &#8226; ML KIT OCR &#8226; ZERO ADS &#8226; 100% PRIVATE</text>
+  </g>
+
+  <!-- Right: Archival Bookshelf Motif -->
+  <g transform="translate(720, 110)">
+    <rect x="0" y="60" width="34" height="220" rx="4" fill="#6B1D28" stroke="#8C2D19" stroke-width="1.5"/>
+    <rect x="42" y="20" width="42" height="260" rx="4" fill="#24211D" stroke="#C9963F" stroke-width="2"/>
+    <line x1="63" y1="40" x2="63" y2="260" stroke="#F3DCA2" stroke-width="2"/>
+    <rect x="92" y="80" width="36" height="200" rx="4" fill="#1C3829" stroke="#2D5A3C" stroke-width="1.5"/>
+    <rect x="136" y="40" width="38" height="240" rx="4" fill="#18233C" stroke="#2A3D66" stroke-width="1.5"/>
+    <g transform="translate(182, 90) rotate(8)">
+      <rect x="0" y="0" width="34" height="190" rx="4" fill="#8C3A27" stroke="#B84E34" stroke-width="1.5"/>
+    </g>
+    <!-- Shelf base -->
+    <rect x="-20" y="280" width="280" height="12" rx="3" fill="url(#brassG)"/>
+  </g>
+</svg>

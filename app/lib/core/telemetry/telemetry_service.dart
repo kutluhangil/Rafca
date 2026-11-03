@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'offline_error_queue.dart';
 
@@ -76,6 +77,17 @@ class AppTelemetryService implements TelemetryService {
         data: data,
       ),
     );
+
+    if (isSentryConfigured && Sentry.isEnabled) {
+      Sentry.addBreadcrumb(
+        Breadcrumb(
+          message: message,
+          category: category,
+          data: data,
+          timestamp: DateTime.now(),
+        ),
+      );
+    }
   }
 
   @override
@@ -104,6 +116,20 @@ class AppTelemetryService implements TelemetryService {
     // For local-first and offline tolerance, always enqueue in the offline queue.
     offlineQueue.enqueue(event);
 
+    if (isSentryConfigured && Sentry.isEnabled) {
+      Sentry.captureException(
+        error,
+        stackTrace: stackTrace,
+        withScope: (scope) {
+          if (reason != null) scope.setTag('reason', reason);
+          scope.setTag('fatal', fatal.toString());
+          if (extras != null && extras.isNotEmpty) {
+            scope.setContexts('extras', extras);
+          }
+        },
+      );
+    }
+
     if (kDebugMode) {
       debugPrint('[Telemetry] Error logged (${fatal ? "FATAL" : "NON-FATAL"}): $error');
       if (reason != null) debugPrint('[Telemetry] Reason: $reason');
@@ -115,8 +141,24 @@ class AppTelemetryService implements TelemetryService {
     final drained = offlineQueue.drain();
     if (drained.isEmpty) return 0;
 
-    // When Sentry or backend endpoint is available, posts all items.
-    // Drained count is returned for monitoring.
+    if (isSentryConfigured && Sentry.isEnabled) {
+      for (final event in drained) {
+        final contexts = Contexts();
+        if (event.extras.isNotEmpty) {
+          contexts['extras'] = event.extras;
+        }
+        await Sentry.captureEvent(
+          SentryEvent(
+            message: SentryMessage(event.message),
+            level: event.fatal ? SentryLevel.fatal : SentryLevel.error,
+            timestamp: event.timestamp,
+            contexts: contexts,
+          ),
+          stackTrace: event.stackTrace,
+        );
+      }
+    }
+
     return drained.length;
   }
 

@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 2400" width="1080" height="2400">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#1E1914"/>
+      <stop offset="50%" stop-color="#14110E"/>
+      <stop offset="100%" stop-color="#0A0807"/>
+    </radialGradient>
+    <linearGradient id="brassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F3DCA2"/>
+      <stop offset="50%" stop-color="#C9963F"/>
+      <stop offset="100%" stop-color="#8F6218"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#221E19"/>
+      <stop offset="100%" stop-color="#161310"/>
+    </linearGradient>
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="dropShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#000000" flood-opacity="0.8"/>
+    </filter>
+    <style>
+      .banner-title { font-family: 'Literata', Georgia, serif; font-size: 52px; font-weight: 600; fill: #F3DCA2; text-anchor: middle; letter-spacing: -0.5px; }
+      .banner-sub { font-family: 'Inter', system-ui, sans-serif; font-size: 28px; font-weight: 400; fill: #A39E96; text-anchor: middle; }
+      .mono-label { font-family: 'IBM Plex Mono', Courier, monospace; font-size: 20px; letter-spacing: 2px; fill: #C9963F; text-transform: uppercase; }
+      .app-title { font-family: 'Literata', Georgia, serif; font-size: 38px; font-weight: 600; fill: #ECE6DE; }
+      .book-title { font-family: 'Literata', Georgia, serif; font-size: 30px; font-weight: 600; fill: #ECE6DE; }
+      .book-author { font-family: 'Inter', system-ui, sans-serif; font-size: 22px; fill: #A39E96; }
+      .badge-text { font-family: 'IBM Plex Mono', Courier, monospace; font-size: 18px; font-weight: 600; }
+    </style>
+  </defs>
+
+  <!-- Deep Obsidian Background -->
+  <rect width="1080" height="2400" fill="url(#bgGlow)"/>
+
+  <g transform="translate(540, 180)">
+    <text y="0" class="banner-title">Instant Spine Segmentation</text>
+    <text y="64" class="banner-sub">High-confidence catalogue matching</text>
+  </g>
+
+  
+  <!-- Device Mockup Container -->
+  <g transform="translate(90, 420)" filter="url(#dropShadow)">
+    <!-- Phone Outer Bezel -->
+    <rect width="900" height="1840" rx="64" fill="#0E0C0A" stroke="#C9963F" stroke-width="3" stroke-opacity="0.4"/>
+    <rect x="8" y="8" width="884" height="1824" rx="56" fill="#15120E"/>
+    
+    <!-- Dynamic Island / Speaker notch -->
+    <rect x="360" y="24" width="180" height="36" rx="18" fill="#000000"/>
+    <circle cx="510" cy="42" r="6" fill="#1C1916"/>
+
+    <!-- Screen Inner Content (Clipped to display) -->
+    <g transform="translate(24, 76)">
+      
+      <text x="30" y="60" class="mono-label">12 OF 14 SPINES MATCHED</text>
+      <text x="30" y="115" class="app-title">Tarama Sonuçları</text>
+
+      <!-- Segmented Spines Visual Ribbon -->
+      <g transform="translate(25, 160)">
+        <rect width="802" height="640" rx="20" fill="#161310" stroke="#C9963F" stroke-width="1.5" stroke-opacity="0.3"/>
+
+        <!-- Detected Spines with Bounding Boxes -->
+        <!-- Spine 1: Matched -->
+        <rect x="40" y="50" width="85" height="520" rx="8" fill="#6B1D28" stroke="#52B788" stroke-width="3"/>
+        <rect x="40" y="50" width="85" height="36" rx="4" fill="#152B1E"/>
+        <text x="82" y="74" font-family="IBM Plex Mono" font-size="16" fill="#52B788" text-anchor="middle">%98</text>
+
+        <!-- Spine 2: Matched -->
+        <rect x="145" y="30" width="95" height="540" rx="8" fill="#24211D" stroke="#52B788" stroke-width="3"/>
+        <rect x="145" y="30" width="95" height="36" rx="4" fill="#152B1E"/>
+        <text x="192" y="54" font-family="IBM Plex Mono" font-size="16" fill="#52B788" text-anchor="middle">%99</text>
+
+        <!-- Spine 3: Needs Review (Amber) -->
+        <rect x="260" y="80" width="80" height="490" rx="8" fill="#5A3A1A" stroke="#E59866" stroke-width="3" stroke-dasharray="6,4"/>
+        <rect x="260" y="80" width="80" height="36" rx="4" fill="#3D2614"/>
+        <text x="300" y="104" font-family="IBM Plex Mono" font-size="16" fill="#F8C471" text-anchor="middle">İNCELE</text>
+
+        <!-- Spine 4: Matched -->
+        <rect x="360" y="40" width="90" height="530" rx="8" fill="#1C3829" stroke="#52B788" stroke-width="3"/>
+        <rect x="360" y="40" width="90" height="36" rx="4" fill="#152B1E"/>
+        <text x="405" y="64" font-family="IBM Plex Mono" font-size="16" fill="#52B788" text-anchor="middle">%96</text>
+
+        <!-- Spine 5: Matched -->
+        <rect x="470" y="60" width="85" height="510" rx="8" fill="#18233C" stroke="#52B788" stroke-width="3"/>
+        <rect x="470" y="60" width="85" height="36" rx="4" fill="#152B1E"/>
+        <text x="512" y="84" font-family="IBM Plex Mono" font-size="16" fill="#52B788" text-anchor="middle">%95</text>
+
+        <!-- Spine 6: Matched -->
+        <rect x="575" y="30" width="90" height="540" rx="8" fill="#8C3A27" stroke="#52B788" stroke-width="3"/>
+        <rect x="575" y="30" width="90" height="36" rx="4" fill="#152B1E"/>
+        <text x="620" y="54" font-family="IBM Plex Mono" font-size="16" fill="#52B788" text-anchor="middle">%94</text>
+      </g>
+
+      <!-- Detection List Item Cards -->
+      <g transform="translate(25, 830)">
+        <!-- List Item 1 -->
+        <rect width="802" height="190" rx="16" fill="url(#cardGrad)" stroke="#C9963F" stroke-width="1" stroke-opacity="0.3"/>
+        <text x="30" y="55" class="book-title">Kürk Mantolu Madonna</text>
+        <text x="30" y="95" class="book-author">Sabahattin Ali &#8226; Yapı Kredi Yayınları</text>
+        <rect x="30" y="125" width="160" height="38" rx="8" fill="#152B1E" stroke="#2D6A4F" stroke-width="1.5"/>
+        <text x="110" y="150" class="badge-text" fill="#52B788" text-anchor="middle">%99 EŞLEŞTİ</text>
+
+        <!-- List Item 2 (Needs review card) -->
+        <g transform="translate(0, 210)">
+          <rect width="802" height="190" rx="16" fill="url(#cardGrad)" stroke="#E59866" stroke-width="1.5"/>
+          <text x="30" y="55" class="book-title">Yabancı (L'Étranger)</text>
+          <text x="30" y="95" class="book-author">Albert Camus &#8226; Can Yayınları (Öneri)</text>
+          <rect x="30" y="125" width="220" height="38" rx="8" fill="#3D2614" stroke="#E59866" stroke-width="1.5"/>
+          <text x="140" y="150" class="badge-text" fill="#F8C471" text-anchor="middle">BASKIYI ONAYLA</text>
+        </g>
+
+        <!-- List Item 3 -->
+        <g transform="translate(0, 420)">
+          <rect width="802" height="190" rx="16" fill="url(#cardGrad)" stroke="#C9963F" stroke-width="1" stroke-opacity="0.3"/>
+          <text x="30" y="55" class="book-title">Tutunamayanlar</text>
+          <text x="30" y="95" class="book-author">Oğuz Atay &#8226; İletişim Yayınları</text>
+          <rect x="30" y="125" width="160" height="38" rx="8" fill="#152B1E" stroke="#2D6A4F" stroke-width="1.5"/>
+          <text x="110" y="150" class="badge-text" fill="#52B788" text-anchor="middle">%97 EŞLEŞTİ</text>
+        </g>
+      </g>
+
+      <!-- Bottom Save Action -->
+      <g transform="translate(25, 1510)">
+        <rect width="802" height="96" rx="24" fill="url(#brassGrad)" filter="url(#softGlow)"/>
+        <text x="401" y="60" font-family="IBM Plex Mono" font-size="24" font-weight="600" fill="#12100E" text-anchor="middle" letter-spacing="1.5">SAVE TO LIBRARY (14 VOLUMES)</text>
+      </g>
+    
+    </g>
+  </g>
+
+</svg>

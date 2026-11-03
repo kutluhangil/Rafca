@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rafça — Gizlilik Politikası / Privacy Policy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #12100E;
+      --bg-card: #1C1916;
+      --border-brass: #C9963F;
+      --border-subtle: rgba(201, 150, 63, 0.2);
+      --text-main: #ECE6DE;
+      --text-muted: #A39E96;
+      --accent-brass: #E5C178;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.65;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .badge {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--border-brass);
+      padding: 4px 12px;
+      border: 1px solid var(--border-brass);
+      border-radius: 4px;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-family: 'Literata', serif;
+      font-size: 36px;
+      font-weight: 600;
+      color: var(--accent-brass);
+      margin-bottom: 8px;
+    }
+    .updated {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .lang-switch {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .lang-btn {
+      background: none;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      transition: all 0.2s ease;
+    }
+    .lang-btn.active, .lang-btn:hover {
+      border-color: var(--border-brass);
+      color: var(--accent-brass);
+      background-color: rgba(201, 150, 63, 0.08);
+    }
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+    h2 {
+      font-family: 'Literata', serif;
+      font-size: 22px;
+      color: var(--accent-brass);
+      margin-bottom: 16px;
+    }
+    h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin: 16px 0 8px;
+    }
+    p {
+      margin-bottom: 14px;
+      color: var(--text-main);
+    }
+    ul {
+      list-style-type: none;
+      margin-bottom: 14px;
+    }
+    li {
+      position: relative;
+      padding-left: 20px;
+      margin-bottom: 10px;
+    }
+    li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--border-brass);
+      font-weight: bold;
+    }
+    code {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 2px 6px;
+      border-radius: 3px;
+      color: var(--accent-brass);
+    }
+    footer {
+      text-align: center;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-subtle);
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    footer a {
+      color: var(--border-brass);
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge">Nocturnal Archivist</div>
+      <h1>Rafça Gizlilik Politikası</h1>
+      <div class="updated">Son Güncelleme / Last Updated: 3 Kasım 2026</div>
+      <div class="lang-switch">
+        <button class="lang-btn active" id="btn-tr" onclick="setLang('tr')">Türkçe</button>
+        <button class="lang-btn" id="btn-en" onclick="setLang('en')">English</button>
+      </div>
+    </header>
+
+    <!-- TR CONTENT -->
+    <main id="content-tr">
+      <div class="section-card">
+        <h2>1. Temel Felsefemiz: Yerel Öncelikli ve Sıfır Gözetim</h2>
+        <p>Rafça, fiziksel kitaplığınızı fotoğraflayarak dijitalleştirmenizi sağlayan bir arşiv aracıdır. Tasarımımızın temeli kullanıcı gizliliğine ve tam veri egemenliğine dayanır:</p>
+        <ul>
+          <li><strong>Fotoğraflar ve Sırt Kırpımları Cihazınızda Kalır:</strong> Çektiğiniz ham raf fotoğrafları ve ayrıştırılan kitap sırtı kırpımları yalnızca cihazınızın yerel depolama alanında saklanır.</li>
+          <li><strong>Görseller Buluta Aktarılmaz:</strong> Kitap görselleri veya kamera akışları hiçbir şekilde uzak sunuculara veya üçüncü taraf yapay zeka bulutlarına yüklenmez.</li>
+          <li><strong>Yalnızca Düz Metin İşlenir:</strong> Eşleştirme servisine yalnızca yerel OCR motoru (Google ML Kit) tarafından okunan düz metin parçaları şifreli HTTPS kanalı üzerinden iletilir.</li>
+          <li><strong>İzleme ve Reklam Yok:</strong> Rafça'da üçüncü taraf reklam ağı, davranışsal profil çıkarma, veri simsarlığı veya çapraz uygulama takibi (cross-app tracking) bulunmaz.</li>
+        </ul>
+      </div>
+
+      <div class="section-card">
+        <h2>2. Toplanan ve İşlenen Veriler</h2>
+        <ul>
+          <li><strong>Kamera Erişimi:</strong> Yalnızca raf tarama işlemi sırasında anlık fotoğraf çekmek ve açı tesviyesi (su terazisi) ile doğru kadrajı sağlamak için kullanılır. Sürekli video kaydı yapılmaz.</li>
+          <li><strong>OCR Metinleri:</strong> Kitap eşleştirmesi yapabilmek için sırt üzerinden okunan karakter dizileri Open Library ve yerel katalog indeksinde sorgulanır.</li>
+          <li><strong>Kütüphane Kayıtları:</strong> Eklediğiniz kitaplar, oluşturduğunuz raflar ve okuma durumları cihazınızdaki yerel SQLite veritabanında tutulur.</li>
+          <li><strong>İsteğe Bağlı Bulut Yedekleme:</strong> Ayarlar ekranından açıkça etkinleştirilmediği sürece hiçbir kütüphane verisi buluta iletilmez. Etkinleştirildiğinde veriler uçtan uca kullanıcıya özel satır düzeyinde güvenlik (RLS) ile korunur.</li>
+          <li><strong>Hata ve Tanılama Kayıtları:</strong> Uygulamanın kararlılığını sağlamak amacıyla anonimleştirilmiş çökme raporları (Sentry) ve performans metrikleri (kişisel veya görsel veri içermeksizin) toplanabilir.</li>
+        </ul>
+      </div>
+
+      <div class="section-card">
+        <h2>3. Kullanıcı Hakları ve Veri Kontrolü</h2>
+        <ul>
+          <li><strong>Tam Veri Dışa Aktarma:</strong> Kütüphanenizi dilediğiniz zaman standart RFC 4180 CSV veya JSON formatında tek tıkla dışa aktarabilirsiniz.</li>
+          <li><strong>Kalıcı Silme:</strong> Ayarlar menüsünden "Kütüphaneyi Sıfırla" seçeneğiyle tüm yerel kayıtları ve sırt kırpımlarını kalıcı olarak silebilirsiniz.</li>
+        </ul>
+      </div>
+    </main>
+
+    <!-- EN CONTENT -->
+    <main id="content-en" class="hidden">
+      <div class="section-card">
+        <h2>1. Core Principle: Local-First & Zero Surveillance</h2>
+        <p>Rafca is an archival tool designed to digitize physical bookshelves from a single photograph. Privacy by design is our foundation:</p>
+        <ul>
+          <li><strong>Photos Stay on Your Device:</strong> Original bookshelf captures and segmented spine crops reside exclusively in your device's local application storage.</li>
+          <li><strong>No Images in the Cloud:</strong> Raw photographs, crops, or camera streams are never uploaded to remote servers or third-party AI clouds.</li>
+          <li><strong>Plain Text Processing Only:</strong> Only plain text recognized locally by on-device OCR is securely transmitted via HTTPS for catalog matching.</li>
+          <li><strong>No Ads, No Tracking:</strong> Rafca contains no third-party ad networks, no behavioural profiling, and no cross-app tracking.</li>
+        </ul>
+      </div>
+
+      <div class="section-card">
+        <h2>2. Data Collection and Usage</h2>
+        <ul>
+          <li><strong>Camera Access:</strong> Used strictly during active shelf scanning to capture still images with roll/pitch guidance. No persistent video stream is recorded.</li>
+          <li><strong>OCR Text Tokens:</strong> Text recognized on book spines is matched against our Open Library derived catalog index.</li>
+          <li><strong>Local Library Storage:</strong> Book records, shelf arrangements, and reading statuses are stored locally on your device in an encrypted SQLite database via Drift.</li>
+          <li><strong>Optional Cloud Sync:</strong> Disabled by default. If explicitly toggled in Settings, metadata synchronizes with encrypted cloud storage protected by PostgreSQL Row-Level Security (RLS).</li>
+          <li><strong>Diagnostics:</strong> Optional, non-identifiable crash events (Sentry) and performance telemetry may be collected strictly to improve application stability.</li>
+        </ul>
+      </div>
+
+      <div class="section-card">
+        <h2>3. User Ownership & Data Rights</h2>
+        <ul>
+          <li><strong>Export Anytime:</strong> Download your full archival collection at any time in standardized RFC 4180 CSV or structured JSON format.</li>
+          <li><strong>Instant Library Wipe:</strong> Use the "Reset Library" option under Settings to permanently delete all local databases and cached spine crops.</li>
+        </ul>
+      </div>
+    </main>
+
+    <footer>
+      <p>Rafça — Nocturnal Archivist &copy; 2026. Kutluhan Gül.</p>
+      <p>İletişim / Contact: <a href="mailto:support@rafca.app">support@rafca.app</a></p>
+    </footer>
+  </div>
+
+  <script>
+    function setLang(lang) {
+      const isTr = lang === 'tr';
+      document.getElementById('content-tr').classList.toggle('hidden', !isTr);
+      document.getElementById('content-en').classList.toggle('hidden', isTr);
+      document.getElementById('btn-tr').classList.toggle('active', isTr);
+      document.getElementById('btn-en').classList.toggle('active', !isTr);
+      document.documentElement.lang = lang;
+      document.title = isTr ? "Rafça — Gizlilik Politikası" : "Rafca — Privacy Policy";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 2400" width="1080" height="2400">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#1E1914"/>
+      <stop offset="50%" stop-color="#14110E"/>
+      <stop offset="100%" stop-color="#0A0807"/>
+    </radialGradient>
+    <linearGradient id="brassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F3DCA2"/>
+      <stop offset="50%" stop-color="#C9963F"/>
+      <stop offset="100%" stop-color="#8F6218"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#221E19"/>
+      <stop offset="100%" stop-color="#161310"/>
+    </linearGradient>
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="dropShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#000000" flood-opacity="0.8"/>
+    </filter>
+    <style>
+      .banner-title { font-family: 'Literata', Georgia, serif; font-size: 52px; font-weight: 600; fill: #F3DCA2; text-anchor: middle; letter-spacing: -0.5px; }
+      .banner-sub { font-family: 'Inter', system-ui, sans-serif; font-size: 28px; font-weight: 400; fill: #A39E96; text-anchor: middle; }
+      .mono-label { font-family: 'IBM Plex Mono', Courier, monospace; font-size: 20px; letter-spacing: 2px; fill: #C9963F; text-transform: uppercase; }
+      .app-title { font-family: 'Literata', Georgia, serif; font-size: 38px; font-weight: 600; fill: #ECE6DE; }
+      .book-title { font-family: 'Literata', Georgia, serif; font-size: 30px; font-weight: 600; fill: #ECE6DE; }
+      .book-author { font-family: 'Inter', system-ui, sans-serif; font-size: 22px; fill: #A39E96; }
+      .badge-text { font-family: 'IBM Plex Mono', Courier, monospace; font-size: 18px; font-weight: 600; }
+    </style>
+  </defs>
+
+  <!-- Deep Obsidian Background -->
+  <rect width="1080" height="2400" fill="url(#bgGlow)"/>
+
+  <g transform="translate(540, 180)">
+    <text y="0" class="banner-title">Koleksiyonunuzu Sanatsal Olarak Paylaşın</text>
+    <text y="64" class="banner-sub">Tek tıkla hikaye veya yüksek çözünürlüklü kart</text>
+  </g>
+
+  
+  <!-- Device Mockup Container -->
+  <g transform="translate(90, 420)" filter="url(#dropShadow)">
+    <!-- Phone Outer Bezel -->
+    <rect width="900" height="1840" rx="64" fill="#0E0C0A" stroke="#C9963F" stroke-width="3" stroke-opacity="0.4"/>
+    <rect x="8" y="8" width="884" height="1824" rx="56" fill="#15120E"/>
+    
+    <!-- Dynamic Island / Speaker notch -->
+    <rect x="360" y="24" width="180" height="36" rx="18" fill="#000000"/>
+    <circle cx="510" cy="42" r="6" fill="#1C1916"/>
+
+    <!-- Screen Inner Content (Clipped to display) -->
+    <g transform="translate(24, 76)">
+      
+      <!-- Top Title -->
+      <text x="30" y="60" class="mono-label">ARŞİV KARTI PAYLAŞIMI</text>
+      <text x="30" y="115" class="app-title">Koleksiyon Kartı</text>
+
+      <!-- Exact ShareCard Rendering (Centered) -->
+      <g transform="translate(45, 180)" filter="url(#dropShadow)">
+        <!-- Card Background -->
+        <rect width="760" height="1140" rx="32" fill="#1C1814" stroke="#C9963F" stroke-width="3"/>
+        <rect x="18" y="18" width="724" height="1104" rx="24" fill="none" stroke="#C9963F" stroke-width="1" stroke-opacity="0.3" stroke-dasharray="6,4"/>
+
+        <!-- Top Monogram Star -->
+        <g transform="translate(380, 80)">
+          <path d="M 0 -18 L 5 -5 L 18 0 L 5 5 L 0 18 L -5 5 L -18 0 L -5 -5 Z" fill="#F3DCA2"/>
+        </g>
+
+        <!-- Subtitle and Title -->
+        <text x="380" y="160" class="mono-label" text-anchor="middle">FELSEFE VE EDEBİYAT KİTAPLIĞI</text>
+        <text x="380" y="240" font-family="Literata" font-size="52" font-weight="600" fill="#F3DCA2" text-anchor="middle">Sonbahar Koleksiyonu</text>
+        <text x="380" y="300" font-family="Inter" font-size="28" fill="#A39E96" text-anchor="middle">Kutluhan Gül Kütüphanesi</text>
+
+        <!-- Dynamic Mini Shelf Strip -->
+        <g transform="translate(90, 360)">
+          <rect width="580" height="240" rx="16" fill="#14110E" stroke="#C9963F" stroke-width="1.5" stroke-opacity="0.4"/>
+          <!-- 8 Colored Spine strips -->
+          <rect x="30" y="30" width="45" height="180" rx="4" fill="#6B1D28"/>
+          <rect x="85" y="10" width="60" height="200" rx="4" fill="#C9963F"/>
+          <rect x="155" y="40" width="45" height="170" rx="4" fill="#1C3829"/>
+          <rect x="210" y="20" width="55" height="190" rx="4" fill="#18233C"/>
+          <rect x="275" y="35" width="50" height="175" rx="4" fill="#8C3A27"/>
+          <rect x="335" y="15" width="65" height="195" rx="4" fill="#4A1E34"/>
+          <rect x="410" y="45" width="45" height="165" rx="4" fill="#52B788"/>
+          <rect x="465" y="25" width="55" height="185" rx="4" fill="#2E3C4E"/>
+
+          <!-- Shelf bar under books -->
+          <rect x="15" y="210" width="550" height="8" rx="2" fill="url(#brassGrad)"/>
+        </g>
+
+        <!-- Stats Big Count -->
+        <text x="380" y="700" font-family="Literata" font-size="72" font-weight="600" fill="#F3DCA2" text-anchor="middle">48</text>
+        <text x="380" y="745" class="mono-label" text-anchor="middle">CİLT ARŞİVLENDİ</text>
+
+        <!-- Category Tags -->
+        <g transform="translate(380, 830)">
+          <text x="0" y="0" font-family="IBM Plex Mono" font-size="22" fill="#C9963F" text-anchor="middle" letter-spacing="2">KLASİKLER &#8226; FELSEFE &#8226; ŞİİR</text>
+        </g>
+
+        <!-- Watermark / Footer -->
+        <g transform="translate(380, 990)">
+          <text x="0" y="0" font-family="IBM Plex Mono" font-size="20" fill="#756F68" text-anchor="middle" letter-spacing="3">RAFÇA &#8226; NOCTURNAL ARCHIVIST</text>
+          <text x="0" y="35" font-family="Inter" font-size="16" fill="#55504A" text-anchor="middle">KASIM 2026 &#8226; YEREL ARŞİV</text>
+        </g>
+      </g>
+
+      <!-- Bottom Actions -->
+      <g transform="translate(45, 1480)">
+        <rect width="360" height="90" rx="20" fill="#1E1A16" stroke="#C9963F" stroke-width="2"/>
+        <text x="180" y="55" font-family="IBM Plex Mono" font-size="20" font-weight="600" fill="#F3DCA2" text-anchor="middle">HİKAYEDE PAYLAŞ</text>
+
+        <rect x="400" y="0" width="360" height="90" rx="20" fill="url(#brassGrad)" filter="url(#softGlow)"/>
+        <text x="580" y="55" font-family="IBM Plex Mono" font-size="20" font-weight="600" fill="#12100E" text-anchor="middle">GÖRSELİ KAYDET</text>
+      </g>
+    
+    </g>
+  </g>
+
+</svg>

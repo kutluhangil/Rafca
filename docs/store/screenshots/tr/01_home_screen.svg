@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 2400" width="1080" height="2400">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#1E1914"/>
+      <stop offset="50%" stop-color="#14110E"/>
+      <stop offset="100%" stop-color="#0A0807"/>
+    </radialGradient>
+    <linearGradient id="brassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F3DCA2"/>
+      <stop offset="50%" stop-color="#C9963F"/>
+      <stop offset="100%" stop-color="#8F6218"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#221E19"/>
+      <stop offset="100%" stop-color="#161310"/>
+    </linearGradient>
+    <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="dropShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#000000" flood-opacity="0.8"/>
+    </filter>
+    <style>
+      .banner-title { font-family: 'Literata', Georgia, serif; font-size: 52px; font-weight: 600; fill: #F3DCA2; text-anchor: middle; letter-spacing: -0.5px; }
+      .banner-sub { font-family: 'Inter', system-ui, sans-serif; font-size: 28px; font-weight: 400; fill: #A39E96; text-anchor: middle; }
+      .mono-label { font-family: 'IBM Plex Mono', Courier, monospace; font-size: 20px; letter-spacing: 2px; fill: #C9963F; text-transform: uppercase; }
+      .app-title { font-family: 'Literata', Georgia, serif; font-size: 38px; font-weight: 600; fill: #ECE6DE; }
+      .book-title { font-family: 'Literata', Georgia, serif; font-size: 30px; font-weight: 600; fill: #ECE6DE; }
+      .book-author { font-family: 'Inter', system-ui, sans-serif; font-size: 22px; fill: #A39E96; }
+      .badge-text { font-family: 'IBM Plex Mono', Courier, monospace; font-size: 18px; font-weight: 600; }
+    </style>
+  </defs>
+
+  <!-- Deep Obsidian Background -->
+  <rect width="1080" height="2400" fill="url(#bgGlow)"/>
+
+  <!-- Marketing Banner -->
+  <g transform="translate(540, 180)">
+    <text y="0" class="banner-title">Tüm Kitaplığınız Parmaklarınızın Ucunda</text>
+    <text y="64" class="banner-sub">Nocturnal Archivist zarafetiyle arşivleyin</text>
+  </g>
+
+  
+  <!-- Device Mockup Container -->
+  <g transform="translate(90, 420)" filter="url(#dropShadow)">
+    <!-- Phone Outer Bezel -->
+    <rect width="900" height="1840" rx="64" fill="#0E0C0A" stroke="#C9963F" stroke-width="3" stroke-opacity="0.4"/>
+    <rect x="8" y="8" width="884" height="1824" rx="56" fill="#15120E"/>
+    
+    <!-- Dynamic Island / Speaker notch -->
+    <rect x="360" y="24" width="180" height="36" rx="18" fill="#000000"/>
+    <circle cx="510" cy="42" r="6" fill="#1C1916"/>
+
+    <!-- Screen Inner Content (Clipped to display) -->
+    <g transform="translate(24, 76)">
+      
+      <!-- App Header -->
+      <text x="30" y="60" class="mono-label">48 CİLT / 4 RAF</text>
+      <text x="30" y="115" class="app-title">Kütüphane</text>
+      <circle cx="810" cy="95" r="28" fill="#241F1A" stroke="#C9963F" stroke-width="1.5"/>
+      <path d="M 802 95 L 818 95 M 810 87 L 810 103" stroke="#F3DCA2" stroke-width="2.5" stroke-linecap="round"/>
+
+      <!-- Search Box -->
+      <rect x="25" y="150" width="802" height="72" rx="16" fill="#1E1A16" stroke="#C9963F" stroke-width="1" stroke-opacity="0.25"/>
+      <circle cx="65" cy="186" r="12" fill="none" stroke="#C9963F" stroke-width="2"/>
+      <line x1="74" y1="195" x2="85" y2="206" stroke="#C9963F" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="110" y="194" font-family="Inter" font-size="22" fill="#756F68">Kütüphanenizde arayın...</text>
+
+      <!-- Shelf Tabs -->
+      <g transform="translate(25, 255)">
+        <rect x="0" y="0" width="130" height="52" rx="12" fill="#C9963F"/>
+        <text x="65" y="34" font-family="Inter" font-size="20" font-weight="600" fill="#12100E" text-anchor="middle">Tümü</text>
+
+        <rect x="145" y="0" width="160" height="52" rx="12" fill="#1E1A16" stroke="#C9963F" stroke-width="1" stroke-opacity="0.2"/>
+        <text x="225" y="34" font-family="Inter" font-size="20" fill="#A39E96" text-anchor="middle">Felsefe</text>
+
+        <rect x="320" y="0" width="170" height="52" rx="12" fill="#1E1A16" stroke="#C9963F" stroke-width="1" stroke-opacity="0.2"/>
+        <text x="405" y="34" font-family="Inter" font-size="20" fill="#A39E96" text-anchor="middle">Klasikler</text>
+
+        <rect x="505" y="0" width="170" height="52" rx="12" fill="#1E1A16" stroke="#C9963F" stroke-width="1" stroke-opacity="0.2"/>
+        <text x="590" y="34" font-family="Inter" font-size="20" fill="#A39E96" text-anchor="middle">Bilimkurgu</text>
+      </g>
+
+      <!-- Shelf Strip Divider -->
+      <g transform="translate(25, 340)">
+        <rect width="802" height="12" rx="4" fill="url(#brassGrad)"/>
+        <rect y="12" width="802" height="4" fill="#000000" fill-opacity="0.6"/>
+      </g>
+
+      <!-- Book Cards Grid (4 Featured Books) -->
+      <!-- Card 1 -->
+      <g transform="translate(25, 385)">
+        <rect width="802" height="260" rx="20" fill="url(#cardGrad)" stroke="#C9963F" stroke-width="1.5" stroke-opacity="0.3"/>
+        <!-- Spine Crop View -->
+        <rect x="24" y="20" width="46" height="220" rx="6" fill="#6B1D28" stroke="#8C2D19" stroke-width="1.5"/>
+        <line x1="47" y1="36" x2="47" y2="224" stroke="#C9963F" stroke-width="1.5" stroke-opacity="0.5"/>
+        <!-- Info -->
+        <text x="96" y="70" class="book-title">Suç ve Ceza</text>
+        <text x="96" y="110" class="book-author">Fyodor Dostoyevski &#8226; İletişim Yayınları</text>
+        <!-- Match Badge -->
+        <rect x="96" y="145" width="150" height="40" rx="8" fill="#152B1E" stroke="#2D6A4F" stroke-width="1.5"/>
+        <text x="171" y="171" class="badge-text" fill="#52B788" text-anchor="middle">%98 EŞLEŞTİ</text>
+        <text x="96" y="222" font-family="IBM Plex Mono" font-size="18" fill="#C9963F">RAF 1 &#8226; KORİDOR KİTAPLIĞI</text>
+      </g>
+
+      <!-- Card 2 -->
+      <g transform="translate(25, 675)">
+        <rect width="802" height="260" rx="20" fill="url(#cardGrad)" stroke="#C9963F" stroke-width="1.5" stroke-opacity="0.3"/>
+        <rect x="24" y="20" width="50" height="220" rx="6" fill="#24211D" stroke="#C9963F" stroke-width="2"/>
+        <line x1="49" y1="36" x2="49" y2="224" stroke="#F3DCA2" stroke-width="2"/>
+        <text x="100" y="70" class="book-title">Saatleri Ayarlama Enstitüsü</text>
+        <text x="100" y="110" class="book-author">Ahmet Hamdi Tanpınar &#8226; Dergâh</text>
+        <rect x="100" y="145" width="150" height="40" rx="8" fill="#152B1E" stroke="#2D6A4F" stroke-width="1.5"/>
+        <text x="175" y="171" class="badge-text" fill="#52B788" text-anchor="middle">%99 EŞLEŞTİ</text>
+        <text x="100" y="222" font-family="IBM Plex Mono" font-size="18" fill="#C9963F">RAF 1 &#8226; TÜRK KLASİKLERİ</text>
+      </g>
+
+      <!-- Card 3 -->
+      <g transform="translate(25, 965)">
+        <rect width="802" height="260" rx="20" fill="url(#cardGrad)" stroke="#C9963F" stroke-width="1.5" stroke-opacity="0.3"/>
+        <rect x="24" y="20" width="44" height="220" rx="6" fill="#1C3829" stroke="#2D5A3C" stroke-width="1.5"/>
+        <text x="96" y="70" class="book-title">Dune</text>
+        <text x="96" y="110" class="book-author">Frank Herbert &#8226; İthaki Yayınları</text>
+        <rect x="96" y="145" width="150" height="40" rx="8" fill="#152B1E" stroke="#2D6A4F" stroke-width="1.5"/>
+        <text x="171" y="171" class="badge-text" fill="#52B788" text-anchor="middle">%96 EŞLEŞTİ</text>
+        <text x="96" y="222" font-family="IBM Plex Mono" font-size="18" fill="#C9963F">RAF 3 &#8226; BİLİMKURGU</text>
+      </g>
+
+      <!-- Card 4 -->
+      <g transform="translate(25, 1255)">
+        <rect width="802" height="260" rx="20" fill="url(#cardGrad)" stroke="#C9963F" stroke-width="1.5" stroke-opacity="0.3"/>
+        <rect x="24" y="20" width="46" height="220" rx="6" fill="#18233C" stroke="#2A3D66" stroke-width="1.5"/>
+        <text x="96" y="70" class="book-title">Beyaz Kale</text>
+        <text x="96" y="110" class="book-author">Orhan Pamuk &#8226; Yapı Kredi Yayınları</text>
+        <rect x="96" y="145" width="150" height="40" rx="8" fill="#152B1E" stroke="#2D6A4F" stroke-width="1.5"/>
+        <text x="171" y="171" class="badge-text" fill="#52B788" text-anchor="middle">%95 EŞLEŞTİ</text>
+        <text x="96" y="222" font-family="IBM Plex Mono" font-size="18" fill="#C9963F">RAF 2 &#8226; ÇAĞDAŞ EDEBİYAT</text>
+      </g>
+    
+    </g>
+  </g>
+
+</svg>

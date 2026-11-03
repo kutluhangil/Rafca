@@ -50,6 +50,10 @@ dependencies:
   intl: ^0.20.3
   share_plus: ^13.3.1
 
+  # Crash reporting — Sentry. DSN injected at build time via --dart-define=SENTRY_DSN=...
+  # If DSN is absent the SDK is a no-op; local-first offline queue still works.
+  sentry_flutter: ^8.14.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -60,6 +64,7 @@ dev_dependencies:
   drift_dev: ^2.23.1
   custom_lint: ^0.7.0
   riverpod_lint: ^2.6.3
+  flutter_launcher_icons: ^0.14.3
 
 flutter:
   uses-material-design: true

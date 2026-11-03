@@ -1,0 +1,34 @@
+flutter_launcher_icons:
+  # -----------------------------------------------------------------------
+  # Rafça — Nocturnal Archivist App Icon Config
+  # flutter_launcher_icons ^0.14.x
+  # Run: dart run flutter_launcher_icons
+  # -----------------------------------------------------------------------
+
+  # Android
+  android: true
+  image_path_android: "assets/icons/app_icon.png"
+  # Adaptive icon (API 26+)
+  adaptive_icon_background: "assets/icons/app_icon_background.png"
+  adaptive_icon_foreground: "assets/icons/app_icon_foreground.png"
+  # Round icon variant (Pixel launcher etc.)
+  adaptive_icon_monochrome: "assets/icons/app_icon_foreground.png"
+  min_sdk_android: 21
+
+  # iOS
+  ios: true
+  image_path_ios: "assets/icons/app_icon.png"
+  # App Store requires no alpha channel — enforce opaque background
+  remove_alpha_ios: true
+
+  # Web (PWA) — optional but nice
+  web:
+    generate: true
+    image_path: "assets/icons/app_icon.png"
+    background_color: "#12100E"
+    theme_color: "#C9963F"
+
+  # macOS (for Flutter desktop if ever needed)
+  macos:
+    generate: true
+    image_path: "assets/icons/app_icon.png"
