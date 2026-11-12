@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="docs/media/hero.svg" alt="Rafça — catalogue your bookshelf from a single photo" width="100%">
+<img src="docs/media/hero.svg" alt="Rafça — a shelf photographed level, corners framed, OCR boxes on each spine and results sorted into matched, review and unknown" width="100%">
 
 <p>
   <img alt="Flutter" src="https://img.shields.io/badge/Flutter-Riverpod%20%2B%20Drift-c9963f?style=for-the-badge&labelColor=12100e">
@@ -60,6 +60,32 @@ The interface borrows the calm of a quiet library at midnight: an obsidian-ink b
 
 <img src="docs/media/divider.svg" width="100%" alt="">
 
+## Beyond the scan
+
+| Feature | Detail |
+|---|---|
+| **AR lens** | A live camera overlay that keeps an index of your library and marks spines you already own, throttled to one pass every 450 ms with frame skipping so the CPU stays low. |
+| **Review queue** | Every REVIEW and UNKNOWN result waits in one place until you confirm an edition, an author or a manual search. |
+| **Archivist Wrapped** | A year-in-books summary with shareable cards. |
+| **Shelf cards** | Share a shelf as an image. |
+| **Local library** | Drift on SQLite: the collection opens instantly and works without a connection. |
+
+<img src="docs/media/divider.svg" width="100%" alt="">
+
+## Kept honest by CI
+
+| Check | What it guards |
+|---|---|
+| **Dart packages** | The pure-Dart spine clustering package and its tests |
+| **Flutter app** | `flutter analyze` and the app's test suite (44 test files) |
+| **Generated sources** | Drift and other generated code must be current before merge |
+| **Performance budgets** | Budget evaluation tests, a synthetic pipeline benchmark, and a hard 15 MB cap on bundled fonts and design assets |
+| **Database** | The Supabase schema, row-level security and pgTAP tests live with the code |
+
+Before any feature work, a phase-0 accuracy spike ran the whole pipeline end to end on a labelled shelf set; the golden test keeps the result within ±3 % from then on. A signed release checklist closes every phase.
+
+<img src="docs/media/divider.svg" width="100%" alt="">
+
 ## Türkçe özet
 
 **Rafça**, kitaplığının tek bir fotoğrafından kitapları tanıyıp dijital koleksiyonuna ekleyen, yerel öncelikli bir mobil uygulama. Barkod okutmadan, tek tek yazmadan: raftaki sırtları bulup perspektifi düzeltiyor, sırt yazılarını dört yönden OCR ile okuyor ve Open Library kataloğuyla eşleştiriyor. Fotoğraflar telefondan çıkmıyor, sunucuya yalnızca okunan metin gidiyor. Kütüphane internet olmadan da açılıyor.
@@ -88,5 +114,5 @@ spike/                 accuracy set and an Apple Vision CLI probe
 <div align="center">
 <br>
 <a href="https://github.com/kutluhangil"><img src="docs/media/signature.svg" width="100%" alt="Built by kutluhangil"></a>
-<sub>For readers whose shelves are bigger than their spreadsheets.</sub>
+<sub>MIT licensed · for readers whose shelves are bigger than their spreadsheets · titles in the banner are invented.</sub>
 </div>
