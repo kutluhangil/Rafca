@@ -1,154 +1,92 @@
 <div align="center">
 
-<img src="docs/readme/hero.svg" alt="Rafça — Physical Library Archivist" width="100%" />
+<img src="docs/media/hero.svg" alt="Rafça — catalogue your bookshelf from a single photo" width="100%">
 
-<br />
+<p>
+  <img alt="Flutter" src="https://img.shields.io/badge/Flutter-Riverpod%20%2B%20Drift-c9963f?style=for-the-badge&labelColor=12100e">
+  <img alt="Go" src="https://img.shields.io/badge/Go-matchd%20service-f5bd62?style=for-the-badge&labelColor=12100e">
+  <img alt="Open Library" src="https://img.shields.io/badge/catalogue-Open%20Library-7aa88a?style=for-the-badge&labelColor=12100e">
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-c9963f?style=for-the-badge&labelColor=12100e">
+</p>
 
-<img src="https://img.shields.io/badge/version-1.0.0--faz6-c9963f?style=for-the-badge&labelColor=12100e" alt="version" />
-<img src="https://img.shields.io/badge/Flutter-3.47+-02569B?style=for-the-badge&logo=flutter&logoColor=white&labelColor=12100e" alt="Flutter" />
-<img src="https://img.shields.io/badge/Dart-3.13-0175C2?style=for-the-badge&logo=dart&logoColor=white&labelColor=12100e" alt="Dart" />
-<img src="https://img.shields.io/badge/State-Riverpod_2-00599c?style=for-the-badge&labelColor=12100e" alt="Riverpod" />
-<img src="https://img.shields.io/badge/Local_DB-Drift_(SQLite)-33e86c?style=for-the-badge&labelColor=12100e" alt="Drift" />
-<img src="https://img.shields.io/badge/Backend-Go_1.2x-00ADD8?style=for-the-badge&logo=go&logoColor=white&labelColor=12100e" alt="Go" />
-<img src="https://img.shields.io/badge/Catalog-Open_Library-e8ecf0?style=for-the-badge&labelColor=12100e" alt="Open Library" />
-<img src="https://img.shields.io/badge/Privacy-Device_First-6e8f6a?style=for-the-badge&labelColor=12100e" alt="Privacy First" />
+<p><em>Photograph your shelf and the books land in your digital collection within seconds.<br>
+No barcodes, no typing. Photos stay on your phone; only the recognised text goes to the server.</em></p>
 
-<br /><br />
-
-**Rafının fotoğrafını çek; kitapların 10 saniye içinde dijital koleksiyonuna eklensin.**
-<br />
-<sub>Barkod okutmadan, tek tek yazmadan. Fotoğraflar cihazında kalır, buluta yalnızca okunan metin gider.</sub>
-
-<br /><br />
-
-[**Nasıl Çalışır?**](#-nasıl-çalışır) • [**Tasarım Sistemi**](#-tasarım-sistemi--nocturnal-archivist) • [**Ekran Mockup'ları**](#-ekranlar) • [**Mimari**](#%EF%B8%8F-teknik-mimari) • [**Geliştirme**](#%EF%B8%8F-geliştirme-ve-test)
+<img src="docs/readme/pipeline.svg" alt="The Rafça pipeline: capture, warp, OCR, match, archive" width="100%">
 
 </div>
 
-<img src="docs/readme/divider.svg" width="100%" alt="" />
+<img src="docs/media/divider.svg" width="100%" alt="">
 
-## 🇹🇷 Kısaca Rafça
+## What it is
 
-**Rafça**, fiziksel kitaplığınızı tek bir raf fotoğrafından tanıyan ve arşivleyen yerel-önce (local-first) bir mobil uygulamadır.
+Rafça is a local-first mobile app that recognises a physical bookshelf from one photo. Instead of scanning barcodes one by one, it finds dozens of spines side by side, corrects perspective, reads the spine text from four directions and matches each book against the Open Library catalogue.
 
-Geleneksel barkod tarayıcılarının aksine, rafta yan yana dizili onlarca kitabın sırtlarını eşzamanlı olarak tespit eder, perspektif bozulmalarını düzeltir, 4 yönlü OCR ile sırt yazılarını okur ve Open Library kataloğu üzerinden trigram + FTS eşleştirmesi yaparak koleksiyonunuza kaydeder.
+<img src="docs/media/divider.svg" width="100%" alt="">
 
-### 🌟 Öne Çıkan Nitelikler
+## How it works
 
-- **Gerçek Zamanlı Su Terazisi & Titreşim Engelleme:** Kamera deklanşörü, telefon rafa tam paralel tutulmadan (±7° tolerans) ve ivme sensörü stabil olmadan deklanşörü serbest bırakmaz.
-- **Saf Dart Sırt Kümeleme (`packages/spine_clustering`):** ML Kit çıktısı metin bloklarını medyan sırt genişliği ve Otsu eşikleme ile kitap sınırlarına böler.
-- **3 Kademeli Güven Sistemi:**
-  - `MATCHED` (Yeşil): Kesin eşleşme, doğrudan kütüphaneye eklenir.
-  - `REVIEW` (Pirinç Altın): Alternatif baskılar veya yazar çakışması için kullanıcı seçimi.
-  - `UNKNOWN` (Kırmızı): Tanınamayan sırtlar, manuel arama veya tek-tık VLM desteği.
-- **İmza Bileşen — `ShelfStrip`:** Kitap sırtlarının baskın renklerini piksel oranlarına göre yatay bir renk şeridine dönüştürür.
-- **Kayıpsız Gizlilik:** Fotoğraflar asla buluta yüklenmez; yerel diskte kalır. Sunucuya yalnızca ham OCR metni gönderilir.
+| Step | |
+|---|---|
+| **1 · Capture** | A spirit level and shake guard: the shutter only releases when the phone is parallel to the shelf (±7°) and steady. |
+| **2 · Frame and warp** | Drag four corners around the shelf; bilinear inverse mapping straightens the perspective. |
+| **3 · Four-angle OCR** | ML Kit runs at 0°, 90°, 180° and 270°, so vertical and upside-down spine text is never missed. |
+| **4 · Spine clustering** | A pure-Dart package splits text blocks into books by median spine width and Otsu thresholding. |
+| **5 · Fuzzy match** | The Go `matchd` service matches titles and authors with PostgreSQL `pg_trgm` and `tsvector`. |
+| **6 · Local archive** | Results are stored in a Drift SQLite database; the library opens instantly, even offline. |
 
-<img src="docs/readme/divider.svg" width="100%" alt="" />
+Every match lands in one of three states: **MATCHED** (green, added directly), **REVIEW** (brass, pick the right edition or author) or **UNKNOWN** (red, search manually or ask a vision model with one tap).
 
-## ⚡ Nasıl Çalışır?
+<table>
+  <tr>
+    <td width="25%"><img src="stitch_spine_book_scanner_app/scan_camera/screen.png" alt="Camera with level guide"></td>
+    <td width="25%"><img src="stitch_spine_book_scanner_app/scan_results/screen.png" alt="Scan results"></td>
+    <td width="25%"><img src="stitch_spine_book_scanner_app/library_populated/screen.png" alt="The library"></td>
+    <td width="25%"><img src="stitch_spine_book_scanner_app/shareable_shelf_card/screen.png" alt="Shareable shelf card"></td>
+  </tr>
+  <tr>
+    <td align="center"><code>capture</code></td>
+    <td align="center"><code>results</code></td>
+    <td align="center"><code>library</code></td>
+    <td align="center"><code>shelf card</code></td>
+  </tr>
+</table>
 
-<div align="center">
-  <img src="docs/readme/pipeline.svg" alt="Rafça İşlem Boru Hattı" width="100%" />
-</div>
+<img src="docs/media/divider.svg" width="100%" alt="">
 
-1. **Yakalama:** Yüksek çözünürlüklü deklanşör, sensör doğrulaması ile en net kareyi yakalar.
-2. **Kadraj & Warp:** Kullanıcı raf alanını 4 köşe sürükleyerek seçer; bilinear ters eşleme ile perspektif kusursuz düzeltilir.
-3. **4-Açılı OCR:** ML Kit motoru 0°, 90°, 180° ve 270° açılarında çalışır; dikey ve ters akan sırt metinleri kaçırılmaz.
-4. **Bulanık Eşleme:** Go tabanlı `matchd` servisi, PostgreSQL `pg_trgm` + `tsvector` ile başlık ve yazarları eşler.
-5. **Yerel Arşiv:** Drift SQLite veritabanına kaydedilir; internet olmasa dahi kütüphane anında açılır.
+## Design: Nocturnal Archivist
 
-<img src="docs/readme/divider.svg" width="100%" alt="" />
+The interface borrows the calm of a quiet library at midnight: an obsidian-ink base (`#12100E`), warm brass accents like gold tooling on leather (`#C9963F`, `#F5BD62`), Literata for titles, Inter for the interface and IBM Plex Mono for ISBNs. Its signature component, `ShelfStrip`, turns the dominant colours of the spines into a horizontal colour band.
 
-## 🎨 Tasarım Sistemi — *Nocturnal Archivist*
+<img src="docs/media/divider.svg" width="100%" alt="">
 
-Rafça, tüketici uygulamalarının yapay ve parlak arayüzleri yerine, **gece yarısı sessiz bir kütüphanenin** dinginliğini yansıtan özel bir estetiğe sahiptir:
+## Türkçe özet
 
-- **Zemin:** `#12100E` (Obsidian Ink) — derin, dingin siyah.
-- **Vurgu:** `#C9963F` & `#F5BD62` — deri cilt üzerindeki varak baskıyı andıran sıcak pirinç altın.
-- **Tipografi:** Başlıklarda edebi **Literata** (serif), arayüzde fonksiyonel **Inter**, ISBN ve güven loglarında ise **IBM Plex Mono**.
-- **Işık ve Katman:** Agresif gölgeler yerine 1px hairline çerçeveler (`#3A332A`) ve %10 iç üst parlaklık.
+**Rafça**, kitaplığının tek bir fotoğrafından kitapları tanıyıp dijital koleksiyonuna ekleyen, yerel öncelikli bir mobil uygulama. Barkod okutmadan, tek tek yazmadan: raftaki sırtları bulup perspektifi düzeltiyor, sırt yazılarını dört yönden OCR ile okuyor ve Open Library kataloğuyla eşleştiriyor. Fotoğraflar telefondan çıkmıyor, sunucuya yalnızca okunan metin gidiyor. Kütüphane internet olmadan da açılıyor.
 
-<img src="docs/readme/divider.svg" width="100%" alt="" />
+<img src="docs/media/divider.svg" width="100%" alt="">
 
-## 📱 Ekranlar
+## Development
 
-<div align="center">
-  <table>
-    <tr>
-      <td align="center" width="33%">
-        <b>Canlı Tarama &amp; Tesviye</b><br /><br />
-        <img src="stitch_spine_book_scanner_app/scan_camera/screen.png" width="240" alt="Scan Camera" />
-      </td>
-      <td align="center" width="33%">
-        <b>İşleniyor &amp; Arşiv Logu</b><br /><br />
-        <img src="stitch_spine_book_scanner_app/processing_scan/screen.png" width="240" alt="Processing Scan" />
-      </td>
-      <td align="center" width="33%">
-        <b>Tarama Sonuçları</b><br /><br />
-        <img src="stitch_spine_book_scanner_app/scan_results/screen.png" width="240" alt="Scan Results" />
-      </td>
-    </tr>
-    <tr>
-      <td align="center" width="33%">
-        <b>Dijital Kütüphane</b><br /><br />
-        <img src="stitch_spine_book_scanner_app/library_populated/screen.png" width="240" alt="Library" />
-      </td>
-      <td align="center" width="33%">
-        <b>Sırt Doğrulama Sheet'i</b><br /><br />
-        <img src="stitch_spine_book_scanner_app/review_correct_spine/screen.png" width="240" alt="Review Correct Spine" />
-      </td>
-      <td align="center" width="33%">
-        <b>Kitap Detay Sayfası</b><br /><br />
-        <img src="stitch_spine_book_scanner_app/book_detail/screen.png" width="240" alt="Book Detail" />
-      </td>
-    </tr>
-  </table>
-</div>
-
-<img src="docs/readme/divider.svg" width="100%" alt="" />
-
-## 🏗️ Teknik Mimari
-
-```
-Rafça Monorepo
-├── /app                  # Flutter 3.47+ istemci (iOS & Android)
-│   ├── lib/core          # Router, tema, Drift SQLite yerel DB
-│   ├── lib/design        # Nocturnal Archivist bileşenleri, tokenlar, ShelfStrip
-│   └── lib/features      # Capture (Faz 6), Review, Library
-├── /packages
-│   └── spine_clustering  # Saf Dart sırt segmentasyon algoritması
-├── /services
-│   ├── index             # Open Library üç geçişli indeksleyici (Go)
-│   └── match             # Trigram + FTS eşleştirme servisi (Go matchd)
-├── /supabase             # PostgreSQL şeması, RLS kuralları ve pgTAP testleri
-└── /spike                # Doğruluk ölçüm seti ve Apple Vision CLI probu
-```
-
-<img src="docs/readme/divider.svg" width="100%" alt="" />
-
-## 🛠️ Geliştirme ve Test
-
-```bash
-# Bağımlılıkları yükle
+```sh
 cd app && flutter pub get
-
-# Statik analiz (sıfır uyarı / 0 issues)
 flutter analyze
-
-# Mobil birim ve widget testleri (68/68 yeşil)
 flutter test
-
-# Kümeleme paketi ve spike değerlendirme testleri
-make test
-make analyze
-
-# Faz 0 Doğruluk değerlendirmesi
-make eval
+make test        # clustering package and spike evaluation
+make eval        # phase-0 accuracy evaluation
 ```
 
-<img src="docs/readme/divider.svg" width="100%" alt="" />
+```
+app/                   Flutter client (iOS + Android): core, design, features
+packages/              spine_clustering, pure Dart
+services/index         Open Library indexer (Go)
+services/match         trigram + full-text matching service (Go)
+supabase/              schema, RLS and pgTAP tests
+spike/                 accuracy set and an Apple Vision CLI probe
+```
 
 <div align="center">
-<sub>Kutluhan — <a href="https://github.com/kutluhangil">@kutluhangil</a></sub>
+<br>
+<a href="https://github.com/kutluhangil"><img src="docs/media/signature.svg" width="100%" alt="Built by kutluhangil"></a>
+<sub>For readers whose shelves are bigger than their spreadsheets.</sub>
 </div>
